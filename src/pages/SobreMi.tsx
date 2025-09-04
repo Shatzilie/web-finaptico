@@ -20,7 +20,7 @@ const SobreMi = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-h1 text-text-primary mb-6">
-              Hola, soy [Tu Nombre], fundadora de Finaptico.
+              Hola, soy Fátima, fundadora de Finaptico.
             </h1>
             <p className="text-body text-text-secondary leading-relaxed">
               Asistente virtual en finanzas. Me muevo bien con empresas tech y también con pymes tradicionales.
@@ -187,7 +187,7 @@ const SobreMi = () => {
             <div className="bg-white rounded-2xl p-8 shadow-lg border border-border/30">
               <div className="text-6xl text-primary mb-4">"</div>
               <p className="text-body text-text-secondary italic mb-6 leading-relaxed">
-                Desde que trabajo con [Tu Nombre], tengo una visión completamente clara de mi negocio. 
+                Desde que trabajo con Fátima, tengo una visión completamente clara de mi negocio. 
                 Los informes mensuales me han ahorrado horas de análisis y ahora tomo decisiones con mucha más confianza. 
                 Su comunicación es impecable y siempre está disponible cuando la necesito.
               </p>

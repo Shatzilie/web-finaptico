@@ -10,10 +10,10 @@
 @layer base {
   :root {
     /* Finaptico Brand Colors - HSL format */
-    --primary: 255 102 111;     /* Violeta #6366F1 convertido a HSL */
+    --primary: 263 82% 65%;     /* Violeta #6C5CE7 convertido a HSL */
     --primary-foreground: 0 0% 100%;
-    --secondary: 171 100% 37%;   /* Verde menta #00BEA4 convertido a HSL */
-    --secondary-foreground: 11 21% 6%;  /* #0B0F19 */
+    --secondary: 171 100% 37%;   /* Verde menta #00BFA5 convertido a HSL */
+    --secondary-foreground: 0 0% 100%;  /* Blanco */
     
     /* Background colors */
     --background: 218 27% 94%;   /* #F1F5F9 */
@@ -37,12 +37,12 @@
     --text-muted: 217 10% 47%;    /* #6B7280 */
     
     /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(255 102 111) 0%, hsl(171 100% 37%) 70%, hsl(222 47% 11%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(263 82% 65%) 0%, hsl(171 100% 37%) 70%, hsl(222 47% 11%) 100%);
     
     /* Borders and shadows */
     --border: 214 31% 91%;
     --input: 214 31% 91%;
-    --ring: 255 102 111;
+    --ring: 263 82% 65%;
     
     /* Design system radius */
     --radius: 0.875rem; /* 14px */
@@ -111,6 +111,10 @@
   
   .btn-secondary {
     @apply border border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-200 rounded-[var(--radius-pill)] px-7 py-3 font-medium text-body;
+  }
+
+  .btn-outline {
+    @apply bg-transparent text-white border-2 border-white hover:bg-white hover:text-primary transition-all duration-200 rounded-[var(--radius-pill)] px-7 py-3 font-medium text-body;
   }
 
   /* Card styles */

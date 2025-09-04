@@ -24,8 +24,8 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="text-xl font-bold text-primary hover:text-secondary transition-colors duration-200">
-            Finaptico
+          <Link to="/" className="flex items-center hover:opacity-80 transition-opacity duration-200">
+            <img src="/lovable-uploads/0210cb49-99a1-4d7b-aa90-c57902239bf7.png" alt="Finaptico" className="h-8" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -35,7 +35,7 @@ const Header = () => {
                 key={item.name}
                 to={item.href}
                 className={`link-underline transition-colors duration-200 ${
-                  isActiveLink(item.href) ? "text-primary" : "text-text-secondary hover:text-primary"
+                  isActiveLink(item.href) ? "text-secondary" : "text-text-secondary hover:text-primary"
                 }`}
               >
                 {item.name}
@@ -86,7 +86,7 @@ const Header = () => {
                 to={item.href}
                 className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
                   isActiveLink(item.href)
-                    ? "text-primary bg-section-light"
+                    ? "text-secondary bg-section-light"
                     : "text-text-secondary hover:text-primary hover:bg-section-light"
                 }`}
                 onClick={() => setIsMenuOpen(false)}

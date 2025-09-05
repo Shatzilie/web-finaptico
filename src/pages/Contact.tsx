@@ -4,19 +4,21 @@ const WORKER_URL = 'https://ujbnqyeqrkheflvbrwat.supabase.co/functions/v1/smart-
 
 export default function Contact() {
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<string | null>(null);
+  const [serverId, setServerId] = useState<string | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setErrorMsg(null);
+    setServerId(null);
+    setLoading(true);
     const form = e.currentTarget;
     const fd = new FormData(form);
     const name = String(fd.get('name') || '').trim();
     const email = String(fd.get('email') || '').trim();
     const message = String(fd.get('message') || '').trim();
     const privacy = (form.querySelector('input[name="privacy"]') as HTMLInputElement)?.checked;
-    if (!privacy) { setResult('Marca la casilla de privacidad'); return; }
-    setLoading(true);
-    setResult(null);
+    if (!privacy) { setLoading(false); setErrorMsg('Debes aceptar la privacidad'); return; }
     try {
       const res = await fetch(WORKER_URL, {
         method: 'POST',
@@ -24,11 +26,12 @@ export default function Contact() {
         body: JSON.stringify({ name, email, message })
       });
       const json = await res.json();
-      if (!res.ok || json.ok === false) throw new Error(json.error || 'Error al enviar');
-      setResult('¡Mensaje enviado! ID: ' + json.id);
-      form.reset();
+      if (!res.ok || json.ok === false) throw new Error(json.error || 'Fallo al enviar');
+      setServerId(json.id);
+      // Si existe estado de éxito (submitted/showSuccess), actívalo aquí:
+      // setSubmitted?.(true); setShowSuccess?.(true);
     } catch (err:any) {
-      setResult('Error: ' + err.message);
+      setErrorMsg(err.message);
     } finally {
       setLoading(false);
     }
@@ -70,7 +73,8 @@ export default function Contact() {
           {loading ? 'Enviando…' : 'Enviar'}
         </button>
       </form>
-      {result && <p style={{marginTop:12, fontFamily:'monospace'}}>{result}</p>}
+      {serverId && <p style={{marginTop:8,fontFamily:'monospace'}}>ID: {serverId}</p>}
+      {errorMsg && <p style={{marginTop:8,color:'red',fontFamily:'monospace'}}>Error: {errorMsg}</p>}
     </main>
   );
 }

@@ -6,7 +6,7 @@ const Footer = () => {
       {/* CTA Card superpuesta */}
       <div className="container mx-auto px-4 relative">
         <div className="cta-gradient text-center -mt-16 mb-16 relative z-10">
-          <h2 className="text-h2 mb-4">¿Lista para empezar?</h2>
+          <h2 className="text-h2 mb-4">¿Empezamos?</h2>
           <p className="text-body mb-6 opacity-90">Reservemos una llamada</p>
           <Link
             to="/contacto"

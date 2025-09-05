@@ -187,7 +187,7 @@ const Home = () => {
       <section className="section-dark text-white py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-h2 mb-4">Lo que dicen nuestros clientes</h2>
+            <h2 className="text-h2 mb-4">Lo que dicen mis clientes</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

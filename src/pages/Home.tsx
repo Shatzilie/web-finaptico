@@ -28,23 +28,11 @@ const Home = () => {
               </div>
             </div>
             <div className="flex justify-center">
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 w-full max-w-md">
-                <div className="space-y-4">
-                  <div className="h-4 bg-secondary rounded w-3/4"></div>
-                  <div className="h-3 bg-white/30 rounded w-1/2"></div>
-                  <div className="grid grid-cols-2 gap-4 mt-6">
-                    <div className="bg-white/20 rounded-lg p-4">
-                      <div className="h-2 bg-secondary rounded w-full mb-2"></div>
-                      <div className="h-2 bg-white/40 rounded w-2/3"></div>
-                    </div>
-                    <div className="bg-white/20 rounded-lg p-4">
-                      <div className="h-2 bg-secondary rounded w-full mb-2"></div>
-                      <div className="h-2 bg-white/40 rounded w-2/3"></div>
-                    </div>
-                  </div>
-                  <div className="h-20 bg-white/20 rounded-lg"></div>
-                </div>
-              </div>
+              <img 
+                src="/lovable-uploads/edfe88c1-c8c4-4f11-83fb-287debc52ecc.png"
+                alt="Dashboard financiero con métricas en tiempo real - Balance, ingresos, gastos y beneficios"
+                className="w-full max-w-md mx-auto rounded-2xl shadow-2xl"
+              />
             </div>
           </div>
         </div>

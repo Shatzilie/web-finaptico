@@ -3,16 +3,20 @@ import { useState } from 'react';
 const WORKER_URL = 'https://ujbnqyeqrkheflvbrwat.supabase.co/functions/v1/smart-worker';
 
 export default function Contact() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  const [out, setOut] = useState<string | null>(null);
+  const [result, setResult] = useState<string | null>(null);
 
-  const onSubmit = async (e: React.FormEvent) => {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+    const name = String(fd.get('name') || '').trim();
+    const email = String(fd.get('email') || '').trim();
+    const message = String(fd.get('message') || '').trim();
+    const privacy = (form.querySelector('input[name="privacy"]') as HTMLInputElement)?.checked;
+    if (!privacy) { setResult('Marca la casilla de privacidad'); return; }
     setLoading(true);
-    setOut(null);
+    setResult(null);
     try {
       const res = await fetch(WORKER_URL, {
         method: 'POST',
@@ -20,45 +24,44 @@ export default function Contact() {
         body: JSON.stringify({ name, email, message })
       });
       const json = await res.json();
-      if (!res.ok || json.ok === false) {
-        throw new Error(json.error || 'Error al enviar');
-      }
-      setOut('¡Mensaje enviado! ID: ' + json.id);
-      setName(''); setEmail(''); setMessage('');
+      if (!res.ok || json.ok === false) throw new Error(json.error || 'Error al enviar');
+      setResult('¡Mensaje enviado! ID: ' + json.id);
+      form.reset();
     } catch (err:any) {
-      setOut('Error: ' + err.message);
+      setResult('Error: ' + err.message);
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   return (
     <main style={{ maxWidth: 640, margin: '2rem auto', padding: '1rem' }}>
       <h1 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '1rem' }}>Contacto</h1>
-      <form onSubmit={onSubmit} style={{ display: 'grid', gap: '0.75rem' }}>
+      <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '0.75rem' }}>
         <input
           required
+          name="name"
           placeholder="Tu nombre"
-          value={name}
-          onChange={e => setName(e.target.value)}
           style={{ padding: '0.6rem', border: '1px solid #ddd', borderRadius: 8 }}
         />
         <input
           required
+          name="email"
           type="email"
           placeholder="tu@email.com"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
           style={{ padding: '0.6rem', border: '1px solid #ddd', borderRadius: 8 }}
         />
         <textarea
           required
+          name="message"
           placeholder="Tu mensaje"
           rows={5}
-          value={message}
-          onChange={e => setMessage(e.target.value)}
           style={{ padding: '0.6rem', border: '1px solid #ddd', borderRadius: 8 }}
         />
+        <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <input type="checkbox" name="privacy" required />
+          Acepto la política de privacidad
+        </label>
         <button
           type="submit"
           disabled={loading}
@@ -67,7 +70,7 @@ export default function Contact() {
           {loading ? 'Enviando…' : 'Enviar'}
         </button>
       </form>
-      {out && <p style={{ marginTop: '1rem', fontFamily: 'monospace' }}>{out}</p>}
+      {result && <p style={{marginTop:12, fontFamily:'monospace'}}>{result}</p>}
     </main>
   );
 }

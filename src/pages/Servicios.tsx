@@ -9,7 +9,7 @@ const Servicios = () => {
   const faqs = [
     {
       question: "¿Puedo cambiar de pack más adelante?",
-      answer: "Sí, puedes cambiar de pack cuando necesites más o menos nivel de servicio. Lo revisamos juntas y ajustamos según tus necesidades."
+      answer: "Sí, puedes cambiar de pack cuando necesites más o menos nivel de servicio. Lo revisamos juntos y ajustamos según tus necesidades."
     },
     {
       question: "¿Trabajas solo con empresas tech?",
@@ -307,7 +307,7 @@ const Servicios = () => {
       <section className="section-alt py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-h2 text-text-primary mb-12">Cómo trabajaremos juntas</h2>
+            <h2 className="text-h2 text-text-primary mb-12">Cómo trabajamos</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">

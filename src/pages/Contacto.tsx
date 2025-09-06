@@ -37,38 +37,57 @@ const Contacto = () => {
     setServerId(null);
     setConsentId(null);
     
-    const submitWithRetry = async (maxRetries = 2) => {
+    const submitWithRetry = async (maxRetries = 3) => {
       for (let attempt = 1; attempt <= maxRetries; attempt++) {
         try {
           console.log(`Attempt ${attempt}: Sending to smart-worker:`, formData);
           
-          // Try using Supabase client first
-          const { data, error } = await supabase.functions.invoke('smart-worker', {
-            body: {
-              name: formData.nombre, 
-              email: formData.email, 
-              message: formData.mensaje,
-              privacy: formData.acepta_privacidad,
-              policyVersion: POLICY_VERSION,
-              policyUrl: POLICY_URL,
-              policyText: POLICY_TEXT
-            }
+          const requestBody = {
+            name: formData.nombre, 
+            email: formData.email, 
+            message: formData.mensaje,
+            privacy: formData.acepta_privacidad,
+            policyVersion: POLICY_VERSION,
+            policyUrl: POLICY_URL,
+            policyText: POLICY_TEXT
+          };
+          
+          console.log('Request body:', requestBody);
+          
+          // Use fetch with proper configuration
+          const response = await fetch(WORKER_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'Access-Control-Request-Method': 'POST',
+              'Access-Control-Request-Headers': 'Content-Type'
+            },
+            body: JSON.stringify(requestBody),
+            mode: 'cors',
+            credentials: 'omit'
           });
           
-          console.log(`Attempt ${attempt} - Supabase response:`, { data, error });
+          console.log(`Attempt ${attempt} - Response status:`, response.status);
+          console.log(`Attempt ${attempt} - Response headers:`, Object.fromEntries(response.headers.entries()));
           
-          if (error) {
-            throw new Error(error.message || 'Error calling function');
+          if (!response.ok) {
+            const errorText = await response.text();
+            console.log(`Attempt ${attempt} - Error response:`, errorText);
+            throw new Error(`HTTP ${response.status}: ${response.statusText} - ${errorText}`);
           }
           
-          if (data?.ok === false) {
-            throw new Error(data.error || 'Error al enviar');
+          const result = await response.json();
+          console.log(`Attempt ${attempt} - Response json:`, result);
+          
+          if (result.ok === false) {
+            throw new Error(result.error || 'Error al enviar mensaje');
           }
           
           // Success!
-          setServerId(data.id);
-          if (data.saved === 'contact' && data.consent_id) {
-            setConsentId(data.consent_id);
+          setServerId(result.id);
+          if (result.saved === 'contact' && result.consent_id) {
+            setConsentId(result.consent_id);
           }
           setShowSuccess(true);
           setFormData({
@@ -84,20 +103,24 @@ const Contacto = () => {
           
           if (attempt === maxRetries) {
             // Last attempt failed
-            let errorMessage = 'Error de conexión. Por favor, inténtalo de nuevo.';
+            let errorMessage = 'Error enviando el mensaje. Por favor, inténtalo de nuevo.';
             
-            if (err.message.includes('Failed to fetch')) {
-              errorMessage = 'Error de red. Verifica tu conexión a internet e inténtalo de nuevo.';
-            } else if (err.message.includes('Function not found')) {
-              errorMessage = 'Error del sistema. Por favor, inténtalo más tarde.';
-            } else if (err.message) {
+            if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
+              errorMessage = 'Error de conexión. Verifica tu internet e inténtalo de nuevo.';
+            } else if (err.message.includes('CORS')) {
+              errorMessage = 'Error de configuración. Inténtalo de nuevo en unos segundos.';
+            } else if (err.message.includes('HTTP 4')) {
+              errorMessage = 'Error en los datos enviados. Revisa los campos e inténtalo de nuevo.';
+            } else if (err.message.includes('HTTP 5')) {
+              errorMessage = 'Error del servidor. Inténtalo de nuevo en unos minutos.';
+            } else if (err.message && !err.message.includes('HTTP')) {
               errorMessage = err.message;
             }
             
             setErrorMsg(errorMessage);
           } else {
-            // Wait before retry
-            await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+            // Wait before retry with exponential backoff
+            await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 1000));
           }
         }
       }

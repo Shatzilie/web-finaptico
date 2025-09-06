@@ -14,16 +14,213 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      consents: {
+        Row: {
+          created_at: string
+          granted: boolean
+          id: string
+          ip: unknown | null
+          origin: string | null
+          policy_text_b64: string | null
+          policy_text_hash: string | null
+          policy_url: string | null
+          policy_version: string
+          referer: string | null
+          source: string
+          user_agent: string | null
+        }
+        Insert: {
+          created_at?: string
+          granted?: boolean
+          id?: string
+          ip?: unknown | null
+          origin?: string | null
+          policy_text_b64?: string | null
+          policy_text_hash?: string | null
+          policy_url?: string | null
+          policy_version: string
+          referer?: string | null
+          source: string
+          user_agent?: string | null
+        }
+        Update: {
+          created_at?: string
+          granted?: boolean
+          id?: string
+          ip?: unknown | null
+          origin?: string | null
+          policy_text_b64?: string | null
+          policy_text_hash?: string | null
+          policy_url?: string | null
+          policy_version?: string
+          referer?: string | null
+          source?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
+      contact_messages: {
+        Row: {
+          consent_id: string | null
+          created_at: string
+          email: string | null
+          id: string
+          message: string | null
+          name: string
+          privacy_accepted: boolean
+        }
+        Insert: {
+          consent_id?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          message?: string | null
+          name: string
+          privacy_accepted?: boolean
+        }
+        Update: {
+          consent_id?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          message?: string | null
+          name?: string
+          privacy_accepted?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contact_messages_consent_id_fkey"
+            columns: ["consent_id"]
+            isOneToOne: false
+            referencedRelation: "consents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      erasure_events: {
+        Row: {
+          actor: string
+          anonymized_count: number
+          created_at: string
+          id: string
+          reason: string
+          source_ip: unknown | null
+          target_contact_ids: string[] | null
+          target_email: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          actor: string
+          anonymized_count?: number
+          created_at?: string
+          id?: string
+          reason: string
+          source_ip?: unknown | null
+          target_contact_ids?: string[] | null
+          target_email?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          actor?: string
+          anonymized_count?: number
+          created_at?: string
+          id?: string
+          reason?: string
+          source_ip?: unknown | null
+          target_contact_ids?: string[] | null
+          target_email?: string | null
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      worker_logs: {
+        Row: {
+          created_at: string
+          id: string
+          text: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          text: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          text?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
-      [_ in never]: never
+      v_contact_consents_audit: {
+        Row: {
+          consent_created_at: string | null
+          consent_id: string | null
+          contact_created_at: string | null
+          contact_id: string | null
+          email: string | null
+          granted: boolean | null
+          ip: unknown | null
+          message: string | null
+          name: string | null
+          origin: string | null
+          policy_text_b64: string | null
+          policy_text_hash: string | null
+          policy_url: string | null
+          policy_version: string | null
+          privacy_accepted: boolean | null
+          referer: string | null
+          source: string | null
+          user_agent: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contact_messages_consent_id_fkey"
+            columns: ["consent_id"]
+            isOneToOne: false
+            referencedRelation: "consents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_admin: {
+        Args: { _user_id?: string }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "moderator" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +347,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "moderator", "user"],
+    },
   },
 } as const

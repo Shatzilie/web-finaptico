@@ -76,7 +76,7 @@ export default function Contact() {
           style={{ padding: '0.6rem', border: '1px solid #ddd', borderRadius: 8 }}
         />
         <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <input type="checkbox" name="privacy" required />
+          <input type="checkbox" name="privacy" />
           Acepto la política de privacidad
         </label>
         <button

@@ -1,8 +1,13 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { Checkbox } from "../components/ui/checkbox";
 
 const Blog = () => {
+  const [email, setEmail] = useState("");
+  const [privacy, setPrivacy] = useState(false);
+
   const posts = [
     {
       id: 1,
@@ -154,19 +159,48 @@ const Blog = () => {
               <p className="text-body text-text-secondary mb-6">
                 Recibe consejos financieros prácticos directamente en tu email. Una vez por semana, sin spam.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                <input
-                  type="email"
-                  placeholder="tu@email.com"
-                  className="flex-1 px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                />
-                <button className="btn-primary whitespace-nowrap">
-                  Suscribirme
-                </button>
+              <div className="space-y-4 max-w-md mx-auto">
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <input
+                    type="email"
+                    placeholder="tu@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="flex-1 px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  />
+                  <button 
+                    className="btn-primary whitespace-nowrap disabled:opacity-50"
+                    disabled={!email || !privacy}
+                  >
+                    Suscribirme
+                  </button>
+                </div>
+                
+                <div className="flex items-start space-x-3 text-left">
+                  <Checkbox
+                    id="privacy-newsletter"
+                    checked={privacy}
+                    onCheckedChange={(checked) => setPrivacy(checked as boolean)}
+                    className="mt-0.5"
+                  />
+                  <label
+                    htmlFor="privacy-newsletter"
+                    className="text-sm text-text-secondary leading-5 cursor-pointer"
+                  >
+                    He leído y acepto la{" "}
+                    <Link
+                      to="/privacidad"
+                      className="text-primary hover:underline font-medium"
+                    >
+                      Política de Privacidad
+                    </Link>
+                  </label>
+                </div>
+                
+                <p className="text-xs text-text-muted">
+                  No spam. Cancela cuando quieras.
+                </p>
               </div>
-              <p className="text-xs text-text-muted mt-3">
-                No spam. Cancela cuando quieras.
-              </p>
             </div>
           </div>
         </div>

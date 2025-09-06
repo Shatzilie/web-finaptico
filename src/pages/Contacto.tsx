@@ -59,13 +59,9 @@ const Contacto = () => {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'Accept': 'application/json',
-              'Access-Control-Request-Method': 'POST',
-              'Access-Control-Request-Headers': 'Content-Type'
+              'Accept': 'application/json'
             },
-            body: JSON.stringify(requestBody),
-            mode: 'cors',
-            credentials: 'omit'
+            body: JSON.stringify(requestBody)
           });
           
           console.log(`Attempt ${attempt} - Response status:`, response.status);

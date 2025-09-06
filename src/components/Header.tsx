@@ -25,7 +25,7 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center hover:opacity-80 transition-opacity duration-200">
-            <img src="/lovable-uploads/0210cb49-99a1-4d7b-aa90-c57902239bf7.png" alt="Finaptico" className="h-12" />
+            <img src="/lovable-uploads/0210cb49-99a1-4d7b-aa90-c57902239bf7.png" alt="Finaptico" className="h-16" />
           </Link>
 
           {/* Desktop Navigation */}

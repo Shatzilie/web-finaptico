@@ -4,6 +4,10 @@ import Footer from "../components/Footer";
 
 const WORKER_URL = 'https://ujbnqyeqrkheflvbrwat.supabase.co/functions/v1/smart-worker';
 
+const POLICY_VERSION = '2025-09-01';
+const POLICY_URL = `${window.location.origin}/privacidad`;
+const POLICY_TEXT = 'He leído y acepto la Política de Privacidad';
+
 const Contacto = () => {
   const [formData, setFormData] = useState({
     nombre: "",
@@ -33,9 +37,6 @@ const Contacto = () => {
     setConsentId(null);
     
     try {
-      const POLICY_VERSION = '2025-09-01';
-      const POLICY_URL = window.location.origin + '/privacidad';
-      
       console.log('Sending to smart-worker:', formData);
       const res = await fetch(WORKER_URL, {
         method: 'POST',
@@ -46,7 +47,8 @@ const Contacto = () => {
           message: formData.mensaje,
           privacy: formData.acepta_privacidad,
           policyVersion: POLICY_VERSION,
-          policyUrl: POLICY_URL
+          policyUrl: POLICY_URL,
+          policyText: POLICY_TEXT
         })
       });
       

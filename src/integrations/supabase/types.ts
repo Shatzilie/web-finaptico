@@ -207,29 +207,6 @@ export type Database = {
       }
     }
     Functions: {
-      get_contact_consents_audit: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          consent_created_at: string
-          consent_id: string
-          contact_created_at: string
-          contact_id: string
-          email: string
-          granted: boolean
-          ip: unknown
-          message: string
-          name: string
-          origin: string
-          policy_text_b64: string
-          policy_text_hash: string
-          policy_url: string
-          policy_version: string
-          privacy_accepted: boolean
-          referer: string
-          source: string
-          user_agent: string
-        }[]
-      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

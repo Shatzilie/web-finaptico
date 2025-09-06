@@ -36,44 +36,88 @@ const Contacto = () => {
     setServerId(null);
     setConsentId(null);
     
+    const submitWithRetry = async (maxRetries = 2) => {
+      for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+          console.log(`Attempt ${attempt}: Sending to smart-worker:`, formData);
+          
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+          
+          const res = await fetch(WORKER_URL, {
+            method: 'POST',
+            headers: { 
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({ 
+              name: formData.nombre, 
+              email: formData.email, 
+              message: formData.mensaje,
+              privacy: formData.acepta_privacidad,
+              policyVersion: POLICY_VERSION,
+              policyUrl: POLICY_URL,
+              policyText: POLICY_TEXT
+            }),
+            signal: controller.signal
+          });
+          
+          clearTimeout(timeoutId);
+          console.log(`Attempt ${attempt} - Response status:`, res.status);
+          
+          if (!res.ok) {
+            throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+          }
+          
+          const json = await res.json();
+          console.log(`Attempt ${attempt} - Response json:`, json);
+          
+          if (json.ok === false) {
+            throw new Error(json.error || 'Error al enviar');
+          }
+          
+          // Success!
+          setServerId(json.id);
+          if (json.saved === 'contact' && json.consent_id) {
+            setConsentId(json.consent_id);
+          }
+          setShowSuccess(true);
+          setFormData({
+            nombre: "",
+            email: "",
+            mensaje: "",
+            acepta_privacidad: false
+          });
+          return;
+          
+        } catch (err: any) {
+          console.error(`Attempt ${attempt} failed:`, err);
+          
+          if (attempt === maxRetries) {
+            // Last attempt failed
+            let errorMessage = 'Error de conexión. Por favor, inténtalo de nuevo.';
+            
+            if (err.name === 'AbortError') {
+              errorMessage = 'La solicitud tardó demasiado tiempo. Inténtalo de nuevo.';
+            } else if (err.message.includes('Failed to fetch')) {
+              errorMessage = 'Error de red. Verifica tu conexión a internet e inténtalo de nuevo.';
+            } else if (err.message.includes('HTTP')) {
+              errorMessage = `Error del servidor: ${err.message}`;
+            } else if (err.message) {
+              errorMessage = err.message;
+            }
+            
+            setErrorMsg(errorMessage);
+          } else {
+            // Wait before retry
+            await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+          }
+        }
+      }
+    };
+    
     try {
-      console.log('Sending to smart-worker:', formData);
-      const res = await fetch(WORKER_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          name: formData.nombre, 
-          email: formData.email, 
-          message: formData.mensaje,
-          privacy: formData.acepta_privacidad,
-          policyVersion: POLICY_VERSION,
-          policyUrl: POLICY_URL,
-          policyText: POLICY_TEXT
-        })
-      });
-      
-      console.log('Response status:', res.status);
-      const json = await res.json();
-      console.log('Response json:', json);
-      
-      if (!res.ok || json.ok === false) {
-        throw new Error(json.error || 'Error al enviar');
-      }
-      
-      setServerId(json.id);
-      if (json.saved === 'contact' && json.consent_id) {
-        setConsentId(json.consent_id);
-      }
-      setShowSuccess(true);
-      setFormData({
-        nombre: "",
-        email: "",
-        mensaje: "",
-        acepta_privacidad: false
-      });
-    } catch (err: any) {
-      console.error('Error:', err);
-      setErrorMsg(err.message);
+      await submitWithRetry();
     } finally {
       setIsSubmitting(false);
     }

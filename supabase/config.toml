@@ -1,1 +1,4 @@
 project_id = "ujbnqyeqrkheflvbrwat"
+
+[functions.smart-worker]
+verify_jwt = false

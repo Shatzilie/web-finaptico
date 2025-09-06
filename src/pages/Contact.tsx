@@ -9,6 +9,7 @@ export default function Contact() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    console.log('Form submitted!');
     setErrorMsg(null);
     setServerId(null);
     setLoading(true);
@@ -18,19 +19,32 @@ export default function Contact() {
     const email = String(fd.get('email') || '').trim();
     const message = String(fd.get('message') || '').trim();
     const privacy = (form.querySelector('input[name="privacy"]') as HTMLInputElement)?.checked;
-    if (!privacy) { setLoading(false); setErrorMsg('Debes aceptar la privacidad'); return; }
+    
+    console.log('Form data:', { name, email, message, privacy });
+    console.log('Calling endpoint:', WORKER_URL);
+    
+    if (!privacy) { 
+      console.log('Privacy not accepted');
+      setLoading(false); 
+      setErrorMsg('Debes aceptar la privacidad'); 
+      return; 
+    }
     try {
       const res = await fetch(WORKER_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, message })
       });
+      console.log('Response status:', res.status);
       const json = await res.json();
+      console.log('Response json:', json);
       if (!res.ok || json.ok === false) throw new Error(json.error || 'Fallo al enviar');
       setServerId(json.id);
+      form.reset();
       // Si existe estado de éxito (submitted/showSuccess), actívalo aquí:
       // setSubmitted?.(true); setShowSuccess?.(true);
     } catch (err:any) {
+      console.error('Error:', err);
       setErrorMsg(err.message);
     } finally {
       setLoading(false);

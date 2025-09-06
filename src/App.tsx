@@ -9,6 +9,7 @@ import SobreMi from "./pages/SobreMi";
 import Blog from "./pages/Blog";
 import Contacto from "./pages/Contacto";
 import AvisoLegal from "./pages/AvisoLegal";
+import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
 import SmartWorkerTest from "./pages/SmartWorkerTest";
 import NotFound from "./pages/NotFound";
 
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/blog" element={<Blog />} />
           <Route path="/contacto" element={<Contacto />} />
           <Route path="/aviso-legal" element={<AvisoLegal />} />
+          <Route path="/politica-de-privacidad" element={<PoliticaPrivacidad />} />
           <Route path="/smart-worker-test" element={<SmartWorkerTest />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

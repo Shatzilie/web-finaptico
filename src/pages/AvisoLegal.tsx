@@ -6,7 +6,7 @@ const AvisoLegal = () => {
     <>
       <Header />
       <main className="min-h-screen bg-background">
-        <div className="container mx-auto px-4 py-16">
+        <div className="container mx-auto px-4 py-16 pb-32">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-h1 mb-8 text-center">⚖ AVISO LEGAL</h1>
             

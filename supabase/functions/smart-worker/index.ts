@@ -19,7 +19,7 @@ serve(async (req) => {
     const body = await req.json();
     console.log('Received body:', body);
 
-    const { name, email, message } = body;
+    const { name, email, message, privacy, policyVersion, policyUrl, policyText } = body;
 
     if (!name || !email || !message) {
       console.log('Missing required fields');
@@ -35,6 +35,20 @@ serve(async (req) => {
       );
     }
 
+    if (!privacy) {
+      console.log('Privacy consent not provided');
+      return new Response(
+        JSON.stringify({ 
+          ok: false, 
+          error: 'Privacy consent is required' 
+        }),
+        {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
     // Initialize Supabase client
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -42,13 +56,18 @@ serve(async (req) => {
 
     console.log('Saving to database...');
     
-    // Save to database
+    // Generate consent ID for this submission
+    const consentId = crypto.randomUUID();
+    
+    // Save contact message with privacy acceptance
     const { data, error } = await supabase
       .from('contact_messages')
       .insert([{
         name: name,
         email: email,
-        message: message
+        message: message,
+        privacy_accepted: privacy,
+        consent_id: consentId
       }])
       .select();
 
@@ -69,10 +88,15 @@ serve(async (req) => {
     const savedMessage = data[0];
     console.log('Message saved successfully:', savedMessage);
 
+    // Also log the consent for compliance
+    console.log(`Privacy consent recorded - Contact ID: ${savedMessage.id}, Consent ID: ${consentId}, Policy Version: ${policyVersion}, Policy URL: ${policyUrl}, Consent Text: ${policyText}`);
+
     return new Response(
       JSON.stringify({ 
         ok: true, 
         id: savedMessage.id,
+        saved: 'contact',
+        consent_id: consentId,
         message: 'Message received and saved successfully'
       }),
       {

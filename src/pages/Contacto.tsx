@@ -15,6 +15,7 @@ const Contacto = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [serverId, setServerId] = useState<string | null>(null);
+  const [consentId, setConsentId] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -29,8 +30,12 @@ const Contacto = () => {
     setIsSubmitting(true);
     setErrorMsg(null);
     setServerId(null);
+    setConsentId(null);
     
     try {
+      const POLICY_VERSION = '2025-09-01';
+      const POLICY_URL = window.location.origin + '/privacidad';
+      
       console.log('Sending to smart-worker:', formData);
       const res = await fetch(WORKER_URL, {
         method: 'POST',
@@ -39,7 +44,9 @@ const Contacto = () => {
           name: formData.nombre, 
           email: formData.email, 
           message: formData.mensaje,
-          privacy: formData.acepta_privacidad 
+          privacy: formData.acepta_privacidad,
+          policyVersion: POLICY_VERSION,
+          policyUrl: POLICY_URL
         })
       });
       
@@ -52,6 +59,9 @@ const Contacto = () => {
       }
       
       setServerId(json.id);
+      if (json.saved === 'contact' && json.consent_id) {
+        setConsentId(json.consent_id);
+      }
       setShowSuccess(true);
       setFormData({
         nombre: "",
@@ -69,9 +79,10 @@ const Contacto = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
+    const fieldName = name === 'privacy' ? 'acepta_privacidad' : name;
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
+      [fieldName]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
     }));
   };
 
@@ -111,12 +122,13 @@ const Contacto = () => {
                       Gracias por contactar. Te responderé en un máximo de 24 horas.
                     </p>
                     {serverId && (
-                      <p className="text-sm text-text-secondary mb-4 font-mono bg-gray-100 p-2 rounded">
-                        ID: {serverId}
-                      </p>
+                      <div className="text-sm text-text-secondary mb-4 font-mono bg-gray-100 p-2 rounded space-y-1">
+                        <p>ID: {serverId}</p>
+                        {consentId && <p>Consent ID: {consentId}</p>}
+                      </div>
                     )}
                     <button
-                      onClick={() => {setShowSuccess(false); setServerId(null); setErrorMsg(null);}}
+                      onClick={() => {setShowSuccess(false); setServerId(null); setConsentId(null); setErrorMsg(null);}}
                       className="btn-secondary"
                     >
                       Enviar otro mensaje
@@ -177,7 +189,7 @@ const Contacto = () => {
                         <input
                           type="checkbox"
                           id="acepta_privacidad"
-                          name="acepta_privacidad"
+                          name="privacy"
                           required
                           checked={formData.acepta_privacidad}
                           onChange={handleChange}

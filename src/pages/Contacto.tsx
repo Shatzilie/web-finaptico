@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { supabase } from "@/integrations/supabase/client";
 
 const WORKER_URL = 'https://ujbnqyeqrkheflvbrwat.supabase.co/functions/v1/smart-worker';
 
@@ -41,16 +42,9 @@ const Contacto = () => {
         try {
           console.log(`Attempt ${attempt}: Sending to smart-worker:`, formData);
           
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
-          
-          const res = await fetch(WORKER_URL, {
-            method: 'POST',
-            headers: { 
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            },
-            body: JSON.stringify({ 
+          // Try using Supabase client first
+          const { data, error } = await supabase.functions.invoke('smart-worker', {
+            body: {
               name: formData.nombre, 
               email: formData.email, 
               message: formData.mensaje,
@@ -58,28 +52,23 @@ const Contacto = () => {
               policyVersion: POLICY_VERSION,
               policyUrl: POLICY_URL,
               policyText: POLICY_TEXT
-            }),
-            signal: controller.signal
+            }
           });
           
-          clearTimeout(timeoutId);
-          console.log(`Attempt ${attempt} - Response status:`, res.status);
+          console.log(`Attempt ${attempt} - Supabase response:`, { data, error });
           
-          if (!res.ok) {
-            throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+          if (error) {
+            throw new Error(error.message || 'Error calling function');
           }
           
-          const json = await res.json();
-          console.log(`Attempt ${attempt} - Response json:`, json);
-          
-          if (json.ok === false) {
-            throw new Error(json.error || 'Error al enviar');
+          if (data?.ok === false) {
+            throw new Error(data.error || 'Error al enviar');
           }
           
           // Success!
-          setServerId(json.id);
-          if (json.saved === 'contact' && json.consent_id) {
-            setConsentId(json.consent_id);
+          setServerId(data.id);
+          if (data.saved === 'contact' && data.consent_id) {
+            setConsentId(data.consent_id);
           }
           setShowSuccess(true);
           setFormData({
@@ -97,12 +86,10 @@ const Contacto = () => {
             // Last attempt failed
             let errorMessage = 'Error de conexión. Por favor, inténtalo de nuevo.';
             
-            if (err.name === 'AbortError') {
-              errorMessage = 'La solicitud tardó demasiado tiempo. Inténtalo de nuevo.';
-            } else if (err.message.includes('Failed to fetch')) {
+            if (err.message.includes('Failed to fetch')) {
               errorMessage = 'Error de red. Verifica tu conexión a internet e inténtalo de nuevo.';
-            } else if (err.message.includes('HTTP')) {
-              errorMessage = `Error del servidor: ${err.message}`;
+            } else if (err.message.includes('Function not found')) {
+              errorMessage = 'Error del sistema. Por favor, inténtalo más tarde.';
             } else if (err.message) {
               errorMessage = err.message;
             }

@@ -38,7 +38,8 @@ const Contacto = () => {
         body: JSON.stringify({ 
           name: formData.nombre, 
           email: formData.email, 
-          message: formData.mensaje 
+          message: formData.mensaje,
+          privacy: formData.acepta_privacidad 
         })
       });
       

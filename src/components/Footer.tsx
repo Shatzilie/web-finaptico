@@ -58,7 +58,7 @@ const Footer = () => {
                 <Link to="/politica-de-privacidad" className="text-white/80 hover:text-secondary transition-colors duration-200">
                   Privacidad
                 </Link>
-                <Link to="/cookies" className="text-white/80 hover:text-secondary transition-colors duration-200">
+                <Link to="/politica-de-cookies" className="text-white/80 hover:text-secondary transition-colors duration-200">
                   Cookies
                 </Link>
               </nav>

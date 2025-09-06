@@ -1,5 +1,6 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.2';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -34,20 +35,45 @@ serve(async (req) => {
       );
     }
 
-    // Generate a unique ID for this message
-    const id = crypto.randomUUID();
-    
-    console.log('Generated message ID:', id);
-    console.log('Message data:', { name, email, message });
+    // Initialize Supabase client
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Here you would typically save to database, send email, etc.
-    // For now, we'll just return success with the ID
+    console.log('Saving to database...');
+    
+    // Save to database
+    const { data, error } = await supabase
+      .from('contact_messages')
+      .insert([{
+        name: name,
+        email: email,
+        message: message
+      }])
+      .select();
+
+    if (error) {
+      console.error('Database error:', error);
+      return new Response(
+        JSON.stringify({ 
+          ok: false, 
+          error: 'Failed to save message: ' + error.message 
+        }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
+    const savedMessage = data[0];
+    console.log('Message saved successfully:', savedMessage);
 
     return new Response(
       JSON.stringify({ 
         ok: true, 
-        id: id,
-        message: 'Message received successfully'
+        id: savedMessage.id,
+        message: 'Message received and saved successfully'
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

@@ -2,6 +2,8 @@ import { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
+const WORKER_URL = 'https://ujbnqyeqrkheflvbrwat.supabase.co/functions/v1/smart-worker';
+
 const Contacto = () => {
   const [formData, setFormData] = useState({
     nombre: "",
@@ -12,14 +14,43 @@ const Contacto = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [serverId, setServerId] = useState<string | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    console.log('Contacto form submitted!');
     
-    // Simulación del envío
-    setTimeout(() => {
-      setIsSubmitting(false);
+    if (!formData.acepta_privacidad) {
+      setErrorMsg('Debes aceptar la política de privacidad');
+      return;
+    }
+    
+    setIsSubmitting(true);
+    setErrorMsg(null);
+    setServerId(null);
+    
+    try {
+      console.log('Sending to smart-worker:', formData);
+      const res = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          name: formData.nombre, 
+          email: formData.email, 
+          message: formData.mensaje 
+        })
+      });
+      
+      console.log('Response status:', res.status);
+      const json = await res.json();
+      console.log('Response json:', json);
+      
+      if (!res.ok || json.ok === false) {
+        throw new Error(json.error || 'Error al enviar');
+      }
+      
+      setServerId(json.id);
       setShowSuccess(true);
       setFormData({
         nombre: "",
@@ -27,7 +58,12 @@ const Contacto = () => {
         mensaje: "",
         acepta_privacidad: false
       });
-    }, 1000);
+    } catch (err: any) {
+      console.error('Error:', err);
+      setErrorMsg(err.message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -70,11 +106,16 @@ const Contacto = () => {
                       </svg>
                     </div>
                     <h3 className="text-h2 text-text-primary mb-4">¡Mensaje enviado!</h3>
-                    <p className="text-body text-text-secondary mb-6">
+                    <p className="text-body text-text-secondary mb-4">
                       Gracias por contactar. Te responderé en un máximo de 24 horas.
                     </p>
+                    {serverId && (
+                      <p className="text-sm text-text-secondary mb-4 font-mono bg-gray-100 p-2 rounded">
+                        ID: {serverId}
+                      </p>
+                    )}
                     <button
-                      onClick={() => setShowSuccess(false)}
+                      onClick={() => {setShowSuccess(false); setServerId(null); setErrorMsg(null);}}
                       className="btn-secondary"
                     >
                       Enviar otro mensaje
@@ -175,6 +216,12 @@ const Contacto = () => {
                     >
                       {isSubmitting ? "Enviando..." : "Enviar mensaje"}
                     </button>
+                    
+                    {errorMsg && (
+                      <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                        <p className="text-sm text-red-700">{errorMsg}</p>
+                      </div>
+                    )}
                   </form>
                 )}
               </div>

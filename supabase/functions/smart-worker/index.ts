@@ -59,7 +59,37 @@ serve(async (req) => {
     // Generate consent ID for this submission
     const consentId = crypto.randomUUID();
     
-    // Save contact message with privacy acceptance
+    // First, create the consent record
+    const { data: consentData, error: consentError } = await supabase
+      .from('consents')
+      .insert([{
+        id: consentId,
+        granted: privacy,
+        source: 'contact_form',
+        policy_version: policyVersion,
+        policy_url: policyUrl,
+        policy_text_hash: policyText ? btoa(policyText) : null,
+        origin: req.headers.get('origin') || null,
+        referer: req.headers.get('referer') || null,
+        user_agent: req.headers.get('user-agent') || null
+      }])
+      .select();
+
+    if (consentError) {
+      console.error('Consent creation error:', consentError);
+      return new Response(
+        JSON.stringify({ 
+          ok: false, 
+          error: 'Failed to record consent: ' + consentError.message 
+        }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
+    }
+    
+    // Now save contact message with privacy acceptance
     const { data, error } = await supabase
       .from('contact_messages')
       .insert([{
@@ -88,8 +118,8 @@ serve(async (req) => {
     const savedMessage = data[0];
     console.log('Message saved successfully:', savedMessage);
 
-    // Also log the consent for compliance
-    console.log(`Privacy consent recorded - Contact ID: ${savedMessage.id}, Consent ID: ${consentId}, Policy Version: ${policyVersion}, Policy URL: ${policyUrl}, Consent Text: ${policyText}`);
+    // Log the consent for compliance
+    console.log(`Privacy consent recorded - Contact ID: ${savedMessage.id}, Consent ID: ${consentId}, Policy Version: ${policyVersion}`);
 
     return new Response(
       JSON.stringify({ 

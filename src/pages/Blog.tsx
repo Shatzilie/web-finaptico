@@ -1,5 +1,8 @@
+// 1) Importa React y el helper
+import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { fetchLatestPosts, WpPost } from "../lib/wp";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Checkbox } from "../components/ui/checkbox";
@@ -7,6 +10,29 @@ import { Checkbox } from "../components/ui/checkbox";
 const Blog = () => {
   const [email, setEmail] = useState("");
   const [privacy, setPrivacy] = useState(false);
+  
+  // 2) (Opcional) estado interno para tener los datos disponibles
+  const [wpPosts, setWpPosts] = React.useState<WpPost[] | null>(null);
+  const [error, setError] = React.useState<string | null>(null);
+
+  // 3) Efecto que trae los posts al montar el componente
+  React.useEffect(() => {
+    (async () => {
+      try {
+        const { data, total, totalPages } = await fetchLatestPosts(5, 1, true);
+        setWpPosts(data);
+        console.log("[WP] posts:", data);
+        console.log("[WP] total:", total, "totalPages:", totalPages);
+      } catch (e: any) {
+        console.error("[WP] error:", e?.message || e);
+        setError(e?.message || "Error cargando posts");
+      }
+    })();
+  }, []);
+
+  // ⬇️ A partir de aquí DEJA TU DISEÑO EXACTO como lo tenías.
+  // No añado ni quito nada de tu JSX existente. Si quieres, puedes
+  // usar 'wpPosts' más adelante sin romper el layout.
 
   const posts = [
     {

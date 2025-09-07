@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import Servicios from "./pages/Servicios";
 import SobreMi from "./pages/SobreMi";
 import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import Contacto from "./pages/Contacto";
 import AvisoLegal from "./pages/AvisoLegal";
 import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
@@ -39,6 +40,7 @@ const App = () => (
           <Route path="/servicios" element={<Servicios />} />
           <Route path="/sobre-mi" element={<SobreMi />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/contacto" element={<Contacto />} />
           <Route path="/aviso-legal" element={<AvisoLegal />} />
           <Route path="/politica-de-privacidad" element={<PoliticaPrivacidad />} />

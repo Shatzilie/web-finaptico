@@ -55,11 +55,11 @@ const Blog = () => {
   const [total, setTotal] = React.useState<number>(0);
   const [totalPages, setTotalPages] = React.useState<number>(1);
 
-  // Cargar categorías una vez
+  // Cargar categorías (solo con posts) y luego posts iniciales
   React.useEffect(() => {
     (async () => {
       try {
-        const cats = await fetchCategories();
+        const cats = await fetchCategories(); // ya viene hide_empty=true
         setCategories(cats);
       } catch (e) {
         console.error("[WP] categories error:", e);
@@ -67,16 +67,24 @@ const Blog = () => {
     })();
   }, []);
 
-  // Cargar posts cada vez que cambie page/category
+  // Cargar posts cuando cambien página o categoría (espera a tener categorías si hay slug)
   React.useEffect(() => {
     (async () => {
       try {
         setLoading(true);
         setError(null);
 
-        const categoryId = categorySlug
-          ? categories.find((c) => c.slug === categorySlug)?.id
-          : undefined;
+        let categoryId: number | undefined = undefined;
+        if (categorySlug) {
+          // buscamos el id de esa categoría entre las cargadas
+          const c = categories.find((x) => x.slug === categorySlug);
+          if (!c) {
+            // si aún no están cargadas, espera al próximo render (cuando lleguen)
+            setLoading(false);
+            return;
+          }
+          categoryId = c.id;
+        }
 
         const { data, total, totalPages } = await fetchLatestPosts(
           PER_PAGE,
@@ -93,10 +101,9 @@ const Blog = () => {
         setLoading(false);
       }
     })();
-    // ⚠️ dependencias: cuando cambien la página, el slug o la lista de categorías (para resolver el id)
-  }, [currentPage, categorySlug, JSON.stringify(categories)]);
+  }, [currentPage, categorySlug, categories]); // 👈 cuando llegan categorías, reintenta
 
-  // Navegación preservando la otra parte del query
+  // Navegación preservando el otro parámetro
   const goToPage = (p: number) => {
     const next = Math.min(Math.max(1, p), totalPages || 1);
     const qs = new URLSearchParams();
@@ -108,8 +115,7 @@ const Blog = () => {
   const selectCategory = (slug: string | null) => {
     const qs = new URLSearchParams();
     if (slug) qs.set("category", slug);
-    // al cambiar categoría reiniciamos a página 1
-    qs.set("page", "1");
+    qs.set("page", "1"); // al cambiar categoría, empezamos en página 1
     navigate(`/blog?${qs.toString()}`);
   };
 
@@ -149,7 +155,7 @@ const Blog = () => {
           imageUrl: null as string | null,
         }));
 
-  // UI de categorías: "Todos" + categorías de WP (orden alfabético)
+  // UI de categorías: "Todos" + categorías de WP (ya vienen sin vacías)
   const categoryButtons: { label: string; slug: string | null }[] = [
     { label: "Todos", slug: null },
     ...categories.map((c) => ({ label: c.name, slug: c.slug })),
@@ -163,12 +169,9 @@ const Blog = () => {
       <section className="bg-white py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-h1 text-text-primary mb-6">
-              Blog de finanzas para pymes
-            </h1>
+            <h1 className="text-h1 text-text-primary mb-6">Blog de finanzas para pymes</h1>
             <p className="text-body text-text-secondary">
-              Consejos prácticos, casos reales y estrategias que funcionan para
-              hacer crecer tu empresa con finanzas sanas.
+              Consejos prácticos, casos reales y estrategias que funcionan para hacer crecer tu empresa con finanzas sanas.
             </p>
           </div>
         </div>
@@ -186,10 +189,10 @@ const Blog = () => {
                     key={slug ?? "all"}
                     type="button"
                     onClick={() => selectCategory(slug)}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 border ${
                       active
-                        ? "bg-primary text-white"
-                        : "bg-white text-text-secondary hover:bg-primary hover:text-white border border-border"
+                        ? "border-transparent bg-[#6C5CE7] text-white"
+                        : "bg-white text-text-secondary border-border hover:bg-[#00BFA5] hover:text-white"
                     }`}
                   >
                     {label}
@@ -205,14 +208,8 @@ const Blog = () => {
       <section className="bg-white py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
-            {error && (
-              <p className="text-center text-sm text-red-600 mb-4">{error}</p>
-            )}
-            {loading && (
-              <p className="text-center text-sm text-text-muted mb-4">
-                Cargando artículos…
-              </p>
-            )}
+            {error && <p className="text-center text-sm text-red-600 mb-4">{error}</p>}
+            {loading && <p className="text-center text-sm text-text-muted mb-4">Cargando artículos…</p>}
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {renderedPosts.map((post) => (
@@ -288,15 +285,14 @@ const Blog = () => {
 
             {total > 0 && (
               <p className="text-center text-xs text-text-muted mt-2">
-                {total} artículos
-                {categorySlug ? " en la categoría seleccionada" : ""}
+                {total} artículos {categorySlug ? "en la categoría seleccionada" : ""}
               </p>
             )}
           </div>
         </div>
       </section>
 
-      {/* Newsletter + resto tal cual */}
+      {/* Newsletter y resto igual */}
       <section className="section-light py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center">
@@ -305,7 +301,33 @@ const Blog = () => {
               <p className="text-body text-text-secondary mb-6">
                 Recibe consejos financieros prácticos directamente en tu email. Una vez por semana, sin spam.
               </p>
-              <Newsletter email={email} setEmail={setEmail} privacy={privacy} setPrivacy={setPrivacy} />
+              <div className="space-y-4 max-w-md mx-auto">
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <input
+                    type="email"
+                    placeholder="tu@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="flex-1 px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  />
+                  <button className="btn-primary whitespace-nowrap disabled:opacity-50" disabled={!email || !privacy}>
+                    Suscribirme
+                  </button>
+                </div>
+
+                <div className="flex items-start space-x-3 text-left">
+                  <Checkbox
+                    id="privacy-newsletter"
+                    checked={privacy}
+                    onCheckedChange={(checked) => setPrivacy(checked as boolean)}
+                    className="mt-0.5"
+                  />
+                  <label htmlFor="privacy-newsletter" className="text-sm text-text-secondary leading-5 cursor-pointer">
+                    He leído y acepto la{" "}
+                    <Link to="/privacidad" className="text-primary hover:underline font-medium">Política de Privacidad</Link>
+                  </label>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -315,52 +337,5 @@ const Blog = () => {
     </div>
   );
 };
-
-// Mini componente para no ensuciar
-function Newsletter({
-  email, setEmail, privacy, setPrivacy,
-}: {
-  email: string; setEmail: (v: string) => void;
-  privacy: boolean; setPrivacy: (v: boolean) => void;
-}) {
-  return (
-    <div className="space-y-4 max-w-md mx-auto">
-      <div className="flex flex-col sm:flex-row gap-3">
-        <input
-          type="email"
-          placeholder="tu@email.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="flex-1 px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-        />
-        <button className="btn-primary whitespace-nowrap disabled:opacity-50" disabled={!email || !privacy}>
-          Suscribirme
-        </button>
-      </div>
-
-      <div className="flex items-start space-x-3 text-left">
-        <Checkbox
-          id="privacy-newsletter"
-          checked={privacy}
-          onCheckedChange={(checked) => setPrivacy(checked as boolean)}
-          className="mt-0.5"
-        />
-        <label htmlFor="privacy-newsletter" className="text-sm text-text-secondary leading-5 cursor-pointer">
-          He leído y acepto la{" "}
-          <Link to="/privacidad" className="text-primary hover:underline font-medium">Política de Privacidad</Link>
-        </label>
-      </div>
-
-      <div className="bg-section-light p-4 rounded-lg">
-        <p className="text-xs text-text-muted leading-relaxed">
-          <strong>Responsable:</strong> Finaptico. <strong>Finalidad:</strong> responder tu solicitud.{" "}
-          <strong>Legitimación:</strong> consentimiento. <strong>Destinatarios:</strong> no se cederán datos.{" "}
-          <strong>Derechos:</strong> acceso, rectificación, supresión, etc. Más info en la Política de Privacidad.
-        </p>
-      </div>
-      <p className="text-xs text-text-muted">No spam. Cancela cuando quieras.</p>
-    </div>
-  );
-}
 
 export default Blog;

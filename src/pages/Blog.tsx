@@ -2,7 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { fetchLatestPosts, WpPost } from "../lib/wp";
+import { fetchLatestPosts, WpPost, featuredImageFromEmbedded } from "../lib/wp";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Checkbox } from "../components/ui/checkbox";
@@ -25,10 +25,9 @@ const Blog = () => {
   React.useEffect(() => {
     (async () => {
       try {
-        const { data, total, totalPages } = await fetchLatestPosts(6, 1, true);
+        const { data } = await fetchLatestPosts(6, 1, true); // _embed=1
         setWpPosts(data);
         console.log("[WP] posts:", data);
-        console.log("[WP] total:", total, "totalPages:", totalPages);
       } catch (e: any) {
         console.error("[WP] error:", e?.message || e);
         setError(e?.message || "Error cargando posts");
@@ -36,96 +35,42 @@ const Blog = () => {
     })();
   }, []);
 
-  // === TU CONTENIDO DE EJEMPLO (fallback) ===
+  // Fallback estático (si no hay datos aún)
   const staticPosts = [
-    {
-      id: 1,
-      title: "5 KPIs que toda pyme tecnológica debe seguir",
-      excerpt:
-        "Los indicadores clave que te ayudarán a tomar mejores decisiones financieras y acelerar el crecimiento de tu startup.",
-      category: "SaaS/Tech",
-      readTime: "5 min",
-      image: "📊",
-      date: "15 Ene 2025",
-    },
-    {
-      id: 2,
-      title: "Cómo optimizar el flujo de caja en empresas en crecimiento",
-      excerpt:
-        "Estrategias prácticas para mejorar tu cash flow y evitar problemas de liquidez durante la expansión.",
-      category: "Cashflow",
-      readTime: "7 min",
-      image: "💰",
-      date: "10 Ene 2025",
-    },
-    {
-      id: 3,
-      title: "Errores fiscales que debes evitar al escalar tu empresa",
-      excerpt:
-        "Los fallos más comunes en fiscalidad cuando tu empresa crece rápido y cómo prevenirlos.",
-      category: "Fiscalidad",
-      readTime: "6 min",
-      image: "⚠️",
-      date: "5 Ene 2025",
-    },
-    {
-      id: 4,
-      title:
-        "Finanzas para pymes tradicionales: digitalización paso a paso",
-      excerpt:
-        "Guía práctica para modernizar la gestión financiera de empresas no-tech sin complicaciones.",
-      category: "Finanzas Pyme",
-      readTime: "8 min",
-      image: "🔄",
-      date: "28 Dic 2024",
-    },
-    {
-      id: 5,
-      title: "Preparar tu empresa para una ronda de inversión",
-      excerpt:
-        "Todo lo que necesitas tener listo en el área financiera antes de buscar inversores.",
-      category: "SaaS/Tech",
-      readTime: "10 min",
-      image: "🚀",
-      date: "20 Dic 2024",
-    },
-    {
-      id: 6,
-      title: "Automatización contable: herramientas que realmente funcionan",
-      excerpt:
-        "Las mejores soluciones para automatizar tu contabilidad sin perder control ni precisión.",
-      category: "Finanzas Pyme",
-      readTime: "6 min",
-      image: "⚡",
-      date: "15 Dic 2024",
-    },
+    { id: 1, title: "5 KPIs que toda pyme tecnológica debe seguir", excerpt: "Los indicadores clave que te ayudarán a tomar mejores decisiones financieras y acelerar el crecimiento de tu startup.", category: "SaaS/Tech", readTime: "5 min", image: "📊", date: "15 Ene 2025" },
+    { id: 2, title: "Cómo optimizar el flujo de caja en empresas en crecimiento", excerpt: "Estrategias prácticas para mejorar tu cash flow y evitar problemas de liquidez durante la expansión.", category: "Cashflow", readTime: "7 min", image: "💰", date: "10 Ene 2025" },
+    { id: 3, title: "Errores fiscales que debes evitar al escalar tu empresa", excerpt: "Los fallos más comunes en fiscalidad cuando tu empresa crece rápido y cómo prevenirlos.", category: "Fiscalidad", readTime: "6 min", image: "⚠️", date: "5 Ene 2025" },
+    { id: 4, title: "Finanzas para pymes tradicionales: digitalización paso a paso", excerpt: "Guía práctica para modernizar la gestión financiera de empresas no-tech sin complicaciones.", category: "Finanzas Pyme", readTime: "8 min", image: "🔄", date: "28 Dic 2024" },
+    { id: 5, title: "Preparar tu empresa para una ronda de inversión", excerpt: "Todo lo que necesitas tener listo en el área financiera antes de buscar inversores.", category: "SaaS/Tech", readTime: "10 min", image: "🚀", date: "20 Dic 2024" },
+    { id: 6, title: "Automatización contable: herramientas que realmente funcionan", excerpt: "Las mejores soluciones para automatizar tu contabilidad sin perder control ni precisión.", category: "Finanzas Pyme", readTime: "6 min", image: "⚡", date: "15 Dic 2024" }
   ];
 
-  // === ADAPTADOR: WordPress -> tu mismo shape visual ===
-  // Si hay posts de WP, se transforman a tu estructura sin tocar el markup.
+  // Adaptador WP -> tu mismo shape visual (ahora con imagen y slug)
   const renderedPosts = wpPosts && wpPosts.length > 0
-    ? wpPosts.map((p) => ({
-        id: p.id,
-        title: stripHtml(p.title?.rendered) || "Sin título",
-        excerpt: stripHtml(p.excerpt?.rendered) || "",
-        category: "Blog", // si más adelante mapeas categorías, cámbialo aquí
-        readTime: "—",    // opcional: podríamos calcularlo por palabras
-        image: "📝",      // placeholder (tu diseño ya usa un emoji)
-        date: new Date(p.date).toLocaleDateString("es-ES", {
-          day: "2-digit",
-          month: "short",
-          year: "numeric",
-        }),
-      }))
-    : staticPosts;
+    ? wpPosts.map((p) => {
+        const img = featuredImageFromEmbedded(p);
+        return {
+          id: p.id,
+          slug: p.slug, // ← para link por slug
+          title: stripHtml(p.title?.rendered) || "Sin título",
+          excerpt: stripHtml(p.excerpt?.rendered) || "",
+          category: "Blog",
+          readTime: "—",
+          imageUrl: img, // si existe, la mostramos; si no, emoji fallback
+          date: new Date(p.date).toLocaleDateString("es-ES", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+          }),
+        };
+      })
+    : staticPosts.map(s => ({
+        ...s,
+        slug: String(s.id),   // placeholder para mantener la API
+        imageUrl: null as string | null
+      }));
 
-  const categories = [
-    "Todos",
-    "Estrategia & Crecimiento",
-    "Métricas & Modelos Tech",
-    "Flujo de Caja",
-    "Impuestos y Optimización",
-  ];
+  const categories = ["Todos", "Estrategia & Crecimiento", "Métricas & Modelos Tech", "Flujo de Caja", "Impuestos y Optimización"];
 
   return (
     <div className="min-h-screen">
@@ -135,18 +80,15 @@ const Blog = () => {
       <section className="bg-white py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-h1 text-text-primary mb-6">
-              Blog de finanzas para pymes
-            </h1>
+            <h1 className="text-h1 text-text-primary mb-6">Blog de finanzas para pymes</h1>
             <p className="text-body text-text-secondary">
-              Consejos prácticos, casos reales y estrategias que funcionan para
-              hacer crecer tu empresa con finanzas sanas.
+              Consejos prácticos, casos reales y estrategias que funcionan para hacer crecer tu empresa con finanzas sanas.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Filtros por categoría (sin funcionalidad por ahora) */}
+      {/* Filtros (sin funcionalidad) */}
       <section className="section-light py-12">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
@@ -168,37 +110,45 @@ const Blog = () => {
         </div>
       </section>
 
-      {/* Grid de posts — MISMO MARKUP, solo cambia la fuente de datos */}
+      {/* Grid de posts */}
       <section className="bg-white py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
-            {/* info de error no invasiva (opcional) */}
             {error && (
-              <p className="text-center text-sm text-red-600 mb-4">
-                {error}
-              </p>
+              <p className="text-center text-sm text-red-600 mb-4">{error}</p>
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {renderedPosts.map((post) => (
                 <article key={post.id} className="card-hover border border-border/30 group">
                   <div className="space-y-4">
-                    {/* Imagen placeholder */}
-                    <div className="w-full h-48 bg-section-light rounded-lg flex items-center justify-center text-4xl">
-                      {post.image}
+                    {/* Media: si hay imagen destacada la mostramos; si no, emoji fallback */}
+                    <div className="w-full h-48 bg-section-light rounded-lg flex items-center justify-center text-4xl overflow-hidden">
+                      {("imageUrl" in post && post.imageUrl) ? (
+                        <img
+                          src={post.imageUrl as string}
+                          alt={post.title}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <span>{(post as any).image ?? "📝"}</span>
+                      )}
                     </div>
 
                     {/* Categoría y tiempo de lectura */}
                     <div className="flex items-center justify-between">
                       <span className="inline-block bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium">
-                        {post.category}
+                        {"category" in post ? (post as any).category : "Blog"}
                       </span>
-                      <span className="text-sm text-text-muted">{post.readTime}</span>
+                      <span className="text-sm text-text-muted">
+                        {"readTime" in post ? (post as any).readTime : "—"}
+                      </span>
                     </div>
 
-                    {/* Título */}
+                    {/* Título (enlace por slug) */}
                     <h2 className="text-xl font-semibold text-text-primary group-hover:text-primary transition-colors duration-200 leading-tight">
-                      <Link to={`/blog/${post.id}`} className="link-underline">
+                      <Link to={`/blog/${(post as any).slug}`} className="link-underline">
                         {post.title}
                       </Link>
                     </h2>
@@ -238,14 +188,14 @@ const Blog = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     className="flex-1 px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   />
-                  <button
+                  <button 
                     className="btn-primary whitespace-nowrap disabled:opacity-50"
                     disabled={!email || !privacy}
                   >
                     Suscribirme
                   </button>
                 </div>
-
+                
                 <div className="flex items-start space-x-3 text-left">
                   <Checkbox
                     id="privacy-newsletter"
@@ -269,13 +219,15 @@ const Blog = () => {
 
                 <div className="bg-section-light p-4 rounded-lg">
                   <p className="text-xs text-text-muted leading-relaxed">
-                    <strong>Responsable:</strong> Finaptico. <strong>Finalidad:</strong> responder tu solicitud.
-                    <strong> Legitimación:</strong> consentimiento. <strong>Destinatarios:</strong> no se cederán datos.
+                    <strong>Responsable:</strong> Finaptico. <strong>Finalidad:</strong> responder tu solicitud. 
+                    <strong> Legitimación:</strong> consentimiento. <strong>Destinatarios:</strong> no se cederán datos. 
                     <strong> Derechos:</strong> acceso, rectificación, supresión, etc. Más info en la Política de Privacidad.
                   </p>
                 </div>
-
-                <p className="text-xs text-text-muted">No spam. Cancela cuando quieras.</p>
+                
+                <p className="text-xs text-text-muted">
+                  No spam. Cancela cuando quieras.
+                </p>
               </div>
             </div>
           </div>

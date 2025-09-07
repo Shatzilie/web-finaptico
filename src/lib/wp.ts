@@ -5,10 +5,10 @@ const BASE =
 
 /**
  * Dominio público donde vive TU WordPress.
- * Lo usamos para convertir rutas relativas (/wp-content/...) a URLs absolutas.
+ * Se usa para convertir rutas relativas (/wp-content/...) a URLs absolutas.
  */
 const WP_ASSETS_ORIGIN =
-  "https://sienna-grouse-877900.hostingersite.com"; // ← si cambias el dominio de WP, actualiza esto
+  "https://sienna-grouse-877900.hostingersite.com"; // <- cambia si mueves WP a otro dominio
 
 export type WpRendered = { rendered: string };
 
@@ -18,7 +18,8 @@ export type WpPost = {
   date: string;
   title: WpRendered;
   excerpt?: WpRendered;
-  _embedded?: any; // necesario para leer imagen destacada
+  content?: WpRendered;
+  _embedded?: any; // necesario para imagen destacada y categorías
 };
 
 export async function fetchLatestPosts(
@@ -29,7 +30,8 @@ export async function fetchLatestPosts(
   const params = new URLSearchParams();
   params.set("per_page", String(perPage));
   params.set("page", String(page));
-  if (embed) params.set("_embed", "1");
+  if (embed) params.set("_embed", "1"); // trae featured media y términos
+  // recomendamos que en WP tengas activado "Excerpt" en cada post; WP ya genera uno automático
 
   const url = `${BASE}/posts?${params.toString()}`;
   const res = await fetch(url, { headers: { Accept: "application/json" } });
@@ -40,29 +42,22 @@ export async function fetchLatestPosts(
   return { data: data as WpPost[], total, totalPages };
 }
 
-// --- helpers de normalización de URL de imagen ---
+// ---------- Helpers de media ----------
 function toAbsoluteUrl(u?: string | null): string | null {
   if (!u) return null;
-  // ya absoluta
-  if (/^https?:\/\//i.test(u)) return u;
-  // ruta relativa que empieza por "/"
+  if (/^https?:\/\//i.test(u)) return u;      // ya absoluta
   if (u.startsWith("/")) return `${WP_ASSETS_ORIGIN}${u}`;
-  // lo que sea (p.ej. sin slash inicial) -> añadimos "/" entre medias
   return `${WP_ASSETS_ORIGIN}/${u}`;
 }
 
-/**
- * Intenta obtener la URL de la imagen destacada de varias formas y la normaliza a absoluta.
- */
 export function featuredImageFromEmbedded(post: WpPost): string | null {
   const media = post?._embedded?.["wp:featuredmedia"]?.[0];
   if (!media) return null;
 
-  // 1) tamaños optimizados
   const sizes = media?.media_details?.sizes;
   if (sizes && typeof sizes === "object") {
-    const preferredOrder = ["large", "medium_large", "medium", "full", "thumbnail"];
-    for (const key of preferredOrder) {
+    const order = ["large", "medium_large", "medium", "full", "thumbnail"];
+    for (const key of order) {
       const candidate = toAbsoluteUrl(sizes[key]?.source_url);
       if (candidate) return candidate;
     }
@@ -71,10 +66,52 @@ export function featuredImageFromEmbedded(post: WpPost): string | null {
       if (candidate) return candidate;
     }
   }
+  return toAbsoluteUrl(media?.source_url) || toAbsoluteUrl(media?.guid?.rendered);
+}
 
-  // 2) campos directos
-  const direct = toAbsoluteUrl(media?.source_url) || toAbsoluteUrl(media?.guid?.rendered);
-  if (direct) return direct;
+// ---------- Helpers de categorías ----------
+/**
+ * Devuelve el nombre de la PRIMERA categoría (taxonomy 'category') embebida.
+ */
+export function primaryCategoryName(post: WpPost): string {
+  const groups = post?._embedded?.["wp:term"];
+  if (Array.isArray(groups)) {
+    const cats: any[] = [];
+    for (const g of groups) {
+      if (Array.isArray(g)) {
+        for (const t of g) {
+          if (t?.taxonomy === "category") cats.push(t);
+        }
+      }
+    }
+    const first = cats[0];
+    if (first?.name) return String(first.name);
+  }
+  return "Blog";
+}
 
-  return null;
+// ---------- Helpers de excerpt ----------
+function stripHtml(html?: string) {
+  if (!html) return "";
+  const div = typeof document !== "undefined" ? document.createElement("div") : null;
+  if (div) {
+    div.innerHTML = html;
+    return (div.textContent || div.innerText || "").trim();
+  }
+  // en entorno SSR, fallback simple
+  return html.replace(/<[^>]*>/g, "").trim();
+}
+
+/**
+ * Usa el excerpt de WP si existe y lo recorta a 'maxWords' palabras.
+ * Si no hay excerpt, hace fallback al contenido, también recortado.
+ */
+export function shortExcerpt(post: WpPost, maxWords = 28): string {
+  const base =
+    stripHtml(post?.excerpt?.rendered) ||
+    stripHtml(post?.content?.rendered) ||
+    "";
+  const words = base.split(/\s+/).filter(Boolean);
+  if (words.length <= maxWords) return base;
+  return words.slice(0, maxWords).join(" ") + "…";
 }

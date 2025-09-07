@@ -1,14 +1,6 @@
 // src/lib/wp.ts
-// URL base de tu función en Supabase (smart-worker con ruta normalizada)
-const BASE =
-  "https://ujbnqyeqrkheflvbrwat.functions.supabase.co/smart-worker/wp";
-
-/**
- * Dominio público donde vive TU WordPress.
- * Se usa para convertir rutas relativas (/wp-content/...) a URLs absolutas.
- */
-const WP_ASSETS_ORIGIN =
-  "https://sienna-grouse-877900.hostingersite.com"; // <- cambia si mueves WP a otro dominio
+const BASE = "https://ujbnqyeqrkheflvbrwat.functions.supabase.co/smart-worker/wp";
+const WP_ASSETS_ORIGIN = "https://sienna-grouse-877900.hostingersite.com";
 
 export type WpRendered = { rendered: string };
 
@@ -19,21 +11,30 @@ export type WpPost = {
   title: WpRendered;
   excerpt?: WpRendered;
   content?: WpRendered;
-  _embedded?: any; // necesario para imagen destacada y categorías
+  _embedded?: any;
 };
 
+export type WpCategory = {
+  id: number;
+  name: string;
+  slug: string;
+  count: number;
+};
+
+// Posts (con categoría opcional)
 export async function fetchLatestPosts(
   perPage = 6,
   page = 1,
-  embed = true
+  embed = true,
+  categoryId?: number
 ) {
   const params = new URLSearchParams();
   params.set("per_page", String(perPage));
   params.set("page", String(page));
-  // 🔒 Orden explícito por fecha descendente (más nuevos primero)
   params.set("orderby", "date");
   params.set("order", "desc");
-  if (embed) params.set("_embed", "1"); // trae featured media y términos
+  if (embed) params.set("_embed", "1");
+  if (categoryId) params.set("categories", String(categoryId));
 
   const url = `${BASE}/posts?${params.toString()}`;
   const res = await fetch(url, { headers: { Accept: "application/json" } });
@@ -44,10 +45,25 @@ export async function fetchLatestPosts(
   return { data: data as WpPost[], total, totalPages };
 }
 
-// ---------- Helpers de media ----------
+// Categorías
+export async function fetchCategories(perPage = 100, page = 1) {
+  const params = new URLSearchParams();
+  params.set("per_page", String(perPage));
+  params.set("page", String(page));
+  params.set("orderby", "name");
+  params.set("order", "asc");
+
+  const url = `${BASE}/categories?${params.toString()}`;
+  const res = await fetch(url, { headers: { Accept: "application/json" } });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data?.error || `HTTP ${res.status}`);
+  return data as WpCategory[];
+}
+
+// ---------- helpers de media/excerpt/categoría ----------
 function toAbsoluteUrl(u?: string | null): string | null {
   if (!u) return null;
-  if (/^https?:\/\//i.test(u)) return u;      // ya absoluta
+  if (/^https?:\/\//i.test(u)) return u;
   if (u.startsWith("/")) return `${WP_ASSETS_ORIGIN}${u}`;
   return `${WP_ASSETS_ORIGIN}/${u}`;
 }
@@ -55,7 +71,6 @@ function toAbsoluteUrl(u?: string | null): string | null {
 export function featuredImageFromEmbedded(post: WpPost): string | null {
   const media = post?._embedded?.["wp:featuredmedia"]?.[0];
   if (!media) return null;
-
   const sizes = media?.media_details?.sizes;
   if (sizes && typeof sizes === "object") {
     const order = ["large", "medium_large", "medium", "full", "thumbnail"];
@@ -64,24 +79,19 @@ export function featuredImageFromEmbedded(post: WpPost): string | null {
       if (candidate) return candidate;
     }
     for (const k of Object.keys(sizes)) {
-      const candidate = toAbsoluteUrl(sizes[k]?.source_url);
+      const candidate = toAbsoluteUrl((sizes as any)[k]?.source_url);
       if (candidate) return candidate;
     }
   }
   return toAbsoluteUrl(media?.source_url) || toAbsoluteUrl(media?.guid?.rendered);
 }
 
-// ---------- Helpers de categorías ----------
 export function primaryCategoryName(post: WpPost): string {
   const groups = post?._embedded?.["wp:term"];
   if (Array.isArray(groups)) {
     const cats: any[] = [];
     for (const g of groups) {
-      if (Array.isArray(g)) {
-        for (const t of g) {
-          if (t?.taxonomy === "category") cats.push(t);
-        }
-      }
+      if (Array.isArray(g)) for (const t of g) if (t?.taxonomy === "category") cats.push(t);
     }
     const first = cats[0];
     if (first?.name) return String(first.name);
@@ -89,22 +99,15 @@ export function primaryCategoryName(post: WpPost): string {
   return "Blog";
 }
 
-// ---------- Helpers de excerpt ----------
 function stripHtml(html?: string) {
   if (!html) return "";
   const div = typeof document !== "undefined" ? document.createElement("div") : null;
-  if (div) {
-    div.innerHTML = html;
-    return (div.textContent || div.innerText || "").trim();
-  }
+  if (div) { div.innerHTML = html; return (div.textContent || div.innerText || "").trim(); }
   return html.replace(/<[^>]*>/g, "").trim();
 }
 
 export function shortExcerpt(post: WpPost, maxWords = 28): string {
-  const base =
-    stripHtml(post?.excerpt?.rendered) ||
-    stripHtml(post?.content?.rendered) ||
-    "";
+  const base = stripHtml(post?.excerpt?.rendered) || stripHtml(post?.content?.rendered) || "";
   const words = base.split(/\s+/).filter(Boolean);
   if (words.length <= maxWords) return base;
   return words.slice(0, maxWords).join(" ") + "…";

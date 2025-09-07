@@ -196,6 +196,14 @@ const Blog = () => {
                     </Link>
                   </label>
                 </div>
+
+                <div className="bg-section-light p-4 rounded-lg">
+                  <p className="text-xs text-text-muted leading-relaxed">
+                    <strong>Responsable:</strong> Finaptico. <strong>Finalidad:</strong> responder tu solicitud. 
+                    <strong> Legitimación:</strong> consentimiento. <strong>Destinatarios:</strong> no se cederán datos. 
+                    <strong> Derechos:</strong> acceso, rectificación, supresión, etc. Más info en la Política de Privacidad.
+                  </p>
+                </div>
                 
                 <p className="text-xs text-text-muted">
                   No spam. Cancela cuando quieras.

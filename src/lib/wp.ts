@@ -134,3 +134,35 @@ export function shortExcerpt(post: WpPost, maxWords = 28): string {
   if (words.length <= maxWords) return base;
   return words.slice(0, maxWords).join(" ") + "…";
 }
+
+// --- Obtener un post por slug ---
+export async function fetchPostBySlug(slug: string, embed = true) {
+  const params = new URLSearchParams();
+  params.set("slug", slug);
+  if (embed) params.set("_embed", "1");
+
+  const url = `${BASE}/posts?${params.toString()}`;
+  const res = await fetch(url, { headers: { Accept: "application/json" } });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data?.error || `HTTP ${res.status}`);
+  // WP devuelve un array; si hay match, será [post]
+  return (Array.isArray(data) && data.length > 0) ? (data[0] as WpPost) : null;
+}
+
+// (opcional) categorías como array de {name, slug}
+export function postCategories(post: WpPost): { name: string; slug: string }[] {
+  const out: { name: string; slug: string }[] = [];
+  const groups = post?._embedded?.["wp:term"];
+  if (Array.isArray(groups)) {
+    for (const g of groups) {
+      if (Array.isArray(g)) {
+        for (const t of g) {
+          if (t?.taxonomy === "category" && t?.name && t?.slug) {
+            out.push({ name: String(t.name), slug: String(t.slug) });
+          }
+        }
+      }
+    }
+  }
+  return out;
+}

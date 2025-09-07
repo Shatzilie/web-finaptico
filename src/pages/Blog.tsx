@@ -32,6 +32,7 @@ const PER_PAGE = 6;
 const Blog = () => {
   const [email, setEmail] = useState("");
   const [privacy, setPrivacy] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("Todos");
 
   const navigate = useNavigate();
   const currentPage = usePageParam();
@@ -96,12 +97,17 @@ const Blog = () => {
           imageUrl: null as string | null,
         }));
 
+  // Filtrado por categoría
+  const filteredPosts = selectedCategory === "Todos" 
+    ? renderedPosts 
+    : renderedPosts.filter(post => post.category === selectedCategory);
+
   const categories = [
     "Todos",
-    "Estrategia & Crecimiento",
-    "Métricas & Modelos Tech",
-    "Flujo de Caja",
-    "Impuestos y Optimización",
+    "SaaS/Tech", 
+    "Cashflow",
+    "Fiscalidad",
+    "Finanzas Pyme"
   ];
 
   const goToPage = (p: number) => {
@@ -129,7 +135,7 @@ const Blog = () => {
         </div>
       </section>
 
-      {/* Filtros (sin funcionalidad) */}
+      {/* Filtros */}
       <section className="section-light py-12">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
@@ -137,8 +143,9 @@ const Blog = () => {
               {categories.map((category) => (
                 <button
                   key={category}
+                  onClick={() => setSelectedCategory(category)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
-                    category === "Todos"
+                    category === selectedCategory
                       ? "bg-primary text-white hover:bg-secondary hover:text-secondary-foreground"
                       : "bg-white text-text-secondary hover:bg-secondary hover:text-secondary-foreground border border-border"
                   }`}
@@ -166,7 +173,7 @@ const Blog = () => {
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {renderedPosts.map((post) => (
+              {filteredPosts.map((post) => (
                 <article
                   key={post.id}
                   className="card-hover border border-border/30 group"

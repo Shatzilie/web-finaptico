@@ -1,4 +1,4 @@
-// 1) Importa React y el helper
+// src/pages/Blog.tsx
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -7,19 +7,25 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Checkbox } from "../components/ui/checkbox";
 
+function stripHtml(html?: string) {
+  if (!html) return "";
+  const div = document.createElement("div");
+  div.innerHTML = html;
+  return (div.textContent || div.innerText || "").trim();
+}
+
 const Blog = () => {
   const [email, setEmail] = useState("");
   const [privacy, setPrivacy] = useState(false);
-  
-  // 2) (Opcional) estado interno para tener los datos disponibles
+
+  // Estado para WordPress
   const [wpPosts, setWpPosts] = React.useState<WpPost[] | null>(null);
   const [error, setError] = React.useState<string | null>(null);
 
-  // 3) Efecto que trae los posts al montar el componente
   React.useEffect(() => {
     (async () => {
       try {
-        const { data, total, totalPages } = await fetchLatestPosts(5, 1, true);
+        const { data, total, totalPages } = await fetchLatestPosts(6, 1, true);
         setWpPosts(data);
         console.log("[WP] posts:", data);
         console.log("[WP] total:", total, "totalPages:", totalPages);
@@ -30,86 +36,117 @@ const Blog = () => {
     })();
   }, []);
 
-  // ⬇️ A partir de aquí DEJA TU DISEÑO EXACTO como lo tenías.
-  // No añado ni quito nada de tu JSX existente. Si quieres, puedes
-  // usar 'wpPosts' más adelante sin romper el layout.
-
-  const posts = [
+  // === TU CONTENIDO DE EJEMPLO (fallback) ===
+  const staticPosts = [
     {
       id: 1,
       title: "5 KPIs que toda pyme tecnológica debe seguir",
-      excerpt: "Los indicadores clave que te ayudarán a tomar mejores decisiones financieras y acelerar el crecimiento de tu startup.",
+      excerpt:
+        "Los indicadores clave que te ayudarán a tomar mejores decisiones financieras y acelerar el crecimiento de tu startup.",
       category: "SaaS/Tech",
       readTime: "5 min",
       image: "📊",
-      date: "15 Ene 2025"
+      date: "15 Ene 2025",
     },
     {
       id: 2,
       title: "Cómo optimizar el flujo de caja en empresas en crecimiento",
-      excerpt: "Estrategias prácticas para mejorar tu cash flow y evitar problemas de liquidez durante la expansión.",
+      excerpt:
+        "Estrategias prácticas para mejorar tu cash flow y evitar problemas de liquidez durante la expansión.",
       category: "Cashflow",
       readTime: "7 min",
       image: "💰",
-      date: "10 Ene 2025"
+      date: "10 Ene 2025",
     },
     {
       id: 3,
       title: "Errores fiscales que debes evitar al escalar tu empresa",
-      excerpt: "Los fallos más comunes en fiscalidad cuando tu empresa crece rápido y cómo prevenirlos.",
+      excerpt:
+        "Los fallos más comunes en fiscalidad cuando tu empresa crece rápido y cómo prevenirlos.",
       category: "Fiscalidad",
       readTime: "6 min",
       image: "⚠️",
-      date: "5 Ene 2025"
+      date: "5 Ene 2025",
     },
     {
       id: 4,
-      title: "Finanzas para pymes tradicionales: digitalización paso a paso",
-      excerpt: "Guía práctica para modernizar la gestión financiera de empresas no-tech sin complicaciones.",
+      title:
+        "Finanzas para pymes tradicionales: digitalización paso a paso",
+      excerpt:
+        "Guía práctica para modernizar la gestión financiera de empresas no-tech sin complicaciones.",
       category: "Finanzas Pyme",
       readTime: "8 min",
       image: "🔄",
-      date: "28 Dic 2024"
+      date: "28 Dic 2024",
     },
     {
       id: 5,
       title: "Preparar tu empresa para una ronda de inversión",
-      excerpt: "Todo lo que necesitas tener listo en el área financiera antes de buscar inversores.",
+      excerpt:
+        "Todo lo que necesitas tener listo en el área financiera antes de buscar inversores.",
       category: "SaaS/Tech",
       readTime: "10 min",
       image: "🚀",
-      date: "20 Dic 2024"
+      date: "20 Dic 2024",
     },
     {
       id: 6,
       title: "Automatización contable: herramientas que realmente funcionan",
-      excerpt: "Las mejores soluciones para automatizar tu contabilidad sin perder control ni precisión.",
+      excerpt:
+        "Las mejores soluciones para automatizar tu contabilidad sin perder control ni precisión.",
       category: "Finanzas Pyme",
       readTime: "6 min",
       image: "⚡",
-      date: "15 Dic 2024"
-    }
+      date: "15 Dic 2024",
+    },
   ];
 
-  const categories = ["Todos", "Estrategia & Crecimiento", "Métricas & Modelos Tech", "Flujo de Caja", "Impuestos y Optimización"];
+  // === ADAPTADOR: WordPress -> tu mismo shape visual ===
+  // Si hay posts de WP, se transforman a tu estructura sin tocar el markup.
+  const renderedPosts = wpPosts && wpPosts.length > 0
+    ? wpPosts.map((p) => ({
+        id: p.id,
+        title: stripHtml(p.title?.rendered) || "Sin título",
+        excerpt: stripHtml(p.excerpt?.rendered) || "",
+        category: "Blog", // si más adelante mapeas categorías, cámbialo aquí
+        readTime: "—",    // opcional: podríamos calcularlo por palabras
+        image: "📝",      // placeholder (tu diseño ya usa un emoji)
+        date: new Date(p.date).toLocaleDateString("es-ES", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        }),
+      }))
+    : staticPosts;
+
+  const categories = [
+    "Todos",
+    "Estrategia & Crecimiento",
+    "Métricas & Modelos Tech",
+    "Flujo de Caja",
+    "Impuestos y Optimización",
+  ];
 
   return (
     <div className="min-h-screen">
       <Header />
-      
+
       {/* Hero */}
       <section className="bg-white py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-h1 text-text-primary mb-6">Blog de finanzas para pymes</h1>
+            <h1 className="text-h1 text-text-primary mb-6">
+              Blog de finanzas para pymes
+            </h1>
             <p className="text-body text-text-secondary">
-              Consejos prácticos, casos reales y estrategias que funcionan para hacer crecer tu empresa con finanzas sanas.
+              Consejos prácticos, casos reales y estrategias que funcionan para
+              hacer crecer tu empresa con finanzas sanas.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Filtros por categoría */}
+      {/* Filtros por categoría (sin funcionalidad por ahora) */}
       <section className="section-light py-12">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
@@ -131,19 +168,26 @@ const Blog = () => {
         </div>
       </section>
 
-      {/* Grid de posts */}
+      {/* Grid de posts — MISMO MARKUP, solo cambia la fuente de datos */}
       <section className="bg-white py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
+            {/* info de error no invasiva (opcional) */}
+            {error && (
+              <p className="text-center text-sm text-red-600 mb-4">
+                {error}
+              </p>
+            )}
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {posts.map((post) => (
+              {renderedPosts.map((post) => (
                 <article key={post.id} className="card-hover border border-border/30 group">
                   <div className="space-y-4">
                     {/* Imagen placeholder */}
                     <div className="w-full h-48 bg-section-light rounded-lg flex items-center justify-center text-4xl">
                       {post.image}
                     </div>
-                    
+
                     {/* Categoría y tiempo de lectura */}
                     <div className="flex items-center justify-between">
                       <span className="inline-block bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium">
@@ -151,19 +195,19 @@ const Blog = () => {
                       </span>
                       <span className="text-sm text-text-muted">{post.readTime}</span>
                     </div>
-                    
+
                     {/* Título */}
                     <h2 className="text-xl font-semibold text-text-primary group-hover:text-primary transition-colors duration-200 leading-tight">
                       <Link to={`/blog/${post.id}`} className="link-underline">
                         {post.title}
                       </Link>
                     </h2>
-                    
+
                     {/* Extracto */}
                     <p className="text-base text-text-secondary leading-relaxed">
                       {post.excerpt}
                     </p>
-                    
+
                     {/* Fecha */}
                     <div className="pt-2 border-t border-border">
                       <span className="text-sm text-text-muted">{post.date}</span>
@@ -194,14 +238,14 @@ const Blog = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     className="flex-1 px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   />
-                  <button 
+                  <button
                     className="btn-primary whitespace-nowrap disabled:opacity-50"
                     disabled={!email || !privacy}
                   >
                     Suscribirme
                   </button>
                 </div>
-                
+
                 <div className="flex items-start space-x-3 text-left">
                   <Checkbox
                     id="privacy-newsletter"
@@ -225,15 +269,13 @@ const Blog = () => {
 
                 <div className="bg-section-light p-4 rounded-lg">
                   <p className="text-xs text-text-muted leading-relaxed">
-                    <strong>Responsable:</strong> Finaptico. <strong>Finalidad:</strong> responder tu solicitud. 
-                    <strong> Legitimación:</strong> consentimiento. <strong>Destinatarios:</strong> no se cederán datos. 
+                    <strong>Responsable:</strong> Finaptico. <strong>Finalidad:</strong> responder tu solicitud.
+                    <strong> Legitimación:</strong> consentimiento. <strong>Destinatarios:</strong> no se cederán datos.
                     <strong> Derechos:</strong> acceso, rectificación, supresión, etc. Más info en la Política de Privacidad.
                   </p>
                 </div>
-                
-                <p className="text-xs text-text-muted">
-                  No spam. Cancela cuando quieras.
-                </p>
+
+                <p className="text-xs text-text-muted">No spam. Cancela cuando quieras.</p>
               </div>
             </div>
           </div>
@@ -255,9 +297,7 @@ const Blog = () => {
         </div>
       </section>
 
-      {/* Espacio para el Footer CTA */}
       <div className="bg-white py-16"></div>
-
       <Footer />
     </div>
   );

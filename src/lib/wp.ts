@@ -3,16 +3,17 @@
 const BASE = "https://ujbnqyeqrkheflvbrwat.functions.supabase.co/smart-worker/wp";
 
 export type WpRendered = { rendered: string };
+
 export type WpPost = {
   id: number;
   slug: string;
   date: string;
   title: WpRendered;
   excerpt?: WpRendered;
-  // puedes añadir más campos si luego los necesitas
+  _embedded?: any; // <- necesario para leer imagen destacada
 };
 
-// Obtiene los últimos posts (no cambia tu UI; solo trae datos)
+// Obtiene los últimos posts
 export async function fetchLatestPosts(perPage = 5, page = 1, embed = true) {
   const params = new URLSearchParams();
   params.set("per_page", String(perPage));
@@ -23,8 +24,13 @@ export async function fetchLatestPosts(perPage = 5, page = 1, embed = true) {
   const res = await fetch(url, { headers: { Accept: "application/json" } });
   const data = await res.json();
   if (!res.ok) throw new Error(data?.error || `HTTP ${res.status}`);
-  // te devuelvo también headers por si luego quieres paginar
   const total = Number(res.headers?.get?.("X-WP-Total") ?? 0);
   const totalPages = Number(res.headers?.get?.("X-WP-TotalPages") ?? 0);
   return { data: data as WpPost[], total, totalPages };
+}
+
+// Lee la imagen destacada desde _embedded
+export function featuredImageFromEmbedded(post: WpPost): string | null {
+  const media = post?._embedded?.["wp:featuredmedia"]?.[0];
+  return media?.source_url || null;
 }

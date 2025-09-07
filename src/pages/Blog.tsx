@@ -140,7 +140,7 @@ const Blog = () => {
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
                     category === "Todos"
                       ? "bg-primary text-white"
-                      : "bg-white text-text-secondary hover:bg-primary hover:text-white border border-border"
+                      : "bg-white text-text-secondary hover:bg-secondary hover:text-secondary-foreground border border-border"
                   }`}
                   type="button"
                 >

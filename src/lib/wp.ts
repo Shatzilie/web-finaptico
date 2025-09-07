@@ -30,8 +30,10 @@ export async function fetchLatestPosts(
   const params = new URLSearchParams();
   params.set("per_page", String(perPage));
   params.set("page", String(page));
+  // 🔒 Orden explícito por fecha descendente (más nuevos primero)
+  params.set("orderby", "date");
+  params.set("order", "desc");
   if (embed) params.set("_embed", "1"); // trae featured media y términos
-  // recomendamos que en WP tengas activado "Excerpt" en cada post; WP ya genera uno automático
 
   const url = `${BASE}/posts?${params.toString()}`;
   const res = await fetch(url, { headers: { Accept: "application/json" } });
@@ -70,9 +72,6 @@ export function featuredImageFromEmbedded(post: WpPost): string | null {
 }
 
 // ---------- Helpers de categorías ----------
-/**
- * Devuelve el nombre de la PRIMERA categoría (taxonomy 'category') embebida.
- */
 export function primaryCategoryName(post: WpPost): string {
   const groups = post?._embedded?.["wp:term"];
   if (Array.isArray(groups)) {
@@ -98,14 +97,9 @@ function stripHtml(html?: string) {
     div.innerHTML = html;
     return (div.textContent || div.innerText || "").trim();
   }
-  // en entorno SSR, fallback simple
   return html.replace(/<[^>]*>/g, "").trim();
 }
 
-/**
- * Usa el excerpt de WP si existe y lo recorta a 'maxWords' palabras.
- * Si no hay excerpt, hace fallback al contenido, también recortado.
- */
 export function shortExcerpt(post: WpPost, maxWords = 28): string {
   const base =
     stripHtml(post?.excerpt?.rendered) ||

@@ -26,8 +26,13 @@ const Blog = () => {
     (async () => {
       try {
         const { data } = await fetchLatestPosts(6, 1, true); // _embed=1
+        // Log rápido para verificar imágenes
+        const imgs = data.map((p) => ({
+          slug: p.slug,
+          img: featuredImageFromEmbedded(p),
+        }));
+        console.log("[WP] featured images:", imgs);
         setWpPosts(data);
-        console.log("[WP] posts:", data);
       } catch (e: any) {
         console.error("[WP] error:", e?.message || e);
         setError(e?.message || "Error cargando posts");
@@ -45,13 +50,13 @@ const Blog = () => {
     { id: 6, title: "Automatización contable: herramientas que realmente funcionan", excerpt: "Las mejores soluciones para automatizar tu contabilidad sin perder control ni precisión.", category: "Finanzas Pyme", readTime: "6 min", image: "⚡", date: "15 Dic 2024" }
   ];
 
-  // Adaptador WP -> tu mismo shape visual (ahora con imagen y slug)
+  // Adaptador WP -> tu shape visual (con imagen y slug)
   const renderedPosts = wpPosts && wpPosts.length > 0
     ? wpPosts.map((p) => {
         const img = featuredImageFromEmbedded(p);
         return {
           id: p.id,
-          slug: p.slug, // ← para link por slug
+          slug: p.slug, // enlace por slug
           title: stripHtml(p.title?.rendered) || "Sin título",
           excerpt: stripHtml(p.excerpt?.rendered) || "",
           category: "Blog",
@@ -64,13 +69,19 @@ const Blog = () => {
           }),
         };
       })
-    : staticPosts.map(s => ({
+    : staticPosts.map((s) => ({
         ...s,
-        slug: String(s.id),   // placeholder para mantener la API
-        imageUrl: null as string | null
+        slug: String(s.id),
+        imageUrl: null as string | null,
       }));
 
-  const categories = ["Todos", "Estrategia & Crecimiento", "Métricas & Modelos Tech", "Flujo de Caja", "Impuestos y Optimización"];
+  const categories = [
+    "Todos",
+    "Estrategia & Crecimiento",
+    "Métricas & Modelos Tech",
+    "Flujo de Caja",
+    "Impuestos y Optimización",
+  ];
 
   return (
     <div className="min-h-screen">
@@ -122,7 +133,7 @@ const Blog = () => {
               {renderedPosts.map((post) => (
                 <article key={post.id} className="card-hover border border-border/30 group">
                   <div className="space-y-4">
-                    {/* Media: si hay imagen destacada la mostramos; si no, emoji fallback */}
+                    {/* Media */}
                     <div className="w-full h-48 bg-section-light rounded-lg flex items-center justify-center text-4xl overflow-hidden">
                       {("imageUrl" in post && post.imageUrl) ? (
                         <img
@@ -130,6 +141,7 @@ const Blog = () => {
                           alt={post.title}
                           className="w-full h-full object-cover"
                           loading="lazy"
+                          referrerPolicy="no-referrer-when-downgrade"
                         />
                       ) : (
                         <span>{(post as any).image ?? "📝"}</span>
@@ -146,7 +158,7 @@ const Blog = () => {
                       </span>
                     </div>
 
-                    {/* Título (enlace por slug) */}
+                    {/* Título (link por slug) */}
                     <h2 className="text-xl font-semibold text-text-primary group-hover:text-primary transition-colors duration-200 leading-tight">
                       <Link to={`/blog/${(post as any).slug}`} className="link-underline">
                         {post.title}

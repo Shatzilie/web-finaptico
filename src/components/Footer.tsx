@@ -22,7 +22,7 @@ const Footer = () => {
             <div className="space-y-4">
               <h3 className="text-xl font-bold">Finaptico</h3>
               <p className="text-white/80 text-base leading-relaxed">
-                Asistente virtual en finanzas para pymes tecnológicas y empresas en crecimiento.
+                Asistente virtual especializada en finanzas para pymes tecnológicas y empresas en crecimiento.
               </p>
             </div>
 

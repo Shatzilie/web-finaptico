@@ -13,7 +13,7 @@ const Home = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <h1 className="text-h1 text-balance">
-                Asistente virtual en finanzas para pymes tecnológicas y empresas en crecimiento.
+                Asistente virtual especializada en finanzas para pymes tecnológicas y empresas en crecimiento.
               </h1>
               <p className="text-body text-white/90 leading-relaxed">
                 Contabilidad y fiscalidad sin sorpresas. KPIs y tesorería claros. Tú te enfocas en producto y crecimiento.

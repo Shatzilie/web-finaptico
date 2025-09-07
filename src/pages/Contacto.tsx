@@ -308,7 +308,7 @@ const Contacto = () => {
                         <h3 className="font-semibold text-text-primary">WhatsApp (solo mensajes)</h3>
                         <p className="text-sm text-text-secondary mb-2">Respuesta rápida para consultas urgentes</p>
                         <a
-                          href="https://wa.me/34657626409?text=Hola%2C%20quiero%20informaci%C3%B3n"
+                          href="https://wa.me/34657626409?text=Hola,%20quiero%20información%20sobre%20Finaptico"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-block btn-secondary text-sm"

@@ -65,7 +65,7 @@ const Blog = () => {
     }
   ];
 
-  const categories = ["Todos", "Finanzas Pyme", "SaaS/Tech", "Fiscalidad", "Cashflow"];
+  const categories = ["Todos", "Estrategia & Crecimiento", "Métricas & Modelos Tech", "Flujo de Caja", "Impuestos y Optimización"];
 
   return (
     <div className="min-h-screen">

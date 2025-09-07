@@ -7,19 +7,14 @@ export type WpPost = {
   id: number;
   slug: string;
   date: string;
+  modified?: string;
   title: WpRendered;
   excerpt?: WpRendered;
   content?: WpRendered;
   _embedded?: any;
 };
-export type WpCategory = {
-  id: number;
-  name: string;
-  slug: string;
-  count: number;
-};
+export type WpCategory = { id: number; name: string; slug: string; count: number };
 
-// Posts (opcional: id de categoría)
 export async function fetchLatestPosts(
   perPage = 6,
   page = 1,
@@ -43,30 +38,34 @@ export async function fetchLatestPosts(
   return { data: data as WpPost[], total, totalPages };
 }
 
-// Categorías (solo con posts) y sin "uncategorized / sin categoría"
+// --- Obtener un post por slug ---
+export async function fetchPostBySlug(slug: string, embed = true) {
+  const params = new URLSearchParams();
+  params.set("slug", slug);
+  if (embed) params.set("_embed", "1");
+  const url = `${BASE}/posts?${params.toString()}`;
+  const res = await fetch(url, { headers: { Accept: "application/json" } });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data?.error || `HTTP ${res.status}`);
+  return (Array.isArray(data) && data.length > 0) ? (data[0] as WpPost) : null;
+}
+
+// --- Categorías y helpers ---
 export async function fetchCategories(perPage = 100, page = 1) {
   const params = new URLSearchParams();
   params.set("per_page", String(perPage));
   params.set("page", String(page));
   params.set("orderby", "name");
   params.set("order", "asc");
-  params.set("hide_empty", "true"); // solo categorías con posts
-
+  params.set("hide_empty", "true");
   const url = `${BASE}/categories?${params.toString()}`;
   const res = await fetch(url, { headers: { Accept: "application/json" } });
   const data = await res.json();
   if (!res.ok) throw new Error(data?.error || `HTTP ${res.status}`);
 
-  const BAD_SLUGS = new Set([
-    "uncategorized",           // inglés
-    "sin-categoria",           // WP suele usar esto
-    "sin-categoría",           // por si la tilde
-  ]);
-
+  const BAD_SLUGS = new Set(["uncategorized","sin-categoria","sin-categoría"]);
   return (data as WpCategory[])
-    // fuera vacías (doble filtro por si el proxy no aplicara hide_empty)
     .filter((c) => (c?.count ?? 0) > 0)
-    // fuera "uncategorized / sin categoría"
     .filter((c) => {
       const slug = (c?.slug || "").toLowerCase();
       const name = (c?.name || "").toLowerCase().trim();
@@ -76,14 +75,40 @@ export async function fetchCategories(perPage = 100, page = 1) {
     });
 }
 
-// ---------- helpers de media/excerpt/categoría ----------
+export function primaryCategoryName(post: WpPost): string {
+  const cats = postCategoryObjects(post);
+  return cats[0]?.name || "Blog";
+}
+export function postCategories(post: WpPost): { name: string; slug: string; id?: number }[] {
+  return postCategoryObjects(post);
+}
+export function postCategoryIds(post: WpPost): number[] {
+  return postCategoryObjects(post).map((c) => c.id!).filter(Boolean);
+}
+function postCategoryObjects(post: WpPost): { name: string; slug: string; id?: number }[] {
+  const out: { name: string; slug: string; id?: number }[] = [];
+  const groups = post?._embedded?.["wp:term"];
+  if (Array.isArray(groups)) {
+    for (const g of groups) {
+      if (Array.isArray(g)) {
+        for (const t of g) {
+          if (t?.taxonomy === "category") {
+            out.push({ name: String(t.name), slug: String(t.slug), id: Number(t.id) });
+          }
+        }
+      }
+    }
+  }
+  return out;
+}
+
+// --- Imagen destacada ---
 function toAbsoluteUrl(u?: string | null): string | null {
   if (!u) return null;
   if (/^https?:\/\//i.test(u)) return u;
   if (u.startsWith("/")) return `${WP_ASSETS_ORIGIN}${u}`;
   return `${WP_ASSETS_ORIGIN}/${u}`;
 }
-
 export function featuredImageFromEmbedded(post: WpPost): string | null {
   const media = post?._embedded?.["wp:featuredmedia"]?.[0];
   if (!media) return null;
@@ -91,78 +116,92 @@ export function featuredImageFromEmbedded(post: WpPost): string | null {
   if (sizes && typeof sizes === "object") {
     const order = ["large", "medium_large", "medium", "full", "thumbnail"];
     for (const key of order) {
-      const candidate = toAbsoluteUrl((sizes as any)[key]?.source_url);
+      const candidate = toAbsoluteUrl(sizes[key]?.source_url);
       if (candidate) return candidate;
     }
-    for (const k of Object.keys(sizes as any)) {
-      const candidate = toAbsoluteUrl((sizes as any)[k]?.source_url);
+    for (const k of Object.keys(sizes)) {
+      const candidate = toAbsoluteUrl(sizes[k]?.source_url);
       if (candidate) return candidate;
     }
   }
-  return toAbsoluteUrl((media as any)?.source_url) || toAbsoluteUrl((media as any)?.guid?.rendered);
+  return toAbsoluteUrl(media?.source_url) || toAbsoluteUrl(media?.guid?.rendered);
 }
 
-export function primaryCategoryName(post: WpPost): string {
-  const groups = post?._embedded?.["wp:term"];
-  if (Array.isArray(groups)) {
-    const cats: any[] = [];
-    for (const g of groups) {
-      if (Array.isArray(g)) for (const t of g) if (t?.taxonomy === "category") cats.push(t);
-    }
-    const first = cats[0];
-    if (first?.name) return String(first.name);
-  }
-  return "Blog";
-}
-
+// --- Excerpt corto ---
 function stripHtml(html?: string) {
   if (!html) return "";
   const div = typeof document !== "undefined" ? document.createElement("div") : null;
-  if (div) {
-    div.innerHTML = html;
-    return (div.textContent || div.innerText || "").trim();
-  }
-  return (html || "").replace(/<[^>]*>/g, "").trim();
+  if (div) { div.innerHTML = html; return (div.textContent || div.innerText || "").trim(); }
+  return html.replace(/<[^>]*>/g, "").trim();
 }
-
 export function shortExcerpt(post: WpPost, maxWords = 28): string {
-  const base =
-    stripHtml(post?.excerpt?.rendered) ||
-    stripHtml(post?.content?.rendered) ||
-    "";
+  const base = stripHtml(post?.excerpt?.rendered) || stripHtml(post?.content?.rendered) || "";
   const words = base.split(/\s+/).filter(Boolean);
   if (words.length <= maxWords) return base;
   return words.slice(0, maxWords).join(" ") + "…";
 }
 
-// --- Obtener un post por slug ---
-export async function fetchPostBySlug(slug: string, embed = true) {
+// --- Autor (para E-E-A-T) ---
+export function authorFromEmbedded(post: WpPost): { name?: string; url?: string; avatar?: string } {
+  const a = post?._embedded?.author?.[0];
+  return {
+    name: a?.name,
+    url: a?.link,
+    avatar: a?.avatar_urls?.["96"] || a?.avatar_urls?.["48"] || a?.avatar_urls?.["24"],
+  };
+}
+
+// --- Posts relacionados por categoría ---
+export async function fetchRelatedPosts(post: WpPost, limit = 6) {
+  const cats = postCategoryIds(post);
+  if (cats.length === 0) return [];
   const params = new URLSearchParams();
-  params.set("slug", slug);
-  if (embed) params.set("_embed", "1");
+  params.set("per_page", String(limit));
+  params.set("page", "1");
+  params.set("orderby", "date");
+  params.set("order", "desc");
+  params.set("_embed", "1");
+  params.set("categories", String(cats[0])); // 1ª categoría como pivote
+  params.set("exclude", String(post.id));    // excluir el actual
+  const url = `${BASE}/posts?${params.toString()}`;
+  const res = await fetch(url, { headers: { Accept: "application/json" } });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data?.error || `HTTP ${res.status}`);
+  return data as WpPost[];
+}
+
+// --- Post anterior / siguiente (por fecha) ---
+export async function fetchAdjacentPost(post: WpPost, direction: "prev" | "next") {
+  // prev = más antiguo (antes); next = más reciente (después)
+  const params = new URLSearchParams();
+  params.set("per_page", "1");
+  params.set("_embed", "1");
+  params.set("orderby", "date");
+
+  if (direction === "prev") {
+    params.set("order", "desc");           // el más cercano ANTES
+    params.set("before", post.date);
+  } else {
+    params.set("order", "asc");            // el más cercano DESPUÉS
+    params.set("after", post.date);
+  }
+  params.set("exclude", String(post.id));
+
+  // si tienes categorías, puedes mantener temática
+  const cats = postCategoryIds(post);
+  if (cats[0]) params.set("categories", String(cats[0]));
 
   const url = `${BASE}/posts?${params.toString()}`;
   const res = await fetch(url, { headers: { Accept: "application/json" } });
   const data = await res.json();
   if (!res.ok) throw new Error(data?.error || `HTTP ${res.status}`);
-  // WP devuelve un array; si hay match, será [post]
   return (Array.isArray(data) && data.length > 0) ? (data[0] as WpPost) : null;
 }
 
-// (opcional) categorías como array de {name, slug}
-export function postCategories(post: WpPost): { name: string; slug: string }[] {
-  const out: { name: string; slug: string }[] = [];
-  const groups = post?._embedded?.["wp:term"];
-  if (Array.isArray(groups)) {
-    for (const g of groups) {
-      if (Array.isArray(g)) {
-        for (const t of g) {
-          if (t?.taxonomy === "category" && t?.name && t?.slug) {
-            out.push({ name: String(t.name), slug: String(t.slug) });
-          }
-        }
-      }
-    }
-  }
-  return out;
+// --- SEO helpers ---
+export function pageTitleFromPost(p?: WpPost | null) {
+  return p ? `${stripHtml(p.title?.rendered)} | Blog` : "Blog";
+}
+export function metaDescriptionFromPost(p?: WpPost | null) {
+  return p ? shortExcerpt(p, 32) : "Artículos sobre finanzas para pymes.";
 }

@@ -54,7 +54,6 @@ const BlogPost: React.FC = () => {
     (async () => {
       if (!post) return;
 
-      // Adjacent
       try {
         const [prev, next] = await Promise.all([
           fetchAdjacentPost(post, "prev"),
@@ -62,20 +61,17 @@ const BlogPost: React.FC = () => {
         ]);
         setPrevPost(prev);
         setNextPost(next);
-      } catch (_) {}
+      } catch {}
 
-      // Related
       try {
         const rel = await fetchRelatedPosts(post, 6);
         setRelated(rel);
-      } catch (_) {}
+      } catch {}
 
-      // SEO
       const title = pageTitleFromPost(post);
       const desc = metaDescriptionFromPost(post);
       document.title = title;
 
-      // meta description
       const ensureMeta = (name: string) => {
         let m = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement | null;
         if (!m) {
@@ -87,7 +83,6 @@ const BlogPost: React.FC = () => {
       };
       ensureMeta("description")!.setAttribute("content", desc);
 
-      // canonical
       const canonicalHref = window.location.origin + window.location.pathname;
       let linkCanonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
       if (!linkCanonical) {
@@ -97,7 +92,6 @@ const BlogPost: React.FC = () => {
       }
       linkCanonical.setAttribute("href", canonicalHref);
 
-      // JSON-LD (Article + Breadcrumb)
       const img = featuredImageFromEmbedded(post);
       const cats = postCategories(post).map((c) => c.name);
       const author = authorFromEmbedded(post);
@@ -125,7 +119,6 @@ const BlogPost: React.FC = () => {
         ],
       };
 
-      // Limpia antiguos <script data-seo>
       document.querySelectorAll('script[data-seo="jsonld"]').forEach((n) => n.remove());
       const addLd = (obj: any) => {
         const s = document.createElement("script");
@@ -141,11 +134,7 @@ const BlogPost: React.FC = () => {
 
   const dateFmt = (iso?: string) =>
     iso
-      ? new Date(iso).toLocaleDateString("es-ES", {
-          day: "2-digit",
-          month: "long",
-          year: "numeric",
-        })
+      ? new Date(iso).toLocaleDateString("es-ES", { day: "2-digit", month: "long", year: "numeric" })
       : "";
 
   const img = post ? featuredImageFromEmbedded(post) : null;
@@ -158,7 +147,6 @@ const BlogPost: React.FC = () => {
 
       <main className="bg-white">
         <div className="container mx-auto px-4 py-8">
-          {/* Breadcrumb minimal y volver */}
           <div className="flex items-center justify-between">
             <nav className="text-sm text-text-muted">
               <Link to="/" className="hover:underline">Inicio</Link> <span>/</span>{" "}
@@ -171,29 +159,21 @@ const BlogPost: React.FC = () => {
           </div>
         </div>
 
-        {/* Hero */}
         <section className="bg-white">
           <div className="container mx-auto px-4">
-            {loading && (
-              <p className="text-center text-text-muted py-16">Cargando artículo…</p>
-            )}
+            {loading && <p className="text-center text-text-muted py-16">Cargando artículo…</p>}
 
             {!loading && !post && !error && (
               <div className="text-center py-16">
                 <h1 className="text-2xl font-semibold mb-2">Artículo no encontrado</h1>
-                <p className="text-text-secondary">
-                  Puede que el enlace haya cambiado o el artículo ya no exista.
-                </p>
+                <p className="text-text-secondary">Puede que el enlace haya cambiado o el artículo ya no exista.</p>
               </div>
             )}
 
-            {error && (
-              <p className="text-center text-red-600 py-16">{error}</p>
-            )}
+            {error && <p className="text-center text-red-600 py-16">{error}</p>}
 
             {post && (
               <article className="max-w-4xl mx-auto">
-                {/* Categorías */}
                 {cats.length > 0 && (
                   <div className="flex flex-wrap gap-2 mb-4">
                     {cats.map((c) => (
@@ -208,15 +188,12 @@ const BlogPost: React.FC = () => {
                   </div>
                 )}
 
-                {/* Título */}
                 <h1 className="text-h1 text-text-primary mb-3">
                   {stripHtml(post.title?.rendered) || "Sin título"}
                 </h1>
 
-                {/* Fecha */}
                 <p className="text-text-muted mb-6">{dateFmt(post.date)}</p>
 
-                {/* Imagen destacada */}
                 {img && (
                   <div className="w-full h-80 bg-section-light rounded-2xl overflow-hidden mb-8">
                     <img
@@ -229,9 +206,9 @@ const BlogPost: React.FC = () => {
                   </div>
                 )}
 
-                {/* Contenido */}
+                {/* CONTENIDO WP con wrapper 'wp-article' para estilos de headings */}
                 <div
-                  className="prose max-w-none prose-headings:font-semibold prose-a:text-primary hover:prose-a:underline prose-img:rounded-xl prose-img:mx-auto prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-4 prose-blockquote:text-text-secondary text-text-primary"
+                  className="wp-article text-text-primary leading-relaxed"
                   dangerouslySetInnerHTML={{ __html: post.content?.rendered || "" }}
                 />
 
@@ -246,14 +223,8 @@ const BlogPost: React.FC = () => {
                       )}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-text-primary">
-                        {author?.name || "Autor"}
-                      </h3>
+                      <h3 className="text-lg font-semibold text-text-primary">{author?.name || "Autor"}</h3>
                       <p className="text-sm text-text-secondary">
-                        {/*
-                          Muchos WP no devuelven 'description' del autor en _embed.
-                          Si quieres forzar bio, ponla en el perfil de WP y la recogeremos.
-                        */}
                         {author?.url ? (
                           <>Perfil del autor en <a href={author.url} target="_blank" rel="noreferrer" className="text-primary hover:underline">WordPress</a>.</>
                         ) : (
@@ -296,7 +267,7 @@ const BlogPost: React.FC = () => {
                   </div>
                 </section>
 
-                {/* Relacionados (link building interno) */}
+                {/* Relacionados */}
                 {related && related.length > 0 && (
                   <section className="mt-12">
                     <h3 className="text-h3 text-text-primary mb-4">También te puede interesar</h3>
@@ -335,6 +306,113 @@ const BlogPost: React.FC = () => {
           </div>
         </section>
       </main>
+
+      {/* ====== ESTILOS SCOPED PARA HEADINGS H2–H6 ====== */}
+      <style>{`
+        /* Wrapper del contenido del post */
+        .wp-article {
+          font-size: 1.0625rem; /* ~17px */
+          line-height: 1.75;
+        }
+        .wp-article p { margin: 1rem 0; }
+
+        /* H2–H6 con jerarquía visual clara */
+        .wp-article h2,
+        .wp-article h3,
+        .wp-article h4,
+        .wp-article h5,
+        .wp-article h6 {
+          color: var(--color-text-primary, #101828);
+          font-weight: 700;
+          line-height: 1.25;
+          margin: 2.25rem 0 0.75rem;
+        }
+        .wp-article h2 {
+          font-size: clamp(1.5rem, 2.2vw, 2rem);
+          padding-left: 0.75rem;
+          border-left: 4px solid #6C5CE7; /* violeta activo */
+        }
+        .wp-article h3 {
+          font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+          padding-left: 0.6rem;
+          border-left: 3px solid #00BFA5; /* verde menta */
+        }
+        .wp-article h4 {
+          font-size: clamp(1.125rem, 1.4vw, 1.25rem);
+          text-transform: none;
+          border-bottom: 1px solid rgba(16, 24, 40, 0.08);
+          padding-bottom: 0.25rem;
+        }
+        .wp-article h5 {
+          font-size: 1.0625rem;
+          letter-spacing: 0.02em;
+          text-transform: uppercase;
+          color: rgba(16, 24, 40, 0.82);
+        }
+        .wp-article h6 {
+          font-size: 0.95rem;
+          letter-spacing: 0.03em;
+          text-transform: uppercase;
+          color: rgba(16, 24, 40, 0.72);
+        }
+
+        /* Listas y citas para mejor legibilidad */
+        .wp-article ul, .wp-article ol { margin: 1rem 0 1rem 1.25rem; }
+        .wp-article li { margin: 0.25rem 0; }
+        .wp-article blockquote {
+          margin: 1.25rem 0;
+          padding: 0.75rem 1rem;
+          border-left: 4px solid #6C5CE7;
+          background: #F8F7FF;
+          color: #475467;
+        }
+
+        /* Imágenes dentro del contenido */
+        .wp-article img {
+          max-width: 100%;
+          height: auto;
+          border-radius: 0.75rem;
+          display: block;
+          margin: 1rem auto;
+        }
+
+        /* Tablas básicas */
+        .wp-article table {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 1rem 0;
+          font-size: 0.95rem;
+        }
+        .wp-article th, .wp-article td {
+          border: 1px solid rgba(16, 24, 40, 0.12);
+          padding: 0.5rem 0.75rem;
+        }
+        .wp-article th {
+          background: #F9FAFB;
+          text-align: left;
+        }
+
+        /* Enlaces en contenido */
+        .wp-article a { color: #6C5CE7; text-decoration: underline; text-underline-offset: 2px; }
+        .wp-article a:hover { color: #00BFA5; }
+
+        /* Código inline / bloques */
+        .wp-article code {
+          background: #F2F4F7;
+          padding: 0.15rem 0.35rem;
+          border-radius: 0.375rem;
+          font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+          font-size: 0.9em;
+        }
+        .wp-article pre {
+          background: #0B1220;
+          color: #F8FAFC;
+          padding: 1rem 1.25rem;
+          border-radius: 0.75rem;
+          overflow: auto;
+          margin: 1rem 0;
+        }
+      `}</style>
 
       <Footer />
     </div>

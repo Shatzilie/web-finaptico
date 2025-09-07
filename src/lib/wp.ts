@@ -10,11 +10,11 @@ export type WpPost = {
   date: string;
   title: WpRendered;
   excerpt?: WpRendered;
-  _embedded?: any; // <- necesario para leer imagen destacada
+  _embedded?: any; // necesario para leer imagen destacada
 };
 
 // Obtiene los últimos posts
-export async function fetchLatestPosts(perPage = 5, page = 1, embed = true) {
+export async function fetchLatestPosts(perPage = 6, page = 1, embed = true) {
   const params = new URLSearchParams();
   params.set("per_page", String(perPage));
   params.set("page", String(page));
@@ -29,8 +29,35 @@ export async function fetchLatestPosts(perPage = 5, page = 1, embed = true) {
   return { data: data as WpPost[], total, totalPages };
 }
 
-// Lee la imagen destacada desde _embedded
+/**
+ * Intenta obtener la URL de la imagen destacada de varias formas.
+ * WP a veces no rellena source_url pero sí media_details.sizes.* o guid.rendered.
+ */
 export function featuredImageFromEmbedded(post: WpPost): string | null {
   const media = post?._embedded?.["wp:featuredmedia"]?.[0];
-  return media?.source_url || null;
+  if (!media) return null;
+
+  // 1) Tamaños comunes (prioriza medios optimizados)
+  const sizes = media?.media_details?.sizes;
+  if (sizes && typeof sizes === "object") {
+    // preferimos 'large' > 'medium_large' > 'medium' > 'full'
+    const preferredOrder = ["large", "medium_large", "medium", "full", "thumbnail"];
+    for (const key of preferredOrder) {
+      const candidate = sizes[key]?.source_url;
+      if (candidate) return candidate;
+    }
+    // si no encaja el orden, prueba el primero que tenga source_url
+    for (const k of Object.keys(sizes)) {
+      const candidate = sizes[k]?.source_url;
+      if (candidate) return candidate;
+    }
+  }
+
+  // 2) Campo directo
+  if (media?.source_url) return media.source_url;
+
+  // 3) GUID (muchos WP lo traen aquí)
+  if (media?.guid?.rendered) return media.guid.rendered;
+
+  return null;
 }

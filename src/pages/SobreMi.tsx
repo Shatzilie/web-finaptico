@@ -23,7 +23,7 @@ const SobreMi = () => {
               Hola, soy Fátima, fundadora de Finaptico.
             </h1>
             <p className="text-body text-text-secondary leading-relaxed">
-              Soy especializada en finanzas. Me muevo bien con empresas tech y también con pymes tradicionales.
+              Soy asistente virtual especializada en finanzas. Me muevo bien con empresas tech y también con pymes tradicionales.
             </p>
           </div>
         </div>

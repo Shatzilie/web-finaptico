@@ -56,13 +56,11 @@ function buildTocAndAnchors(html: string): { html: string; toc: TocItem[] } {
 
     let id = base;
     let inc = 2;
-    while (seen.has(id)) {
-      id = `${base}-${inc++}`;
-    }
+    while (seen.has(id)) id = `${base}-${inc++}`;
     seen.add(id);
     h.id = id;
 
-    // añade un enlace de ancla pequeño al lado del título (opcional, UX)
+    // ancla visible al hover
     const anchor = document.createElement("a");
     anchor.href = `#${id}`;
     anchor.setAttribute("aria-label", "Enlace a este apartado");
@@ -75,6 +73,8 @@ function buildTocAndAnchors(html: string): { html: string; toc: TocItem[] } {
 
   return { html: container.innerHTML, toc };
 }
+
+const TOC_LS_KEY = "finaptico_toc_collapsed";
 
 const BlogPost: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -91,6 +91,20 @@ const BlogPost: React.FC = () => {
   // TOC + HTML con anchors
   const [toc, setToc] = React.useState<TocItem[]>([]);
   const [htmlWithAnchors, setHtmlWithAnchors] = React.useState<string>("");
+
+  // Scrollspy
+  const [activeId, setActiveId] = React.useState<string>("");
+
+  // TOC colapsable
+  const [tocOpen, setTocOpen] = React.useState<boolean>(() => {
+    if (typeof window === "undefined") return true;
+    const raw = localStorage.getItem(TOC_LS_KEY);
+    return raw ? raw !== "1" : true; // "1" = colapsado
+  });
+
+  React.useEffect(() => {
+    localStorage.setItem(TOC_LS_KEY, tocOpen ? "0" : "1");
+  }, [tocOpen]);
 
   // Carga principal
   React.useEffect(() => {
@@ -203,6 +217,42 @@ const BlogPost: React.FC = () => {
     })();
   }, [post]);
 
+  // Scrollspy con IntersectionObserver
+  React.useEffect(() => {
+    const root = document.querySelector(".wp-article");
+    if (!root) return;
+    const headings: Element[] = Array.from(root.querySelectorAll("h2[id], h3[id]"));
+    if (headings.length === 0) return;
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        // Ordena por intersección y elige la más visible hacia arriba
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visible[0]?.target instanceof HTMLElement) {
+          setActiveId(visible[0].target.id);
+        } else {
+          // fallback: busca el primero que esté por encima del viewport
+          const tops = headings
+            .map((h) => ({ id: (h as HTMLElement).id, top: (h as HTMLElement).getBoundingClientRect().top }))
+            .filter((x) => x.top <= 120) // margen por el header
+            .sort((a, b) => b.top - a.top);
+          if (tops[0]?.id) setActiveId(tops[0].id);
+        }
+      },
+      {
+        // margen superior para no quedar oculto bajo el header
+        rootMargin: "-96px 0px -60% 0px",
+        threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
+      }
+    );
+
+    headings.forEach((h) => io.observe(h));
+    return () => io.disconnect();
+  }, [htmlWithAnchors]);
+
   const dateFmt = (iso?: string) =>
     iso
       ? new Date(iso).toLocaleDateString("es-ES", { day: "2-digit", month: "long", year: "numeric" })
@@ -266,7 +316,7 @@ const BlogPost: React.FC = () => {
 
                 <p className="text-text-muted mb-6">{dateFmt(post.date)}</p>
 
-                {/* Imagen destacada (704x384 visibles, sin recorte y ocupando toda la caja) */}
+                {/* Imagen destacada (704x384, completa) */}
                 {img && (
                   <div
                     className="w-full rounded-2xl overflow-hidden mb-8 bg-section-light"
@@ -284,30 +334,53 @@ const BlogPost: React.FC = () => {
 
                 {/* Layout 2 columnas: TOC sticky a la derecha en desktop */}
                 <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8">
-                  {/* CONTENIDO WP con wrapper 'wp-article' para estilos de headings y anclas */}
+                  {/* CONTENIDO WP */}
                   <div
                     className="wp-article text-text-primary leading-relaxed"
                     dangerouslySetInnerHTML={{ __html: htmlWithAnchors || post.content?.rendered || "" }}
                   />
 
-                  {/* TOC */}
+                  {/* TOC (colapsable + scrollspy) */}
                   {toc.length > 0 && (
-                    <aside className="lg:sticky lg:top-24 h-max border border-border/40 rounded-xl p-4 bg-white/60">
-                      <h2 className="text-sm font-semibold text-text-primary mb-2">Contenido</h2>
-                      <nav className="text-sm">
-                        <ul className="space-y-1">
-                          {toc.map((item) => (
-                            <li key={item.id} className={item.level === 3 ? "pl-4" : ""}>
-                              <a
-                                href={`#${item.id}`}
-                                className="block text-text-secondary hover:text-primary hover:underline"
-                              >
-                                {item.text}
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      </nav>
+                    <aside className="lg:sticky lg:top-24 h-max border border-border/40 rounded-xl bg-white/60">
+                      <button
+                        type="button"
+                        className="w-full flex items-center justify-between px-4 py-3 border-b border-border/30"
+                        onClick={() => setTocOpen((v) => !v)}
+                        aria-expanded={tocOpen}
+                        aria-controls="toc-list"
+                      >
+                        <span className="text-sm font-semibold text-text-primary">Contenido</span>
+                        <span
+                          className={`i-chevron transition-transform ${
+                            tocOpen ? "rotate-0" : "-rotate-90"
+                          }`}
+                          aria-hidden="true"
+                        >
+                          ▸
+                        </span>
+                      </button>
+
+                      {tocOpen && (
+                        <nav id="toc-list" className="text-sm p-4">
+                          <ul className="space-y-1">
+                            {toc.map((item) => (
+                              <li key={item.id} className={item.level === 3 ? "pl-4" : ""}>
+                                <a
+                                  href={`#${item.id}`}
+                                  className={`block rounded px-2 py-1 transition-colors ${
+                                    activeId === item.id
+                                      ? "bg-[#F1F0FF] text-[#6C5CE7] font-semibold"
+                                      : "text-text-secondary hover:text-primary hover:bg-[#F2FFFB]"
+                                  }`}
+                                >
+                                  {item.text}
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </nav>
+                      )}
                     </aside>
                   )}
                 </div>
@@ -380,9 +453,9 @@ const BlogPost: React.FC = () => {
                             to={`/blog/${r.slug}`}
                             className="border border-border/40 rounded-xl overflow-hidden hover:border-primary transition-colors"
                           >
-                            <div className="w-full h-40 bg-section-light overflow-hidden">
+                            <div className="w-full bg-section-light overflow-hidden" style={{ aspectRatio: "704/384" }}>
                               {rImg ? (
-                                <img src={rImg} alt={stripHtml(r.title?.rendered)} className="w-full h-full object-cover" loading="lazy" />
+                                <img src={rImg} alt={stripHtml(r.title?.rendered)} className="w-full h-full object-contain" loading="lazy" />
                               ) : (
                                 <div className="w-full h-full flex items-center justify-center text-3xl">📝</div>
                               )}
@@ -458,7 +531,6 @@ const BlogPost: React.FC = () => {
         .wp-article th { background: #F9FAFB; text-align: left; }
         .wp-article a { color: #6C5CE7; text-decoration: underline; text-underline-offset: 2px; }
         .wp-article a:hover { color: #00BFA5; }
-
         .wp-article code {
           background: #F2F4F7; padding: 0.15rem 0.35rem; border-radius: 0.375rem;
           font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 0.9em;
@@ -466,6 +538,9 @@ const BlogPost: React.FC = () => {
         .wp-article pre {
           background: #0B1220; color: #F8FAFC; padding: 1rem 1.25rem; border-radius: 0.75rem; overflow: auto; margin: 1rem 0;
         }
+
+        /* Icono "▸" (simple) */
+        .i-chevron { display: inline-block; transform-origin: center; }
       `}</style>
 
       <Footer />

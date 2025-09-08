@@ -60,7 +60,6 @@ function buildTocAndAnchors(html: string): { html: string; toc: TocItem[] } {
     seen.add(id);
     h.id = id;
 
-    // ancla visible al hover
     const anchor = document.createElement("a");
     anchor.href = `#${id}`;
     anchor.setAttribute("aria-label", "Enlace a este apartado");
@@ -75,6 +74,64 @@ function buildTocAndAnchors(html: string): { html: string; toc: TocItem[] } {
 }
 
 const TOC_LS_KEY = "finaptico_toc_collapsed";
+
+// Reusable TOC component (se usa en móvil y en desktop)
+function TocBox({
+  toc,
+  activeId,
+  tocOpen,
+  setTocOpen,
+  id = "toc-list",
+  className = "",
+}: {
+  toc: TocItem[];
+  activeId: string;
+  tocOpen: boolean;
+  setTocOpen: (v: boolean) => void;
+  id?: string;
+  className?: string;
+}) {
+  return (
+    <aside className={`border border-border/40 rounded-xl bg-white/60 ${className}`}>
+      <button
+        type="button"
+        className="w-full flex items-center justify-between px-4 py-3 border-b border-border/30"
+        onClick={() => setTocOpen(!tocOpen)}
+        aria-expanded={tocOpen}
+        aria-controls={id}
+      >
+        <span className="text-sm font-semibold text-text-primary">Contenido</span>
+        <span
+          className={`i-chevron transition-transform ${tocOpen ? "rotate-0" : "-rotate-90"}`}
+          aria-hidden="true"
+        >
+          ▸
+        </span>
+      </button>
+
+      {tocOpen && (
+        <nav id={id} className="text-sm p-4">
+          <ul className="space-y-1">
+            {toc.map((item) => (
+              <li key={item.id} className={item.level === 3 ? "pl-4" : ""}>
+                <a
+                  href={`#${item.id}`}
+                  className={`block rounded px-2 py-1 transition-colors ${
+                    activeId === item.id
+                      ? "bg-[#F1F0FF] text-[#6C5CE7] font-semibold"
+                      : "text-text-secondary hover:text-primary hover:bg-[#F2FFFB]"
+                  }`}
+                >
+                  {item.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+    </aside>
+  );
+}
 
 const BlogPost: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -95,13 +152,14 @@ const BlogPost: React.FC = () => {
   // Scrollspy
   const [activeId, setActiveId] = React.useState<string>("");
 
-  // TOC colapsable
+  // TOC colapsable (recuerda estado)
   const [tocOpen, setTocOpen] = React.useState<boolean>(() => {
     if (typeof window === "undefined") return true;
     const raw = localStorage.getItem(TOC_LS_KEY);
-    return raw ? raw !== "1" : true; // "1" = colapsado
+    // Por UX: en móvil lo iniciamos colapsado si no hay preferencia guardada
+    const defaultOpen = window.innerWidth < 1024 ? false : true;
+    return raw ? raw !== "1" : defaultOpen; // "1" = colapsado
   });
-
   React.useEffect(() => {
     localStorage.setItem(TOC_LS_KEY, tocOpen ? "0" : "1");
   }, [tocOpen]);
@@ -122,7 +180,7 @@ const BlogPost: React.FC = () => {
     })();
   }, [slug]);
 
-  // Procesa contenido para TOC (H2/H3) en cuanto llega el post
+  // Procesa contenido para TOC al recibir el post
   React.useEffect(() => {
     if (!post?.content?.rendered) {
       setHtmlWithAnchors("");
@@ -134,7 +192,7 @@ const BlogPost: React.FC = () => {
     setToc(toc);
   }, [post?.content?.rendered]);
 
-  // Carga dependiente: adyacentes + relacionados + SEO
+  // Dependencias: adyacentes, relacionados, SEO
   React.useEffect(() => {
     (async () => {
       if (!post) return;
@@ -217,7 +275,7 @@ const BlogPost: React.FC = () => {
     })();
   }, [post]);
 
-  // Scrollspy con IntersectionObserver
+  // Scrollspy
   React.useEffect(() => {
     const root = document.querySelector(".wp-article");
     if (!root) return;
@@ -226,7 +284,6 @@ const BlogPost: React.FC = () => {
 
     const io = new IntersectionObserver(
       (entries) => {
-        // Ordena por intersección y elige la más visible hacia arriba
         const visible = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
@@ -234,19 +291,14 @@ const BlogPost: React.FC = () => {
         if (visible[0]?.target instanceof HTMLElement) {
           setActiveId(visible[0].target.id);
         } else {
-          // fallback: busca el primero que esté por encima del viewport
           const tops = headings
             .map((h) => ({ id: (h as HTMLElement).id, top: (h as HTMLElement).getBoundingClientRect().top }))
-            .filter((x) => x.top <= 120) // margen por el header
+            .filter((x) => x.top <= 120)
             .sort((a, b) => b.top - a.top);
           if (tops[0]?.id) setActiveId(tops[0].id);
         }
       },
-      {
-        // margen superior para no quedar oculto bajo el header
-        rootMargin: "-96px 0px -60% 0px",
-        threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
-      }
+      { rootMargin: "-96px 0px -60% 0px", threshold: [0, 0.1, 0.25, 0.5, 0.75, 1] }
     );
 
     headings.forEach((h) => io.observe(h));
@@ -319,7 +371,7 @@ const BlogPost: React.FC = () => {
                 {/* Imagen destacada (704x384, completa) */}
                 {img && (
                   <div
-                    className="w-full rounded-2xl overflow-hidden mb-8 bg-section-light"
+                    className="w-full rounded-2xl overflow-hidden mb-6 bg-section-light"
                     style={{ aspectRatio: "704 / 384" }}
                   >
                     <img
@@ -332,7 +384,19 @@ const BlogPost: React.FC = () => {
                   </div>
                 )}
 
-                {/* Layout 2 columnas: TOC sticky a la derecha en desktop */}
+                {/* === TOC en MÓVIL: debajo de la imagen destacada === */}
+                {toc.length > 0 && (
+                  <TocBox
+                    toc={toc}
+                    activeId={activeId}
+                    tocOpen={tocOpen}
+                    setTocOpen={setTocOpen}
+                    id="toc-list-mobile"
+                    className="mb-8 lg:hidden"
+                  />
+                )}
+
+                {/* Layout 2 columnas: contenido + TOC sticky en desktop */}
                 <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8">
                   {/* CONTENIDO WP */}
                   <div
@@ -340,48 +404,16 @@ const BlogPost: React.FC = () => {
                     dangerouslySetInnerHTML={{ __html: htmlWithAnchors || post.content?.rendered || "" }}
                   />
 
-                  {/* TOC (colapsable + scrollspy) */}
+                  {/* TOC en DESKTOP (sticky a la derecha) */}
                   {toc.length > 0 && (
-                    <aside className="lg:sticky lg:top-24 h-max border border-border/40 rounded-xl bg-white/60">
-                      <button
-                        type="button"
-                        className="w-full flex items-center justify-between px-4 py-3 border-b border-border/30"
-                        onClick={() => setTocOpen((v) => !v)}
-                        aria-expanded={tocOpen}
-                        aria-controls="toc-list"
-                      >
-                        <span className="text-sm font-semibold text-text-primary">Contenido</span>
-                        <span
-                          className={`i-chevron transition-transform ${
-                            tocOpen ? "rotate-0" : "-rotate-90"
-                          }`}
-                          aria-hidden="true"
-                        >
-                          ▸
-                        </span>
-                      </button>
-
-                      {tocOpen && (
-                        <nav id="toc-list" className="text-sm p-4">
-                          <ul className="space-y-1">
-                            {toc.map((item) => (
-                              <li key={item.id} className={item.level === 3 ? "pl-4" : ""}>
-                                <a
-                                  href={`#${item.id}`}
-                                  className={`block rounded px-2 py-1 transition-colors ${
-                                    activeId === item.id
-                                      ? "bg-[#F1F0FF] text-[#6C5CE7] font-semibold"
-                                      : "text-text-secondary hover:text-primary hover:bg-[#F2FFFB]"
-                                  }`}
-                                >
-                                  {item.text}
-                                </a>
-                              </li>
-                            ))}
-                          </ul>
-                        </nav>
-                      )}
-                    </aside>
+                    <TocBox
+                      toc={toc}
+                      activeId={activeId}
+                      tocOpen={tocOpen}
+                      setTocOpen={setTocOpen}
+                      id="toc-list-desktop"
+                      className="hidden lg:block lg:sticky lg:top-24 h-max"
+                    />
                   )}
                 </div>
 
@@ -482,34 +514,24 @@ const BlogPost: React.FC = () => {
 
       {/* ====== ESTILOS (headings + anclas + TOC + scroll offset) ====== */}
       <style>{`
-        /* Wrapper del contenido del post */
         .wp-article { font-size: 1.0625rem; line-height: 1.75; }
         .wp-article p { margin: 1rem 0; }
 
-        /* Offsets para que al saltar con #id no queden los títulos ocultos bajo el header */
         .wp-article h2[id], .wp-article h3[id], .wp-article h4[id], .wp-article h5[id], .wp-article h6[id] {
           scroll-margin-top: 96px;
         }
 
-        /* Jerarquía H2–H6 */
         .wp-article h2, .wp-article h3, .wp-article h4, .wp-article h5, .wp-article h6 {
           color: var(--color-text-primary, #101828);
           font-weight: 700; line-height: 1.25; margin: 2.25rem 0 0.75rem;
           position: relative;
         }
-        .wp-article h2 {
-          font-size: clamp(1.5rem, 2.2vw, 2rem);
-          padding-left: 0.75rem; border-left: 4px solid #6C5CE7;
-        }
-        .wp-article h3 {
-          font-size: clamp(1.25rem, 1.8vw, 1.5rem);
-          padding-left: 0.6rem; border-left: 3px solid #00BFA5;
-        }
+        .wp-article h2 { font-size: clamp(1.5rem, 2.2vw, 2rem); padding-left: 0.75rem; border-left: 4px solid #6C5CE7; }
+        .wp-article h3 { font-size: clamp(1.25rem, 1.8vw, 1.5rem); padding-left: 0.6rem; border-left: 3px solid #00BFA5; }
         .wp-article h4 { font-size: clamp(1.125rem, 1.4vw, 1.25rem); border-bottom: 1px solid rgba(16,24,40,0.08); padding-bottom: 0.25rem; }
         .wp-article h5 { font-size: 1.0625rem; letter-spacing: 0.02em; text-transform: uppercase; color: rgba(16,24,40,0.82); }
         .wp-article h6 { font-size: 0.95rem; letter-spacing: 0.03em; text-transform: uppercase; color: rgba(16,24,40,0.72); }
 
-        /* Anchor ¶ al lado del heading (aparece al hover) */
         .wp-article .wp-anchor {
           margin-left: 0.5rem; text-decoration: none; opacity: 0; transition: opacity .2s ease;
           color: #98A2B3; font-weight: 400;
@@ -518,28 +540,18 @@ const BlogPost: React.FC = () => {
         .wp-article h3:hover .wp-anchor,
         .wp-article h4:hover .wp-anchor { opacity: 1; }
 
-        /* Listas, citas, imágenes, tablas, código */
         .wp-article ul, .wp-article ol { margin: 1rem 0 1rem 1.25rem; }
         .wp-article li { margin: 0.25rem 0; }
-        .wp-article blockquote {
-          margin: 1.25rem 0; padding: 0.75rem 1rem; border-left: 4px solid #6C5CE7;
-          background: #F8F7FF; color: #475467;
-        }
+        .wp-article blockquote { margin: 1.25rem 0; padding: 0.75rem 1rem; border-left: 4px solid #6C5CE7; background: #F8F7FF; color: #475467; }
         .wp-article img { max-width: 100%; height: auto; border-radius: 0.75rem; display: block; margin: 1rem auto; }
         .wp-article table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.95rem; }
         .wp-article th, .wp-article td { border: 1px solid rgba(16,24,40,0.12); padding: 0.5rem 0.75rem; }
         .wp-article th { background: #F9FAFB; text-align: left; }
         .wp-article a { color: #6C5CE7; text-decoration: underline; text-underline-offset: 2px; }
         .wp-article a:hover { color: #00BFA5; }
-        .wp-article code {
-          background: #F2F4F7; padding: 0.15rem 0.35rem; border-radius: 0.375rem;
-          font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 0.9em;
-        }
-        .wp-article pre {
-          background: #0B1220; color: #F8FAFC; padding: 1rem 1.25rem; border-radius: 0.75rem; overflow: auto; margin: 1rem 0;
-        }
+        .wp-article code { background: #F2F4F7; padding: 0.15rem 0.35rem; border-radius: 0.375rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 0.9em; }
+        .wp-article pre { background: #0B1220; color: #F8FAFC; padding: 1rem 1.25rem; border-radius: 0.75rem; overflow: auto; margin: 1rem 0; }
 
-        /* Icono "▸" (simple) */
         .i-chevron { display: inline-block; transform-origin: center; }
       `}</style>
 

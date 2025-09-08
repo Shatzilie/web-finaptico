@@ -215,17 +215,21 @@ const Blog = () => {
               {renderedPosts.map((post) => (
                 <article key={post.id} className="card-hover border border-border/30 group">
                   <div className="space-y-4">
-                    <div className="w-full h-48 bg-section-light rounded-lg flex items-center justify-center text-4xl overflow-hidden">
+                    {/* Media en cards del blog (mantener imagen entera 704x384 adaptada) */}
+                    <div
+                      className="w-full rounded-lg flex items-center justify-center overflow-hidden bg-section-light"
+                      style={{ aspectRatio: "704 / 384" }}
+                    >
                       {("imageUrl" in post && post.imageUrl) ? (
                         <img
                           src={post.imageUrl as string}
                           alt={post.title}
-                          className="w-full h-full object-cover"
+                          className="max-w-full max-h-full object-contain"
                           loading="lazy"
                           referrerPolicy="no-referrer-when-downgrade"
                         />
                       ) : (
-                        <span>{(post as any).image ?? "📝"}</span>
+                        <span className="text-4xl">{(post as any).image ?? "📝"}</span>
                       )}
                     </div>
 

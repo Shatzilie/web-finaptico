@@ -170,26 +170,24 @@ export async function fetchRelatedPosts(post: WpPost, limit = 6) {
   return data as WpPost[];
 }
 
-// --- Post anterior / siguiente (por fecha) ---
+// --- Post anterior / siguiente (por fecha GLOBAL, sin filtrar por categoría) ---
 export async function fetchAdjacentPost(post: WpPost, direction: "prev" | "next") {
-  // prev = más antiguo (antes); next = más reciente (después)
   const params = new URLSearchParams();
   params.set("per_page", "1");
   params.set("_embed", "1");
   params.set("orderby", "date");
 
   if (direction === "prev") {
-    params.set("order", "desc");           // el más cercano ANTES
+    // post anterior = el inmediatamente ANTERIOR en fecha (más antiguo)
+    params.set("order", "desc");
     params.set("before", post.date);
   } else {
-    params.set("order", "asc");            // el más cercano DESPUÉS
+    // post siguiente = el inmediatamente POSTERIOR en fecha (más nuevo)
+    params.set("order", "asc");
     params.set("after", post.date);
   }
-  params.set("exclude", String(post.id));
 
-  // si tienes categorías, puedes mantener temática
-  const cats = postCategoryIds(post);
-  if (cats[0]) params.set("categories", String(cats[0]));
+  params.set("exclude", String(post.id));
 
   const url = `${BASE}/posts?${params.toString()}`;
   const res = await fetch(url, { headers: { Accept: "application/json" } });

@@ -266,12 +266,16 @@ const BlogPost: React.FC = () => {
 
                 <p className="text-text-muted mb-6">{dateFmt(post.date)}</p>
 
+                {/* Imagen destacada (704x384 visibles, sin recorte) */}
                 {img && (
-                  <div className="w-full h-80 bg-section-light rounded-2xl overflow-hidden mb-8">
+                  <div
+                    className="w-full rounded-2xl overflow-hidden mb-8 bg-section-light flex items-center justify-center"
+                    style={{ aspectRatio: "704 / 384" }} // mantiene proporción exacta
+                  >
                     <img
                       src={img}
                       alt={stripHtml(post.title?.rendered)}
-                      className="w-full h-full object-cover"
+                      className="max-w-full max-h-full object-contain"
                       loading="lazy"
                       referrerPolicy="no-referrer-when-downgrade"
                     />

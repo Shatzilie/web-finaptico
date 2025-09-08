@@ -328,9 +328,17 @@ const Blog = () => {
                   />
                   <label htmlFor="privacy-newsletter" className="text-sm text-text-secondary leading-5 cursor-pointer">
                     He leído y acepto la{" "}
-                    <Link to="/privacidad" className="text-primary hover:underline font-medium">Política de Privacidad</Link>
+                    <Link to="/politica-privacidad" className="text-primary hover:underline font-medium">Política de Privacidad</Link>
+                    {" "}y el{" "}
+                    <Link to="/aviso-legal" className="text-primary hover:underline font-medium">Aviso Legal</Link>
                   </label>
                 </div>
+                <p className="text-xs text-text-muted leading-4 mt-2">
+                  Al suscribirte aceptas recibir comunicaciones comerciales de Finaptico sobre servicios de asesoría financiera. 
+                  Puedes darte de baja en cualquier momento. Responsable: Finaptico SL. 
+                  Finalidad: envío de newsletter y comunicaciones comerciales. 
+                  Legitimación: consentimiento del interesado. No se cederán datos a terceros salvo obligación legal.
+                </p>
               </div>
             </div>
           </div>

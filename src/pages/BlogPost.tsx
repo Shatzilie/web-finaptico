@@ -21,6 +21,61 @@ function stripHtml(html?: string) {
   return (div.textContent || div.innerText || "").trim();
 }
 
+// ---------- TOC utils ----------
+type TocItem = { id: string; text: string; level: 2 | 3 };
+
+function slugify(input: string) {
+  return input
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+}
+
+function buildTocAndAnchors(html: string): { html: string; toc: TocItem[] } {
+  const container = document.createElement("div");
+  container.innerHTML = html;
+
+  const seen = new Set<string>();
+  const toc: TocItem[] = [];
+
+  const headings = Array.from(
+    container.querySelectorAll("h2, h3")
+  ) as HTMLHeadingElement[];
+
+  for (const h of headings) {
+    const level: 2 | 3 = h.tagName.toLowerCase() === "h2" ? 2 : 3;
+    const text = (h.textContent || "").trim();
+    if (!text) continue;
+
+    let base = slugify(text);
+    if (!base) base = (level === 2 ? "h2" : "h3") + "-" + Math.random().toString(36).slice(2, 7);
+
+    let id = base;
+    let inc = 2;
+    while (seen.has(id)) {
+      id = `${base}-${inc++}`;
+    }
+    seen.add(id);
+    h.id = id;
+
+    // añade un enlace de ancla pequeño al lado del título (opcional, UX)
+    const anchor = document.createElement("a");
+    anchor.href = `#${id}`;
+    anchor.setAttribute("aria-label", "Enlace a este apartado");
+    anchor.className = "wp-anchor";
+    anchor.textContent = "¶";
+    h.appendChild(anchor);
+
+    toc.push({ id, text, level });
+  }
+
+  return { html: container.innerHTML, toc };
+}
+
 const BlogPost: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
@@ -32,6 +87,10 @@ const BlogPost: React.FC = () => {
   const [prevPost, setPrevPost] = React.useState<WpPost | null>(null);
   const [nextPost, setNextPost] = React.useState<WpPost | null>(null);
   const [related, setRelated] = React.useState<WpPost[]>([]);
+
+  // TOC + HTML con anchors
+  const [toc, setToc] = React.useState<TocItem[]>([]);
+  const [htmlWithAnchors, setHtmlWithAnchors] = React.useState<string>("");
 
   // Carga principal
   React.useEffect(() => {
@@ -48,6 +107,18 @@ const BlogPost: React.FC = () => {
       }
     })();
   }, [slug]);
+
+  // Procesa contenido para TOC (H2/H3) en cuanto llega el post
+  React.useEffect(() => {
+    if (!post?.content?.rendered) {
+      setHtmlWithAnchors("");
+      setToc([]);
+      return;
+    }
+    const { html, toc } = buildTocAndAnchors(post.content.rendered);
+    setHtmlWithAnchors(html);
+    setToc(toc);
+  }, [post?.content?.rendered]);
 
   // Carga dependiente: adyacentes + relacionados + SEO
   React.useEffect(() => {
@@ -173,7 +244,8 @@ const BlogPost: React.FC = () => {
             {error && <p className="text-center text-red-600 py-16">{error}</p>}
 
             {post && (
-              <article className="max-w-4xl mx-auto">
+              <article className="max-w-5xl mx-auto">
+                {/* Encabezado */}
                 {cats.length > 0 && (
                   <div className="flex flex-wrap gap-2 mb-4">
                     {cats.map((c) => (
@@ -206,11 +278,35 @@ const BlogPost: React.FC = () => {
                   </div>
                 )}
 
-                {/* CONTENIDO WP con wrapper 'wp-article' para estilos de headings */}
-                <div
-                  className="wp-article text-text-primary leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: post.content?.rendered || "" }}
-                />
+                {/* Layout 2 columnas: TOC sticky a la derecha en desktop */}
+                <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8">
+                  {/* CONTENIDO WP con wrapper 'wp-article' para estilos de headings y anclas */}
+                  <div
+                    className="wp-article text-text-primary leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: htmlWithAnchors || post.content?.rendered || "" }}
+                  />
+
+                  {/* TOC */}
+                  {toc.length > 0 && (
+                    <aside className="lg:sticky lg:top-24 h-max border border-border/40 rounded-xl p-4 bg-white/60">
+                      <h2 className="text-sm font-semibold text-text-primary mb-2">Contenido</h2>
+                      <nav className="text-sm">
+                        <ul className="space-y-1">
+                          {toc.map((item) => (
+                            <li key={item.id} className={item.level === 3 ? "pl-4" : ""}>
+                              <a
+                                href={`#${item.id}`}
+                                className="block text-text-secondary hover:text-primary hover:underline"
+                              >
+                                {item.text}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </nav>
+                    </aside>
+                  )}
+                </div>
 
                 {/* Author box (E-E-A-T) */}
                 <section className="mt-10 p-6 rounded-2xl border border-border/50 bg-section-light">
@@ -307,110 +403,64 @@ const BlogPost: React.FC = () => {
         </section>
       </main>
 
-      {/* ====== ESTILOS SCOPED PARA HEADINGS H2–H6 ====== */}
+      {/* ====== ESTILOS (headings + anclas + TOC + scroll offset) ====== */}
       <style>{`
         /* Wrapper del contenido del post */
-        .wp-article {
-          font-size: 1.0625rem; /* ~17px */
-          line-height: 1.75;
-        }
+        .wp-article { font-size: 1.0625rem; line-height: 1.75; }
         .wp-article p { margin: 1rem 0; }
 
-        /* H2–H6 con jerarquía visual clara */
-        .wp-article h2,
-        .wp-article h3,
-        .wp-article h4,
-        .wp-article h5,
-        .wp-article h6 {
+        /* Offsets para que al saltar con #id no queden los títulos ocultos bajo el header */
+        .wp-article h2[id], .wp-article h3[id], .wp-article h4[id], .wp-article h5[id], .wp-article h6[id] {
+          scroll-margin-top: 96px;
+        }
+
+        /* Jerarquía H2–H6 */
+        .wp-article h2, .wp-article h3, .wp-article h4, .wp-article h5, .wp-article h6 {
           color: var(--color-text-primary, #101828);
-          font-weight: 700;
-          line-height: 1.25;
-          margin: 2.25rem 0 0.75rem;
+          font-weight: 700; line-height: 1.25; margin: 2.25rem 0 0.75rem;
+          position: relative;
         }
         .wp-article h2 {
           font-size: clamp(1.5rem, 2.2vw, 2rem);
-          padding-left: 0.75rem;
-          border-left: 4px solid #6C5CE7; /* violeta activo */
+          padding-left: 0.75rem; border-left: 4px solid #6C5CE7;
         }
         .wp-article h3 {
           font-size: clamp(1.25rem, 1.8vw, 1.5rem);
-          padding-left: 0.6rem;
-          border-left: 3px solid #00BFA5; /* verde menta */
+          padding-left: 0.6rem; border-left: 3px solid #00BFA5;
         }
-        .wp-article h4 {
-          font-size: clamp(1.125rem, 1.4vw, 1.25rem);
-          text-transform: none;
-          border-bottom: 1px solid rgba(16, 24, 40, 0.08);
-          padding-bottom: 0.25rem;
-        }
-        .wp-article h5 {
-          font-size: 1.0625rem;
-          letter-spacing: 0.02em;
-          text-transform: uppercase;
-          color: rgba(16, 24, 40, 0.82);
-        }
-        .wp-article h6 {
-          font-size: 0.95rem;
-          letter-spacing: 0.03em;
-          text-transform: uppercase;
-          color: rgba(16, 24, 40, 0.72);
-        }
+        .wp-article h4 { font-size: clamp(1.125rem, 1.4vw, 1.25rem); border-bottom: 1px solid rgba(16,24,40,0.08); padding-bottom: 0.25rem; }
+        .wp-article h5 { font-size: 1.0625rem; letter-spacing: 0.02em; text-transform: uppercase; color: rgba(16,24,40,0.82); }
+        .wp-article h6 { font-size: 0.95rem; letter-spacing: 0.03em; text-transform: uppercase; color: rgba(16,24,40,0.72); }
 
-        /* Listas y citas para mejor legibilidad */
+        /* Anchor ¶ al lado del heading (aparece al hover) */
+        .wp-article .wp-anchor {
+          margin-left: 0.5rem; text-decoration: none; opacity: 0; transition: opacity .2s ease;
+          color: #98A2B3; font-weight: 400;
+        }
+        .wp-article h2:hover .wp-anchor,
+        .wp-article h3:hover .wp-anchor,
+        .wp-article h4:hover .wp-anchor { opacity: 1; }
+
+        /* Listas, citas, imágenes, tablas, código */
         .wp-article ul, .wp-article ol { margin: 1rem 0 1rem 1.25rem; }
         .wp-article li { margin: 0.25rem 0; }
         .wp-article blockquote {
-          margin: 1.25rem 0;
-          padding: 0.75rem 1rem;
-          border-left: 4px solid #6C5CE7;
-          background: #F8F7FF;
-          color: #475467;
+          margin: 1.25rem 0; padding: 0.75rem 1rem; border-left: 4px solid #6C5CE7;
+          background: #F8F7FF; color: #475467;
         }
-
-        /* Imágenes dentro del contenido */
-        .wp-article img {
-          max-width: 100%;
-          height: auto;
-          border-radius: 0.75rem;
-          display: block;
-          margin: 1rem auto;
-        }
-
-        /* Tablas básicas */
-        .wp-article table {
-          width: 100%;
-          border-collapse: collapse;
-          margin: 1rem 0;
-          font-size: 0.95rem;
-        }
-        .wp-article th, .wp-article td {
-          border: 1px solid rgba(16, 24, 40, 0.12);
-          padding: 0.5rem 0.75rem;
-        }
-        .wp-article th {
-          background: #F9FAFB;
-          text-align: left;
-        }
-
-        /* Enlaces en contenido */
+        .wp-article img { max-width: 100%; height: auto; border-radius: 0.75rem; display: block; margin: 1rem auto; }
+        .wp-article table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.95rem; }
+        .wp-article th, .wp-article td { border: 1px solid rgba(16,24,40,0.12); padding: 0.5rem 0.75rem; }
+        .wp-article th { background: #F9FAFB; text-align: left; }
         .wp-article a { color: #6C5CE7; text-decoration: underline; text-underline-offset: 2px; }
         .wp-article a:hover { color: #00BFA5; }
 
-        /* Código inline / bloques */
         .wp-article code {
-          background: #F2F4F7;
-          padding: 0.15rem 0.35rem;
-          border-radius: 0.375rem;
-          font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-          font-size: 0.9em;
+          background: #F2F4F7; padding: 0.15rem 0.35rem; border-radius: 0.375rem;
+          font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 0.9em;
         }
         .wp-article pre {
-          background: #0B1220;
-          color: #F8FAFC;
-          padding: 1rem 1.25rem;
-          border-radius: 0.75rem;
-          overflow: auto;
-          margin: 1rem 0;
+          background: #0B1220; color: #F8FAFC; padding: 1rem 1.25rem; border-radius: 0.75rem; overflow: auto; margin: 1rem 0;
         }
       `}</style>
 

@@ -114,13 +114,14 @@ export function featuredImageFromEmbedded(post: WpPost): string | null {
   if (!media) return null;
   const sizes = media?.media_details?.sizes;
   if (sizes && typeof sizes === "object") {
-    const order = ["large", "medium_large", "medium", "full", "thumbnail"];
+    // 👉 preferimos máxima calidad para que no quede pequeña
+    const order = ["full", "large", "medium_large", "medium", "thumbnail"];
     for (const key of order) {
       const candidate = toAbsoluteUrl(sizes[key]?.source_url);
       if (candidate) return candidate;
     }
     for (const k of Object.keys(sizes)) {
-      const candidate = toAbsoluteUrl(sizes[k]?.source_url);
+      const candidate = toAbsoluteUrl((sizes as any)[k]?.source_url);
       if (candidate) return candidate;
     }
   }

@@ -215,37 +215,7 @@ export type Database = {
       }
     }
     Views: {
-      v_contact_consents_audit: {
-        Row: {
-          consent_created_at: string | null
-          consent_id: string | null
-          contact_created_at: string | null
-          contact_id: string | null
-          email: string | null
-          granted: boolean | null
-          ip: unknown | null
-          message: string | null
-          name: string | null
-          origin: string | null
-          policy_text_b64: string | null
-          policy_text_hash: string | null
-          policy_url: string | null
-          policy_version: string | null
-          privacy_accepted: boolean | null
-          referer: string | null
-          source: string | null
-          user_agent: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "contact_messages_consent_id_fkey"
-            columns: ["consent_id"]
-            isOneToOne: false
-            referencedRelation: "consents"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
+      [_ in never]: never
     }
     Functions: {
       get_contact_consents_audit: {

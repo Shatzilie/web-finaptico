@@ -42,6 +42,8 @@ const PER_PAGE = 6;
 const Blog = () => {
   const [email, setEmail] = useState("");
   const [privacy, setPrivacy] = useState(false);
+  const [nlLoading, setNlLoading] = React.useState(false);
+  const [nlMsg, setNlMsg] = React.useState<string | null>(null);
 
   const navigate = useNavigate();
   const currentPage = usePageParam();
@@ -118,6 +120,42 @@ const Blog = () => {
     qs.set("page", "1"); // al cambiar categoría, empezamos en página 1
     navigate(`/blog?${qs.toString()}`);
   };
+
+  // Newsletter handler
+  async function handleNewsletterSubmit() {
+    setNlMsg(null);
+    if (!email || !privacy) {
+      setNlMsg("Debes indicar tu email y aceptar la Política de Privacidad.");
+      return;
+    }
+    try {
+      setNlLoading(true);
+      const res = await fetch(
+        "https://ujbnqyeqrkheflvbrwat.supabase.co/functions/v1/smart-worker",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            name: null,
+            email,
+            privacyAccepted: privacy,
+            policyVersion: "v1.0",
+            policyUrl: "https://finaptico.com/privacidad",
+            policyText: "Política de Privacidad Finaptico v1.0",
+          }),
+        }
+      );
+      const data = await res.json();
+      if (!res.ok || !data?.ok) throw new Error(data?.error || `HTTP ${res.status}`);
+      setNlMsg("¡Gracias! Te has suscrito correctamente.");
+      setEmail("");
+      setPrivacy(false);
+    } catch (e: any) {
+      setNlMsg(e?.message || "No hemos podido suscribirte. Inténtalo de nuevo.");
+    } finally {
+      setNlLoading(false);
+    }
+  }
 
   // Fallback estático si no hay datos aún
   const staticPosts = [
@@ -314,8 +352,12 @@ const Blog = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     className="flex-1 px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   />
-                  <button className="btn-primary whitespace-nowrap disabled:opacity-50" disabled={!email || !privacy}>
-                    Suscribirme
+                  <button 
+                    onClick={handleNewsletterSubmit}
+                    className="btn-primary whitespace-nowrap disabled:opacity-50" 
+                    disabled={!email || !privacy || nlLoading}
+                  >
+                    {nlLoading ? "Suscribiendo..." : "Suscribirme"}
                   </button>
                 </div>
 
@@ -333,6 +375,13 @@ const Blog = () => {
                     <Link to="/aviso-legal" className="text-primary hover:underline font-medium">Aviso Legal</Link>
                   </label>
                 </div>
+                
+                {nlMsg && (
+                  <p className={`text-sm mt-2 ${nlMsg.includes("Gracias") ? "text-green-600" : "text-red-600"}`}>
+                    {nlMsg}
+                  </p>
+                )}
+                
                 <p className="text-xs text-text-muted leading-4 mt-2">
                   Al suscribirte aceptas recibir comunicaciones comerciales de Finaptico sobre servicios de asesoría financiera. 
                   Puedes darte de baja en cualquier momento. Responsable: Finaptico SL. 

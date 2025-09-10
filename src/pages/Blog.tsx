@@ -352,12 +352,12 @@ const Blog = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     className="flex-1 px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   />
-                  <button 
-                    onClick={handleNewsletterSubmit}
-                    className="btn-primary whitespace-nowrap disabled:opacity-50" 
+                  <button
+                    className="btn-primary whitespace-nowrap disabled:opacity-50"
                     disabled={!email || !privacy || nlLoading}
+                    onClick={handleNewsletterSubmit}
                   >
-                    {nlLoading ? "Suscribiendo..." : "Suscribirme"}
+                    {nlLoading ? "Enviando..." : "Suscribirme"}
                   </button>
                 </div>
 
@@ -377,7 +377,11 @@ const Blog = () => {
                 </div>
                 
                 {nlMsg && (
-                  <p className={`text-sm mt-2 ${nlMsg.includes("Gracias") ? "text-green-600" : "text-red-600"}`}>
+                  <p
+                    className={`text-sm text-center mt-2 ${
+                      nlMsg.startsWith("¡Gracias") ? "text-green-600" : "text-red-600"
+                    }`}
+                  >
                     {nlMsg}
                   </p>
                 )}

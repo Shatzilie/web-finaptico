@@ -131,12 +131,11 @@ const Blog = () => {
     try {
       setNlLoading(true);
       const res = await fetch(
-        "https://ujbnqyeqrkheflvbrwat.supabase.co/functions/v1/smart-worker",
+        "https://ujbnqyeqrkheflvbrwat.functions.supabase.co/smart-worker/newsletter",
         {
           method: "POST",
           headers: { "Content-Type": "application/json", Accept: "application/json" },
           body: JSON.stringify({
-            name: null,
             email,
             privacyAccepted: privacy,
             policyVersion: "v1.0",
@@ -258,7 +257,7 @@ const Blog = () => {
                       className="w-full rounded-lg flex items-center justify-center overflow-hidden bg-section-light"
                       style={{ aspectRatio: "704 / 384" }}
                     >
-                      {("imageUrl" in post && post.imageUrl) ? (
+                      {"imageUrl" in post && post.imageUrl ? (
                         <img
                           src={post.imageUrl as string}
                           alt={post.title}
@@ -334,7 +333,7 @@ const Blog = () => {
         </div>
       </section>
 
-      {/* Newsletter y resto igual */}
+      {/* Newsletter */}
       <section className="section-light py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center">
@@ -353,6 +352,7 @@ const Blog = () => {
                     className="flex-1 px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   />
                   <button
+                    type="button" // 👈 importante
                     className="btn-primary whitespace-nowrap disabled:opacity-50"
                     disabled={!email || !privacy || nlLoading}
                     onClick={handleNewsletterSubmit}
@@ -375,7 +375,7 @@ const Blog = () => {
                     <Link to="/aviso-legal" className="text-primary hover:underline font-medium">Aviso Legal</Link>
                   </label>
                 </div>
-                
+
                 {nlMsg && (
                   <p
                     className={`text-sm text-center mt-2 ${
@@ -385,11 +385,11 @@ const Blog = () => {
                     {nlMsg}
                   </p>
                 )}
-                
+
                 <p className="text-xs text-text-muted leading-4 mt-2">
-                  Al suscribirte aceptas recibir comunicaciones comerciales de Finaptico sobre servicios de asesoría financiera. 
-                  Puedes darte de baja en cualquier momento. Responsable: Finaptico SL. 
-                  Finalidad: envío de newsletter y comunicaciones comerciales. 
+                  Al suscribirte aceptas recibir comunicaciones comerciales de Finaptico sobre servicios de asesoría financiera.
+                  Puedes darte de baja en cualquier momento. Responsable: Finaptico SL.
+                  Finalidad: envío de newsletter y comunicaciones comerciales.
                   Legitimación: consentimiento del interesado. No se cederán datos a terceros salvo obligación legal.
                 </p>
               </div>

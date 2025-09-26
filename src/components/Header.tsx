@@ -41,12 +41,14 @@ const Header = () => {
                 {item.name}
               </Link>
             ))}
-            <Link
-              to="/contacto"
+            <a
+              href="https://clientes.finaptico.com"
               className="btn-primary"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              Reserva tu llamada
-            </Link>
+              Acceso clientes
+            </a>
           </nav>
 
           {/* Mobile menu button */}
@@ -94,13 +96,15 @@ const Header = () => {
                 {item.name}
               </Link>
             ))}
-            <Link
-              to="/contacto"
+            <a
+              href="https://clientes.finaptico.com"
               className="block mt-4 btn-primary text-center"
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => setIsMenuOpen(false)}
             >
-              Reserva tu llamada
-            </Link>
+              Acceso clientes
+            </a>
           </div>
         </div>
       </div>

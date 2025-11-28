@@ -19,7 +19,7 @@ export type Database = {
           created_at: string
           granted: boolean
           id: string
-          ip: unknown | null
+          ip: unknown
           origin: string | null
           policy_text_b64: string | null
           policy_text_hash: string | null
@@ -33,7 +33,7 @@ export type Database = {
           created_at?: string
           granted?: boolean
           id?: string
-          ip?: unknown | null
+          ip?: unknown
           origin?: string | null
           policy_text_b64?: string | null
           policy_text_hash?: string | null
@@ -47,7 +47,7 @@ export type Database = {
           created_at?: string
           granted?: boolean
           id?: string
-          ip?: unknown | null
+          ip?: unknown
           origin?: string | null
           policy_text_b64?: string | null
           policy_text_hash?: string | null
@@ -104,7 +104,7 @@ export type Database = {
           created_at: string
           id: string
           reason: string
-          source_ip: unknown | null
+          source_ip: unknown
           target_contact_ids: string[] | null
           target_email: string | null
           user_agent: string | null
@@ -115,7 +115,7 @@ export type Database = {
           created_at?: string
           id?: string
           reason: string
-          source_ip?: unknown | null
+          source_ip?: unknown
           target_contact_ids?: string[] | null
           target_email?: string | null
           user_agent?: string | null
@@ -126,7 +126,7 @@ export type Database = {
           created_at?: string
           id?: string
           reason?: string
-          source_ip?: unknown | null
+          source_ip?: unknown
           target_contact_ids?: string[] | null
           target_email?: string | null
           user_agent?: string | null
@@ -141,6 +141,7 @@ export type Database = {
           email_norm: string | null
           id: string
           name: string | null
+          unsubscribe_token: string | null
           unsubscribed: boolean | null
           unsubscribed_at: string | null
         }
@@ -151,6 +152,7 @@ export type Database = {
           email_norm?: string | null
           id?: string
           name?: string | null
+          unsubscribe_token?: string | null
           unsubscribed?: boolean | null
           unsubscribed_at?: string | null
         }
@@ -161,6 +163,7 @@ export type Database = {
           email_norm?: string | null
           id?: string
           name?: string | null
+          unsubscribe_token?: string | null
           unsubscribed?: boolean | null
           unsubscribed_at?: string | null
         }
@@ -219,7 +222,7 @@ export type Database = {
     }
     Functions: {
       get_contact_consents_audit: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           consent_created_at: string
           consent_id: string
@@ -248,10 +251,7 @@ export type Database = {
         }
         Returns: boolean
       }
-      is_admin: {
-        Args: { _user_id?: string }
-        Returns: boolean
-      }
+      is_admin: { Args: { _user_id?: string }; Returns: boolean }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"

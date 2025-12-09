@@ -9,19 +9,19 @@ const Servicios = () => {
   const faqs = [
     {
       question: "¿Puedo cambiar de pack más adelante?",
-      answer: "Sí, puedes cambiar de pack cuando necesites más o menos nivel de servicio. Lo revisamos juntos y ajustamos según tus necesidades."
+      answer: "Sí. Cuando tu empresa crece, el servicio debe ajustarse. Podemos cambiar de pack en cualquier momento."
     },
     {
       question: "¿Trabajas solo con empresas tech?",
-      answer: "No, trabajo tanto con pymes tecnológicas como con empresas tradicionales en crecimiento. Mi experiencia abarca diferentes sectores."
+      answer: "Trabajo sobre todo con pymes tecnológicas y negocios digitales, pero reviso cada caso para asegurar que realmente puedo aportar."
     },
     {
       question: "¿Cuándo empezamos?",
-      answer: "Normalmente podemos empezar en 3-7 días después de nuestra primera llamada, dependiendo de la complejidad del setup inicial."
+      answer: "Tras la llamada inicial, preparo tu onboarding y empezamos en cuanto tengas todo listo."
     },
     {
       question: "¿Qué herramientas utilizas?",
-      answer: "Trabajo con las herramientas que ya uses (Odoo, Holded, etc.) o propongo automatizaciones con Notion, Google Sheets, Make/Zapier según tus necesidades."
+      answer: "Las que mejor se adapten a tu flujo: Notion, Holded, Google Workspace, tus bancos y las integraciones necesarias para automatizar tareas."
     }
   ];
 
@@ -34,7 +34,8 @@ const Servicios = () => {
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-h1 text-text-primary mb-6">Servicios por packs</h1>
           <p className="text-body text-text-secondary max-w-2xl mx-auto">
-            Cada negocio es distinto. Aquí te explico cómo trabajo en cada nivel de servicio, con ejemplos reales.
+            Elige el nivel de acompañamiento que encaja con tu empresa.
+            Te explico qué incluye cada pack y qué puedes esperar al trabajar conmigo.
           </p>
         </div>
       </section>
@@ -45,7 +46,7 @@ const Servicios = () => {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-h2 text-text-primary mb-4">Pack Esencial · Empezar con base sólida</h2>
-              <p className="text-subtitle text-text-secondary">Me ocupo de lo básico para que no te frenes.</p>
+              <p className="text-subtitle text-text-secondary">Lo imprescindible para que tu empresa funcione sin bloqueos ni sustos.</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -55,7 +56,7 @@ const Servicios = () => {
                     <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-body text-text-secondary">Alta de empresa y obligaciones claras</span>
+                    <span className="text-body text-text-secondary">Alta de empresa y obligaciones claras desde el inicio</span>
                   </li>
                   <li className="flex items-start space-x-3">
                     <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
@@ -67,12 +68,12 @@ const Servicios = () => {
                     <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-body text-text-secondary">Resolución de dudas rápidas</span>
+                    <span className="text-body text-text-secondary">Resolución rápida de dudas para que avances sin frenar</span>
                   </li>
                 </ul>
 
                 <p className="text-small text-text-muted italic mb-6">
-                  Ej.: pyme tradicional que abre su primera SL y quiere centrarse en clientes.
+                  Pensado para: empresas que empiezan, abren su primera SL o autónomos que quieren una base clara y sin líos desde el inicio.
                 </p>
 
                 <Link to="/contacto?pack=esencial" className="btn-primary">
@@ -114,7 +115,7 @@ const Servicios = () => {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-h2 text-text-primary mb-4">Pack Crecimiento · Escalar con control</h2>
-              <p className="text-subtitle text-text-secondary">Métricas claras y decisiones informadas.</p>
+              <p className="text-subtitle text-text-secondary">Datos claros, tesorería controlada y decisiones informadas cada mes.</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -124,24 +125,24 @@ const Servicios = () => {
                     <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-body text-text-secondary">KPIs y tesorería mensual</span>
+                    <span className="text-body text-text-secondary">KPIs y tesorería mensual sin complicaciones</span>
                   </li>
                   <li className="flex items-start space-x-3">
                     <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-body text-text-secondary">Optimización fiscal y previsiones de caja</span>
+                    <span className="text-body text-text-secondary">Optimización fiscal y previsiones de caja reales</span>
                   </li>
                   <li className="flex items-start space-x-3">
                     <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-body text-text-secondary">Automatización de procesos</span>
+                    <span className="text-body text-text-secondary">Automatización de procesos para ahorrar tiempo</span>
                   </li>
                 </ul>
 
                 <p className="text-small text-text-muted italic mb-6">
-                  Ej.: SaaS que crece en suscripciones y valora contratar sin poner en riesgo la liquidez.
+                  Pensado para: SaaS y pymes digitales que están creciendo y necesitan claridad financiera para no comprometer la liquidez.
                 </p>
 
                 <Link to="/contacto?pack=crecimiento" className="btn-primary">
@@ -180,7 +181,7 @@ const Servicios = () => {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-h2 text-text-primary mb-4">Pack Pro · Visión estratégica a largo plazo</h2>
-              <p className="text-subtitle text-text-secondary">Actúo como tu CFO externo para decisiones clave.</p>
+              <p className="text-subtitle text-text-secondary">Actúo como tu CFO externo para acompañarte en decisiones clave.</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -202,12 +203,12 @@ const Servicios = () => {
                     <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-body text-text-secondary">Planificación patrimonial</span>
+                    <span className="text-body text-text-secondary">Planificación patrimonial y financiera</span>
                   </li>
                 </ul>
 
                 <p className="text-small text-text-muted italic mb-6">
-                  Ej.: empresa en expansión que prepara ronda de inversión.
+                  Pensado para: empresas en fase de expansión, ronda de inversión o crecimiento acelerado que necesitan una visión estratégica.
                 </p>
 
                 <Link to="/contacto?pack=pro" className="btn-primary">
@@ -245,7 +246,8 @@ const Servicios = () => {
       <section className="section-light py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 id="comparativa" className="text-h2 text-text-primary text-center mb-12">Comparativa de packs</h2>
+            <h2 id="comparativa" className="text-h2 text-text-primary text-center mb-4">Comparativa de packs</h2>
+            <p className="text-body text-text-secondary text-center mb-12">Revisa qué incluye cada nivel y elige el que se ajusta a tu momento empresarial.</p>
             
             <div className="bg-white rounded-2xl overflow-hidden shadow-lg">
               <div className="overflow-x-auto">
@@ -315,7 +317,7 @@ const Servicios = () => {
                   <span className="text-2xl font-bold text-primary">1</span>
                 </div>
                 <h3 className="text-subtitle font-semibold text-text-primary mb-3">Llamada inicial</h3>
-                <p className="text-base text-text-secondary">20 minutos para entender tu negocio y objetivos. Sin compromiso.</p>
+                <p className="text-base text-text-secondary">20 minutos para entender tu situación y lo que necesitas. Sin compromiso.</p>
               </div>
 
               <div className="text-center">
@@ -323,7 +325,7 @@ const Servicios = () => {
                   <span className="text-2xl font-bold text-primary">2</span>
                 </div>
                 <h3 className="text-subtitle font-semibold text-text-primary mb-3">Setup y acceso seguro</h3>
-                <p className="text-base text-text-secondary">Configuración de herramientas y calendario de trabajo conjunto.</p>
+                <p className="text-base text-text-secondary">Configuro las herramientas y dejamos cerrado el calendario de trabajo.</p>
               </div>
 
               <div className="text-center">
@@ -331,7 +333,7 @@ const Servicios = () => {
                   <span className="text-2xl font-bold text-primary">3</span>
                 </div>
                 <h3 className="text-subtitle font-semibold text-text-primary mb-3">Ejecución y reporting</h3>
-                <p className="text-base text-text-secondary">Cierres mensuales, KPIs claros y propuestas de mejora continua.</p>
+                <p className="text-base text-text-secondary">Cierres mensuales, KPIs claros y mejoras continuas para que tomes decisiones con seguridad.</p>
               </div>
             </div>
           </div>
@@ -382,7 +384,7 @@ const Servicios = () => {
             <div className="cta-gradient">
               <h2 className="text-h2 mb-4">¿No tienes claro el pack?</h2>
               <p className="text-body mb-6 opacity-90">
-                Escríbeme y lo vemos juntas. Prefiero que decidas con claridad total.
+                Hablamos y vemos cuál encaja de verdad con tu empresa. Quiero que tomes la decisión con claridad.
               </p>
               <Link
                 to="/contacto"

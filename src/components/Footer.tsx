@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="container mx-auto px-4 relative">
         <div className="cta-gradient text-center -mt-16 mb-16 relative z-10">
           <h2 className="text-h2 mb-4">¿Empezamos?</h2>
-          <p className="text-body mb-6 opacity-90">Agendemos una llamada y revisamos tu situación financiera.</p>
+          <p className="text-body mb-6 opacity-90">Agendemos una llamada y revisamos tu situación financiera con calma.</p>
           <Link
             to="/contacto"
             className="inline-block bg-white text-darker-bg hover:bg-section-light transition-colors duration-200 rounded-[var(--radius-pill)] px-8 py-4 font-semibold text-body"

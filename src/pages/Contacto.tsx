@@ -148,7 +148,7 @@ const Contacto = () => {
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-h1 text-text-primary mb-6">Contacto</h1>
             <p className="text-body text-text-secondary">
-              Escríbeme y te respondo muy pronto. Cuéntame sobre tu empresa y cómo puedo ayudarte.
+              Cuéntame sobre tu empresa y en qué punto estás. Te respondo muy pronto y vemos si puedo ayudarte.
             </p>
           </div>
         </div>
@@ -216,7 +216,7 @@ const Contacto = () => {
                         value={formData.email}
                         onChange={handleChange}
                         className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200"
-                        placeholder="tu@empresa.com"
+                        placeholder="tucorreo@empresa.com"
                       />
                     </div>
 
@@ -232,7 +232,7 @@ const Contacto = () => {
                         value={formData.mensaje}
                         onChange={handleChange}
                         className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200 resize-none"
-                        placeholder="Cuéntame sobre tu empresa y cómo puedo ayudarte..."
+                        placeholder="Cuéntame qué necesitas, qué te preocupa o qué estás buscando mejorar."
                       />
                     </div>
 
@@ -263,9 +263,8 @@ const Contacto = () => {
 
                       <div className="bg-section-light p-4 rounded-lg">
                         <p className="text-xs text-text-muted leading-relaxed">
-                          <strong>Responsable:</strong> Finaptico. <strong>Finalidad:</strong> responder tu solicitud. 
-                          <strong> Legitimación:</strong> consentimiento. <strong>Destinatarios:</strong> no se cederán datos. 
-                          <strong> Derechos:</strong> acceso, rectificación, supresión, etc. Más info en la Política de Privacidad.
+                          <strong>Responsable:</strong> Fátima. <strong>Finalidad:</strong> responder tu solicitud y enviar información relacionada con mis servicios. 
+                          <strong> Derechos:</strong> acceso, rectificación, supresión y más. Consulta la Política de Privacidad para más detalle.
                         </p>
                       </div>
                     </div>
@@ -306,7 +305,7 @@ const Contacto = () => {
                       </div>
                       <div>
                         <h3 className="font-semibold text-text-primary">WhatsApp (solo mensajes)</h3>
-                        <p className="text-sm text-text-secondary mb-2">Respuesta rápida para consultas urgentes</p>
+                        <p className="text-sm text-text-secondary mb-2">Respuesta rápida para consultas breves.</p>
                         <a
                           href="https://web.whatsapp.com/send?phone=34657626409&text=Hola,%20quiero%20información%20sobre%20Finaptico"
                           target="_blank"
@@ -336,7 +335,7 @@ const Contacto = () => {
                       </div>
                       <div>
                         <h3 className="font-semibold text-text-primary">Telegram</h3>
-                        <p className="text-sm text-text-secondary mb-2">Consultas rápidas y directas</p>
+                        <p className="text-sm text-text-secondary mb-2">Canal directo para dudas y mensajes rápidos.</p>
                         <a
                           href="https://t.me/finaptico"
                           target="_blank"
@@ -359,7 +358,7 @@ const Contacto = () => {
                       </div>
                       <div>
                         <h3 className="font-semibold text-text-primary">Email directo</h3>
-                        <p className="text-sm text-text-secondary mb-2">Para consultas detalladas</p>
+                        <p className="text-sm text-text-secondary mb-2">Para consultas más detalladas:</p>
                         <a
                           href="mailto:hola@finaptico.com"
                           className="text-primary hover:text-secondary underline"

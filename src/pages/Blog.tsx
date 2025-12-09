@@ -208,7 +208,7 @@ const Blog = () => {
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-h1 text-text-primary mb-6">Blog de finanzas para pymes</h1>
             <p className="text-body text-text-secondary">
-              Consejos prácticos, casos reales y estrategias que funcionan para hacer crecer tu empresa con finanzas sanas.
+              Consejos prácticos, casos reales y estrategias claras para hacer crecer tu empresa con finanzas ordenadas.
             </p>
           </div>
         </div>
@@ -340,7 +340,7 @@ const Blog = () => {
             <div className="bg-white rounded-2xl p-8 shadow-lg border border-border/30">
               <h2 className="text-h2 text-text-primary mb-4">¿Te ha resultado útil?</h2>
               <p className="text-body text-text-secondary mb-6">
-                Recibe consejos financieros prácticos directamente en tu email. Una vez por semana, sin spam.
+                Recibe consejos financieros prácticos directamente en tu email. Un correo a la semana, sin spam.
               </p>
               <div className="space-y-4 max-w-md mx-auto">
                 <div className="flex flex-col sm:flex-row gap-3">

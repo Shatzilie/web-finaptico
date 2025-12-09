@@ -23,7 +23,7 @@ const SobreMi = () => {
               Hola, soy Fátima, fundadora de Finaptico.
             </h1>
             <p className="text-body text-text-secondary leading-relaxed">
-              Soy asistente virtual especializada en finanzas. Me muevo bien con empresas tech y también con pymes tradicionales.
+              Ayudo a empresas tecnológicas y pymes en crecimiento a tener números claros, orden, previsión y decisiones financieras seguras.
             </p>
           </div>
         </div>
@@ -43,7 +43,7 @@ const SobreMi = () => {
                   </svg>
                 </div>
                 <h3 className="text-subtitle font-semibold text-text-primary mb-3">Rigor contable y fiscal</h3>
-                <p className="text-base text-text-secondary">Sin sorpresas ni retrasos. Todo al día y bien documentado.</p>
+                <p className="text-base text-text-secondary">Todo al día, sin riesgos y sin sorpresas. Gestión clara y orden constante.</p>
               </div>
 
               <div className="card-hover border border-border/30 text-center">
@@ -53,7 +53,7 @@ const SobreMi = () => {
                   </svg>
                 </div>
                 <h3 className="text-subtitle font-semibold text-text-primary mb-3">KPIs y tesorería claros</h3>
-                <p className="text-base text-text-secondary">Números que se entienden para tomar mejores decisiones.</p>
+                <p className="text-base text-text-secondary">Métricas sencillas de entender que te ayudan a decidir con seguridad.</p>
               </div>
 
               <div className="card-hover border border-border/30 text-center">
@@ -62,8 +62,8 @@ const SobreMi = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
                 </div>
-                <h3 className="text-subtitle font-semibold text-text-primary mb-3">Comunicación clara</h3>
-                <p className="text-base text-text-secondary">Sin jerga innecesaria. Explico todo de forma sencilla.</p>
+                <h3 className="text-subtitle font-semibold text-text-primary mb-3">Comunicación directa</h3>
+                <p className="text-base text-text-secondary">Explicación simple, sin tecnicismos. Te cuento lo importante para que actúes con confianza.</p>
               </div>
             </div>
           </div>
@@ -83,7 +83,7 @@ const SobreMi = () => {
                 </div>
                 <h3 className="text-subtitle font-semibold text-text-primary mb-4">Entiendo tu negocio</h3>
                 <p className="text-base text-text-secondary leading-relaxed">
-                  Antes de tocar números, necesito entender cómo funciona tu empresa y cuáles son tus objetivos reales.
+                  Antes de tocar números necesito conocer cómo funciona tu empresa y qué quieres conseguir.
                 </p>
               </div>
 
@@ -93,7 +93,7 @@ const SobreMi = () => {
                 </div>
                 <h3 className="text-subtitle font-semibold text-text-primary mb-4">Ordeno y automatizo</h3>
                 <p className="text-base text-text-secondary leading-relaxed">
-                  Pongo orden en lo que ya tienes y automatizo todo lo repetitivo para ahorrar tiempo y errores.
+                  Pongo orden en lo que ya tienes y automatizo tareas para evitar errores y ahorrar tiempo.
                 </p>
               </div>
 
@@ -103,7 +103,7 @@ const SobreMi = () => {
                 </div>
                 <h3 className="text-subtitle font-semibold text-text-primary mb-4">Te doy claridad</h3>
                 <p className="text-base text-text-secondary leading-relaxed">
-                  Informes que entiendes, métricas que importan y propuestas concretas para decidir con confianza.
+                  Informes que entiendes, métricas que importan y mejoras concretas para que decidas bien.
                 </p>
               </div>
             </div>
@@ -117,7 +117,7 @@ const SobreMi = () => {
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-h2 text-text-primary mb-8">Herramientas que uso</h2>
             <p className="text-body text-text-secondary mb-12">
-              Trabajo con las herramientas que ya uses o propongo las más eficientes para tu caso
+              Trabajo con las herramientas que ya usas o te propongo opciones más eficientes según tu caso.
             </p>
             
             <div className="flex flex-wrap justify-center items-center gap-8">
@@ -148,7 +148,7 @@ const SobreMi = () => {
                 </div>
                 <h3 className="text-subtitle font-semibold text-text-primary mb-4">Claridad y transparencia</h3>
                 <p className="text-base text-text-secondary leading-relaxed">
-                  Sin letra pequeña ni sorpresas. Hablo claro sobre costes, plazos y qué puedes esperar.
+                  Hablo claro sobre costes, plazos y expectativas. Sin letra pequeña.
                 </p>
               </div>
 
@@ -160,7 +160,7 @@ const SobreMi = () => {
                 </div>
                 <h3 className="text-subtitle font-semibold text-text-primary mb-4">Confidencialidad</h3>
                 <p className="text-base text-text-secondary leading-relaxed">
-                  Tus datos financieros están protegidos. Máxima discreción y seguridad en todo momento.
+                  Tus datos financieros están protegidos y trato la información con máxima discreción.
                 </p>
               </div>
 
@@ -172,7 +172,7 @@ const SobreMi = () => {
                 </div>
                 <h3 className="text-subtitle font-semibold text-text-primary mb-4">Orientación a resultados</h3>
                 <p className="text-base text-text-secondary leading-relaxed">
-                  No solo ordeno números. Te ayudo a tomar mejores decisiones para hacer crecer tu negocio.
+                  No se trata solo de ordenar números: te ayudo a tomar decisiones mejores para crecer con seguridad.
                 </p>
               </div>
             </div>
@@ -187,12 +187,9 @@ const SobreMi = () => {
             <div className="bg-white rounded-2xl p-8 shadow-lg border border-border/30">
               <div className="text-6xl text-primary mb-4">"</div>
               <p className="text-body text-text-secondary italic mb-6 leading-relaxed">
-                Desde que trabajo con Fátima, tengo una visión completamente clara de mi negocio. 
-                Los informes mensuales me han ahorrado horas de análisis y ahora tomo decisiones con mucha más confianza. 
-                Su comunicación es impecable y siempre está disponible cuando la necesito.
+                Trabajar con Fátima me ha dado una visión financiera que antes no tenía. Los informes mensuales me permiten decidir sin dudas y me han ahorrado muchas horas de revisión. Explica todo con claridad y siempre está disponible cuando la necesito.
               </p>
-              <div className="font-semibold text-secondary">— Laura Martín</div>
-              <div className="text-sm text-text-muted">CEO, TechVentures</div>
+              <div className="font-semibold text-secondary">— Laura Martín, CEO TechVentures</div>
             </div>
           </div>
         </div>
@@ -202,9 +199,9 @@ const SobreMi = () => {
       <section className="bg-white py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-h2 text-text-primary mb-6">¿Hablamos?</h2>
+            <h2 className="text-h2 text-text-primary mb-6">Hablemos</h2>
             <p className="text-body text-text-secondary mb-8">
-              Si quieres conocer mejor cómo puedo ayudarte, reserva una llamada sin compromiso.
+              Si quieres revisar tu situación financiera y saber cómo puedo ayudarte, agenda una llamada sin compromiso.
             </p>
             <Link to="/contacto" className="btn-primary text-lg px-8 py-4">
               Reserva tu llamada

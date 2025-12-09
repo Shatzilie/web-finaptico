@@ -13,10 +13,10 @@ const Home = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <h1 className="text-h1 text-balance">
-                Asistente virtual especializada en finanzas para pymes tecnológicas y empresas en crecimiento.
+                Sistemas financieros claros y sin fricción para empresas tecnológicas
               </h1>
               <p className="text-body text-white/90 leading-relaxed">
-                Contabilidad y fiscalidad sin sorpresas. KPIs y tesorería claros. Tú te enfocas en producto y crecimiento.
+                Un sistema financiero que funciona siempre igual. Sin caos, sin dudas y sin retrasos. Tú diriges la empresa. Yo mantengo tus números en orden con rigor y claridad.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/contacto" className="btn-primary">
@@ -48,8 +48,8 @@ const Home = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17a2 2 0 01-2-2V9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2M9 17h6M9 17v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4m6 0V9a2 2 0 012-2h2a2 2 0 012 2v8a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
-              <h3 className="text-subtitle font-semibold mb-3 text-text-primary">Decisiones con datos al día</h3>
-              <p className="text-base text-text-secondary leading-relaxed">Reporting claro y KPIs accionables.</p>
+              <h3 className="text-subtitle font-semibold mb-3 text-text-primary">Control real con datos al día</h3>
+              <p className="text-base text-text-secondary leading-relaxed">Tesorería, KPIs y flujo de caja claros. Sabes dónde estás y qué puedes asumir.</p>
             </div>
 
             <div className="card-hover border border-border/30">
@@ -59,7 +59,7 @@ const Home = () => {
                 </svg>
               </div>
               <h3 className="text-subtitle font-semibold mb-3 text-text-primary">Menos riesgo fiscal</h3>
-              <p className="text-base text-text-secondary leading-relaxed">Cumplimiento sin sorpresas y alertas preventivas.</p>
+              <p className="text-base text-text-secondary leading-relaxed">Supervisión constante y prevención de errores para evitar problemas y retrasos.</p>
             </div>
 
             <div className="card-hover border border-border/30">
@@ -68,8 +68,8 @@ const Home = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h3 className="text-subtitle font-semibold mb-3 text-text-primary">Tiempo directivo recuperado</h3>
-              <p className="text-base text-text-secondary leading-relaxed">Delegas la operativa y te enfocas en crecer.</p>
+              <h3 className="text-subtitle font-semibold mb-3 text-text-primary">Dirección financiera operativa</h3>
+              <p className="text-base text-text-secondary leading-relaxed">Delegas tareas, eliminas fricción y recuperas tiempo para crecer.</p>
             </div>
           </div>
         </div>
@@ -79,103 +79,51 @@ const Home = () => {
       <section className="section-light py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-h2 text-text-primary mb-4">Servicios por packs</h2>
-            <p className="text-body text-text-secondary">Encuentra el nivel de servicio que mejor se adapte a tu empresa</p>
+            <h2 className="text-h2 text-text-primary mb-4">Lo que incluye Finaptico</h2>
+            <p className="text-body text-text-secondary">Un servicio completo que combina dirección financiera, supervisión fiscal y automatización para empresas tecnológicas.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Pack Esencial */}
-            <div className="card-hover border border-border/30">
-              <div className="text-center mb-6">
-                <h3 className="text-subtitle font-semibold text-text-primary mb-2">Pack Esencial</h3>
-                <p className="text-sm text-text-muted">Empezar con base sólida</p>
-              </div>
+          <div className="flex justify-center">
+            <div className="card-hover border border-border/30 max-w-2xl w-full">
               <ul className="space-y-2 mb-6">
                 <li className="flex items-start space-x-2">
                   <svg className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-base text-text-secondary">Alta SL/autónomo</span>
+                  <span className="text-base text-text-secondary">Control mensual de KPIs y tesorería</span>
                 </li>
                 <li className="flex items-start space-x-2">
                   <svg className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-base text-text-secondary">Contabilidad básica</span>
+                  <span className="text-base text-text-secondary">Supervisión fiscal y cumplimiento sin retrasos</span>
                 </li>
                 <li className="flex items-start space-x-2">
                   <svg className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-base text-text-secondary">Soporte puntual</span>
+                  <span className="text-base text-text-secondary">Automación de procesos para reducir fricción</span>
+                </li>
+                <li className="flex items-start space-x-2">
+                  <svg className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-base text-text-secondary">Informes claros para decisiones rápidas</span>
+                </li>
+                <li className="flex items-start space-x-2">
+                  <svg className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-base text-text-secondary">Acompañamiento operativo en el día a día</span>
+                </li>
+                <li className="flex items-start space-x-2">
+                  <svg className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-base text-text-secondary">Revisión periódica del sistema financiero</span>
                 </li>
               </ul>
-              <Link to="/servicios#pack-esencial" className="btn-secondary w-full text-center block">
-                Ver detalles
-              </Link>
-            </div>
-
-            {/* Pack Crecimiento */}
-            <div className="card-hover border-2 border-primary relative">
-              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                <span className="bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">Más popular</span>
-              </div>
-              <div className="text-center mb-6">
-                <h3 className="text-subtitle font-semibold text-text-primary mb-2">Pack Crecimiento</h3>
-                <p className="text-sm text-text-muted">Escalar con control</p>
-              </div>
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-start space-x-2">
-                  <svg className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  <span className="text-base text-text-secondary">KPIs mensuales</span>
-                </li>
-                <li className="flex items-start space-x-2">
-                  <svg className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  <span className="text-base text-text-secondary">Optimización fiscal/tesorería</span>
-                </li>
-                <li className="flex items-start space-x-2">
-                  <svg className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  <span className="text-base text-text-secondary">Automatización</span>
-                </li>
-              </ul>
-              <Link to="/servicios#pack-crecimiento" className="btn-primary w-full text-center block">
-                Ver detalles
-              </Link>
-            </div>
-
-            {/* Pack Pro */}
-            <div className="card-hover border border-border/30">
-              <div className="text-center mb-6">
-                <h3 className="text-subtitle font-semibold text-text-primary mb-2">Pack Pro</h3>
-                <p className="text-sm text-text-muted">Visión estratégica</p>
-              </div>
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-start space-x-2">
-                  <svg className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  <span className="text-base text-text-secondary">CFO as a service</span>
-                </li>
-                <li className="flex items-start space-x-2">
-                  <svg className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  <span className="text-base text-text-secondary">Modelos inversión</span>
-                </li>
-                <li className="flex items-start space-x-2">
-                  <svg className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  <span className="text-base text-text-secondary">Informes para inversores</span>
-                </li>
-              </ul>
-              <Link to="/servicios#pack-pro" className="btn-secondary w-full text-center block">
+              <Link to="/servicios" className="btn-primary w-full text-center block">
                 Ver detalles
               </Link>
             </div>
@@ -193,23 +141,23 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
               <p className="text-white/90 mb-4 italic">
-                "Desde que trabajo con Finaptico tengo claridad total sobre mis números. Puedo tomar decisiones sin miedo."
+                "Trabajar con Finaptico nos dio una visión clara de nuestra tesorería. Tomamos decisiones sin incertidumbre."
               </p>
               <p className="text-secondary font-medium">— María González, CEO TechStart</p>
             </div>
 
             <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
               <p className="text-white/90 mb-4 italic">
-                "El reporting mensual me ha ahorrado horas de trabajo. Ahora me enfoco en lo que realmente importa."
+                "El orden financiero y los informes mensuales han reducido carga operativa. Ahora avanzamos con foco."
               </p>
               <p className="text-secondary font-medium">— Carlos Ruiz, Founder GrowthApp</p>
             </div>
 
             <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
               <p className="text-white/90 mb-4 italic">
-                "Profesional, clara y siempre disponible. Mi contabilidad nunca había estado tan organizada."
+                "Rigor, claridad y disponibilidad. Nuestro sistema financiero nunca había estado tan organizado."
               </p>
-              <p className="text-secondary font-medium">— Ana López, Directora ComerciaPlus</p>
+              <p className="text-secondary font-medium">— Ana López, Directora CommerciaPlus</p>
             </div>
           </div>
         </div>

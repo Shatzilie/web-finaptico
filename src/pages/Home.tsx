@@ -123,6 +123,9 @@ const Home = () => {
                   <span className="text-base text-text-secondary">Revisión periódica del sistema financiero</span>
                 </li>
               </ul>
+              <p className="text-base text-text-secondary mb-6">
+                Para que este sistema funcione, trabajamos con una forma de operar clara. Si tu empresa está dispuesta a ordenar, mejorar procesos y adoptar un flujo más eficiente, avanzaremos rápido.
+              </p>
               <Link to="/servicios" className="btn-primary w-full text-center block">
                 Ver detalles
               </Link>

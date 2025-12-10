@@ -3,14 +3,6 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 const SobreMi = () => {
-  const herramientas = [
-    { name: "Odoo", logo: "🔧" },
-    { name: "Holded", logo: "📊" },
-    { name: "Notion", logo: "📝" },
-    { name: "Google Sheets", logo: "📈" },
-    { name: "Make/Zapier", logo: "⚡" }
-  ];
-
   return (
     <div className="min-h-screen">
       <Header />
@@ -111,23 +103,14 @@ const SobreMi = () => {
         </div>
       </section>
 
-      {/* Herramientas */}
+      {/* Cómo lo hago */}
       <section className="section-alt py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-h2 text-text-primary mb-8">Herramientas que uso</h2>
-            <p className="text-body text-text-secondary mb-12">
-              Trabajo con las herramientas que ya usas o te propongo opciones más eficientes según tu caso.
+            <h2 className="text-h2 text-text-primary mb-8">Cómo lo hago</h2>
+            <p className="text-body text-text-secondary">
+              Trabajo con sistemas flexibles y adaptables a tu empresa. Durante el onboarding definimos la configuración que garantiza orden y claridad.
             </p>
-            
-            <div className="flex flex-wrap justify-center items-center gap-8">
-              {herramientas.map((herramienta, index) => (
-                <div key={index} className="bg-white rounded-xl p-6 shadow-sm border border-border/30 hover:shadow-md transition-shadow duration-200">
-                  <div className="text-3xl mb-2">{herramienta.logo}</div>
-                  <div className="font-medium text-text-primary">{herramienta.name}</div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </section>

@@ -147,8 +147,11 @@ const Contacto = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-h1 text-text-primary mb-6">Contacto</h1>
-            <p className="text-body text-text-secondary">
+            <p className="text-body text-text-secondary mb-4">
               Cuéntame sobre tu empresa y en qué punto estás. Te respondo muy pronto y vemos si puedo ayudarte.
+            </p>
+            <p className="text-base text-text-secondary">
+              Trabajo con un sistema estructurado. Durante la llamada vemos si tu empresa encaja con este modelo.
             </p>
           </div>
         </div>

@@ -328,7 +328,7 @@ const Servicios = () => {
                   <span className="text-2xl font-bold text-primary">2</span>
                 </div>
                 <h3 className="text-subtitle font-semibold text-text-primary mb-3">Setup y acceso seguro</h3>
-                <p className="text-base text-text-secondary">Configuro las herramientas y dejamos cerrado el calendario de trabajo.</p>
+                <p className="text-base text-text-secondary">Definimos y configuramos el sistema de trabajo que usaremos juntos, asegurando orden y claridad desde el inicio.</p>
               </div>
 
               <div className="text-center">

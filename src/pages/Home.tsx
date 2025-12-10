@@ -69,7 +69,7 @@ const Home = () => {
                 </svg>
               </div>
               <h3 className="text-subtitle font-semibold mb-3 text-text-primary">Dirección financiera operativa</h3>
-              <p className="text-base text-text-secondary leading-relaxed">Delegas tareas, eliminas fricción y recuperas tiempo para crecer.</p>
+              <p className="text-base text-text-secondary leading-relaxed">Delegas la dirección y supervisión financiera, eliminas fricción y recuperas tiempo para crecer.</p>
             </div>
           </div>
         </div>

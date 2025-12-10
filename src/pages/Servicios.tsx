@@ -33,9 +33,12 @@ const Servicios = () => {
       <section className="bg-white py-20">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-h1 text-text-primary mb-6">Servicios por packs</h1>
-          <p className="text-body text-text-secondary max-w-2xl mx-auto">
+          <p className="text-body text-text-secondary max-w-2xl mx-auto mb-4">
             Elige el nivel de acompañamiento que encaja con tu empresa.
             Te explico qué incluye cada pack y qué puedes esperar al trabajar conmigo.
+          </p>
+          <p className="text-base text-text-secondary max-w-2xl mx-auto">
+            Para ofrecerte resultados reales, trabajo con un método definido. Si tu sistema actual genera fricción, lo ajustamos en el onboarding. Este servicio requiere apertura al cambio y compromiso con una forma de trabajo estable.
           </p>
         </div>
       </section>
@@ -333,7 +336,7 @@ const Servicios = () => {
                   <span className="text-2xl font-bold text-primary">3</span>
                 </div>
                 <h3 className="text-subtitle font-semibold text-text-primary mb-3">Ejecución y reporting</h3>
-                <p className="text-base text-text-secondary">Cierres mensuales, KPIs claros y mejoras continuas para que tomes decisiones con seguridad.</p>
+                <p className="text-base text-text-secondary">Empiezo a dirigir y supervisar tu parte financiera con entregas regulares y soporte directo.</p>
               </div>
             </div>
           </div>

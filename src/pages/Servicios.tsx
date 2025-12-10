@@ -56,13 +56,13 @@ const Servicios = () => {
                     <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-body text-text-secondary">Alta de empresa y obligaciones claras desde el inicio</span>
+                    <span className="text-body text-text-secondary">Visión clara de obligaciones y pasos iniciales para empezar bien</span>
                   </li>
                   <li className="flex items-start space-x-3">
                     <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-body text-text-secondary">Contabilidad organizada desde el primer día</span>
+                    <span className="text-body text-text-secondary">Estructura contable organizada desde el primer día</span>
                   </li>
                   <li className="flex items-start space-x-3">
                     <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
@@ -131,7 +131,7 @@ const Servicios = () => {
                     <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-body text-text-secondary">Optimización fiscal y previsiones de caja reales</span>
+                    <span className="text-body text-text-secondary">Supervisión fiscal y previsiones de caja reales</span>
                   </li>
                   <li className="flex items-start space-x-3">
                     <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
@@ -262,7 +262,7 @@ const Servicios = () => {
                   </thead>
                   <tbody>
                     <tr className="border-b border-border">
-                      <td className="p-4 text-text-secondary">Contabilidad básica</td>
+                      <td className="p-4 text-text-secondary">Estructura contable básica</td>
                       <td className="text-center p-4 text-secondary text-xl">✓</td>
                       <td className="text-center p-4 text-secondary text-xl">✓</td>
                       <td className="text-center p-4 text-secondary text-xl">✓</td>
@@ -274,7 +274,7 @@ const Servicios = () => {
                       <td className="text-center p-4 text-secondary text-xl">✓</td>
                     </tr>
                     <tr className="border-b border-border">
-                      <td className="p-4 text-text-secondary">Optimización fiscal</td>
+                      <td className="p-4 text-text-secondary">Supervisión fiscal</td>
                       <td className="text-center p-4 text-text-muted">—</td>
                       <td className="text-center p-4 text-secondary text-xl">✓</td>
                       <td className="text-center p-4 text-secondary text-xl">✓</td>

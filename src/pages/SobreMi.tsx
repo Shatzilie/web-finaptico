@@ -43,7 +43,7 @@ const SobreMi = () => {
                   </svg>
                 </div>
                 <h3 className="text-subtitle font-semibold text-text-primary mb-3">Rigor contable y fiscal</h3>
-                <p className="text-base text-text-secondary">Todo al día, sin riesgos y sin sorpresas. Gestión clara y orden constante.</p>
+                <p className="text-base text-text-secondary">Revisión clara, precisa y continua para evitar errores y sorpresas.</p>
               </div>
 
               <div className="card-hover border border-border/30 text-center">

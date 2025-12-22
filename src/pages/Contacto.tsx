@@ -310,7 +310,7 @@ const Contacto = () => {
                         <h3 className="font-semibold text-text-primary">WhatsApp (solo mensajes)</h3>
                         <p className="text-sm text-text-secondary mb-2">Respuesta rápida para consultas breves.</p>
                         <a
-                          href="https://web.whatsapp.com/send?phone=34657626409&text=Hola,%20quiero%20información%20sobre%20Finaptico"
+                          href="https://web.whatsapp.com/send?phone=34623760848&text=Hola,%20quiero%20información%20sobre%20Finaptico"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-block btn-secondary text-sm"
@@ -318,7 +318,7 @@ const Contacto = () => {
                             // On mobile, use wa.me, on desktop use web.whatsapp.com
                             if (window.innerWidth <= 768) {
                               e.preventDefault();
-                              window.open("https://wa.me/34657626409?text=Hola,%20quiero%20información%20sobre%20Finaptico", "_blank");
+                              window.open("https://wa.me/34623760848?text=Hola,%20quiero%20información%20sobre%20Finaptico", "_blank");
                             }
                           }}
                         >
@@ -340,7 +340,7 @@ const Contacto = () => {
                         <h3 className="font-semibold text-text-primary">Telegram</h3>
                         <p className="text-sm text-text-secondary mb-2">Canal directo para dudas y mensajes rápidos.</p>
                         <a
-                          href="https://t.me/finaptico"
+                          href="https://t.me/+34623760848"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-block btn-secondary text-sm"

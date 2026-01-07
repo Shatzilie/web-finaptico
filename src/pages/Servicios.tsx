@@ -22,6 +22,10 @@ const Servicios = () => {
     {
       question: "¿Qué herramientas utilizas?",
       answer: "Las que mejor se adapten a tu flujo: Notion, Holded, Google Workspace, tus bancos y las integraciones necesarias para automatizar tareas."
+    },
+    {
+      question: "¿Qué pasa si no trabajamos juntos?",
+      answer: "Seguirás tomando decisiones con información incompleta. En muchos casos, eso sale más caro que el propio servicio."
     }
   ];
 
@@ -35,8 +39,8 @@ const Servicios = () => {
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-h1 text-text-primary mb-6">Servicios por packs</h1>
           <p className="text-body text-text-secondary max-w-2xl mx-auto mb-4">
-            Elige el nivel de acompañamiento que encaja con tu empresa.
-            Te explico qué incluye cada pack y qué puedes esperar al trabajar conmigo.
+            No todas las empresas necesitan lo mismo.
+            Por eso trabajo por niveles de acompañamiento, según el momento real de tu negocio.
           </p>
           <p className="text-base text-text-secondary max-w-2xl mx-auto">
             Para ofrecerte resultados reales, trabajo con un método definido. Si tu sistema actual genera fricción, lo ajustamos en el onboarding. Este servicio requiere apertura al cambio y compromiso con una forma de trabajo estable.
@@ -50,7 +54,7 @@ const Servicios = () => {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-h2 text-text-primary mb-4">Pack Esencial · Empezar con base sólida</h2>
-              <p className="text-subtitle text-text-secondary">Lo imprescindible para que tu empresa funcione sin bloqueos ni sustos.</p>
+              <p className="text-subtitle text-text-secondary">Para empresas que están empezando y quieren hacerlo bien desde el principio.</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -76,8 +80,11 @@ const Servicios = () => {
                   </li>
                 </ul>
 
-                <p className="text-small text-text-muted italic mb-6">
+                <p className="text-small text-text-muted italic mb-4">
                   Pensado para: empresas que empiezan, abren su primera SL o autónomos que quieren una base clara y sin líos desde el inicio.
+                </p>
+                <p className="text-small text-text-muted mb-6">
+                  Si buscas solo "cumplir con Hacienda", este pack no es para ti.
                 </p>
 
                 <Link to="/contacto?pack=esencial" className="btn-primary">
@@ -119,7 +126,7 @@ const Servicios = () => {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-h2 text-text-primary mb-4">Pack Crecimiento · Escalar con control</h2>
-              <p className="text-subtitle text-text-secondary">Datos claros, tesorería controlada y decisiones informadas cada mes.</p>
+              <p className="text-subtitle text-text-secondary">Aquí es donde empiezan a evitarse los errores caros.</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -145,8 +152,11 @@ const Servicios = () => {
                   </li>
                 </ul>
 
-                <p className="text-small text-text-muted italic mb-6">
+                <p className="text-small text-text-muted italic mb-4">
                   Pensado para: SaaS y pymes digitales que están creciendo y necesitan claridad financiera para no comprometer la liquidez.
+                </p>
+                <p className="text-small text-text-muted mb-6">
+                  Este pack es para empresas que ya facturan y no quieren que el crecimiento les rompa la caja.
                 </p>
 
                 <Link to="/contacto?pack=crecimiento" className="btn-primary">
@@ -185,7 +195,7 @@ const Servicios = () => {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-h2 text-text-primary mb-4">Pack Pro · Visión estratégica a largo plazo</h2>
-              <p className="text-subtitle text-text-secondary">Actúo como tu CFO externo para acompañarte en decisiones clave.</p>
+              <p className="text-subtitle text-text-secondary">Trabajo contigo como CFO externo. No ejecuto tareas sueltas. Tomo decisiones contigo.</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -211,8 +221,11 @@ const Servicios = () => {
                   </li>
                 </ul>
 
-                <p className="text-small text-text-muted italic mb-6">
+                <p className="text-small text-text-muted italic mb-4">
                   Pensado para: empresas en fase de expansión, ronda de inversión o crecimiento acelerado que necesitan una visión estratégica.
+                </p>
+                <p className="text-small text-text-muted mb-6">
+                  Solo trabajo con pocas empresas en este nivel. Requiere compromiso y visión a medio plazo.
                 </p>
 
                 <Link to="/contacto?pack=pro" className="btn-primary">
@@ -251,7 +264,8 @@ const Servicios = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h2 id="comparativa" className="text-h2 text-text-primary text-center mb-4">Comparativa de packs</h2>
-            <p className="text-body text-text-secondary text-center mb-12">Revisa qué incluye cada nivel y elige el que se ajusta a tu momento empresarial.</p>
+            <p className="text-body text-text-secondary text-center mb-4">Revisa qué incluye cada nivel y elige el que se ajusta a tu momento empresarial.</p>
+            <p className="text-sm text-text-muted text-center mb-12 italic">Si dudas entre dos packs, normalmente el inferior se queda corto en menos de seis meses.</p>
             
             <div className="bg-white rounded-2xl overflow-hidden shadow-lg">
               <div className="overflow-x-auto">
@@ -321,7 +335,7 @@ const Servicios = () => {
                   <span className="text-2xl font-bold text-primary">1</span>
                 </div>
                 <h3 className="text-subtitle font-semibold text-text-primary mb-3">Llamada inicial</h3>
-                <p className="text-base text-text-secondary">20 minutos para entender tu situación y lo que necesitas. Sin compromiso.</p>
+                <p className="text-base text-text-secondary">20 minutos para entender si hay un problema real que merezca resolverse.</p>
               </div>
 
               <div className="text-center">

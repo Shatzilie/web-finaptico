@@ -14,17 +14,20 @@ const Home = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
                 <h1 className="text-h1 text-balance">
-                  Sistemas financieros claros y sin fricción para empresas tecnológicas
+                  Si no tienes control financiero, estás tomando decisiones a ciegas.
                 </h1>
                 <p className="text-body text-white/90 leading-relaxed">
-                  Un sistema financiero que funciona siempre igual. Sin caos, sin dudas y sin retrasos. Tú diriges la empresa. Yo mantengo tus números en orden con rigor y claridad.
+                  Ayudo a empresas tecnológicas y pymes digitales a tener números claros, tesorería bajo control y previsión real para decidir con seguridad y sin sustos.
+                </p>
+                <p className="text-sm text-white/70 italic">
+                  No es contabilidad. Es dirección financiera operativa.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Link to="/contacto" className="btn-primary-contrast">
-                    Reserva tu llamada
+                    Solicitar revisión financiera
                   </Link>
                   <Link to="/servicios" className="btn-outline">
-                    Ver servicios
+                    Ver cómo trabajo
                   </Link>
                 </div>
               </div>
@@ -54,8 +57,8 @@ const Home = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17a2 2 0 01-2-2V9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2M9 17h6M9 17v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4m6 0V9a2 2 0 012-2h2a2 2 0 012 2v8a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                   </svg>
                 </div>
-                <h3 className="text-subtitle font-semibold mb-3 text-text-primary">Control real con datos al día</h3>
-                <p className="text-base text-text-secondary leading-relaxed">Tesorería, KPIs y flujo de caja claros. Sabes dónde estás y qué puedes asumir.</p>
+                <h3 className="text-subtitle font-semibold mb-3 text-text-primary">Sabes exactamente dónde estás</h3>
+                <p className="text-base text-text-secondary leading-relaxed">Tesorería, KPIs y flujo de caja claros. Dejas de intuir y empiezas a decidir con datos reales.</p>
               </div>
 
               <div className="card-hover border border-border/30">
@@ -64,8 +67,8 @@ const Home = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
                 </div>
-                <h3 className="text-subtitle font-semibold mb-3 text-text-primary">Menos riesgo fiscal</h3>
-                <p className="text-base text-text-secondary leading-relaxed">Supervisión constante y prevención de errores para evitar problemas y retrasos.</p>
+                <h3 className="text-subtitle font-semibold mb-3 text-text-primary">Evitas errores fiscales antes de que cuesten dinero</h3>
+                <p className="text-base text-text-secondary leading-relaxed">Supervisión constante para que nada se retrase ni se haga mal. Sin sorpresas ni carreras de última hora.</p>
               </div>
 
               <div className="card-hover border border-border/30">
@@ -74,8 +77,8 @@ const Home = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
-                <h3 className="text-subtitle font-semibold mb-3 text-text-primary">Dirección financiera operativa</h3>
-                <p className="text-base text-text-secondary leading-relaxed">Delegas la dirección y supervisión financiera, eliminas fricción y recuperas tiempo para crecer.</p>
+                <h3 className="text-subtitle font-semibold mb-3 text-text-primary">Recuperas tiempo y foco</h3>
+                <p className="text-base text-text-secondary leading-relaxed">Delegas la parte financiera y eliminas fricción. Tú te centras en crecer, no en apagar fuegos.</p>
               </div>
             </div>
           </div>
@@ -86,7 +89,7 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-h2 text-text-primary mb-4">Lo que incluye Finaptico</h2>
-            <p className="text-body text-text-secondary">Un servicio completo que combina dirección financiera, supervisión fiscal y automatización para empresas tecnológicas.</p>
+            <p className="text-body text-text-secondary">Esto es lo que pasa cuando el sistema financiero funciona como debe.</p>
           </div>
 
           <div className="flex justify-center">
@@ -130,7 +133,7 @@ const Home = () => {
                 </li>
               </ul>
               <p className="text-base text-text-secondary mb-6">
-                Para que este sistema funcione, trabajamos con una forma de operar clara. Si tu empresa está dispuesta a ordenar, mejorar procesos y adoptar un flujo más eficiente, avanzaremos rápido.
+                Si tu empresa no está dispuesta a ordenar procesos y trabajar con criterio, este servicio no es para ti.
               </p>
               <Link to="/servicios" className="btn-primary w-full text-center block">
                 Ver detalles
@@ -144,6 +147,7 @@ const Home = () => {
       <section className="section-dark text-white py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
+            <p className="text-white/70 mb-4">No hablo de teoría. Esto es lo que cambia cuando hay orden financiero.</p>
             <h2 className="text-h2 mb-4">Lo que dicen mis clientes</h2>
           </div>
 
@@ -153,6 +157,7 @@ const Home = () => {
                 "Trabajar con Finaptico nos dio una visión clara de nuestra tesorería. Tomamos decisiones sin incertidumbre."
               </p>
               <p className="text-secondary font-medium">— María González, CEO TechStart</p>
+              <p className="text-white/50 text-sm mt-1">SaaS, 12 personas</p>
             </div>
 
             <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
@@ -160,6 +165,7 @@ const Home = () => {
                 "El orden financiero y los informes mensuales han reducido carga operativa. Ahora avanzamos con foco."
               </p>
               <p className="text-secondary font-medium">— Carlos Ruiz, Founder GrowthApp</p>
+              <p className="text-white/50 text-sm mt-1">App móvil, fase crecimiento</p>
             </div>
 
             <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
@@ -167,6 +173,7 @@ const Home = () => {
                 "Rigor, claridad y disponibilidad. Nuestro sistema financiero nunca había estado tan organizado."
               </p>
               <p className="text-secondary font-medium">— Ana López, Directora CommerciaPlus</p>
+              <p className="text-white/50 text-sm mt-1">eCommerce B2B, 8 personas</p>
             </div>
           </div>
         </div>

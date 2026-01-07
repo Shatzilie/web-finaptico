@@ -7,73 +7,79 @@ const Home = () => {
     <div className="min-h-screen">
       <Header />
       
-      {/* Hero Section - Oscuro */}
-      <section className="section-dark text-white py-20">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <h1 className="text-h1 text-balance">
-                Sistemas financieros claros y sin fricción para empresas tecnológicas
-              </h1>
-              <p className="text-body text-white/90 leading-relaxed">
-                Un sistema financiero que funciona siempre igual. Sin caos, sin dudas y sin retrasos. Tú diriges la empresa. Yo mantengo tus números en orden con rigor y claridad.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/contacto" className="btn-primary">
-                  Reserva tu llamada
-                </Link>
-                <Link to="/servicios" className="btn-outline">
-                  Ver servicios
-                </Link>
+      <main>
+        {/* Hero Section - Oscuro */}
+        <section className="section-dark text-white py-20">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div className="space-y-6">
+                <h1 className="text-h1 text-balance">
+                  Sistemas financieros claros y sin fricción para empresas tecnológicas
+                </h1>
+                <p className="text-body text-white/90 leading-relaxed">
+                  Un sistema financiero que funciona siempre igual. Sin caos, sin dudas y sin retrasos. Tú diriges la empresa. Yo mantengo tus números en orden con rigor y claridad.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Link to="/contacto" className="btn-primary-contrast">
+                    Reserva tu llamada
+                  </Link>
+                  <Link to="/servicios" className="btn-outline">
+                    Ver servicios
+                  </Link>
+                </div>
               </div>
-            </div>
-            <div className="flex justify-center">
-              <img 
-                src="/lovable-uploads/edfe88c1-c8c4-4f11-83fb-287debc52ecc.png"
-                alt="Dashboard financiero con métricas en tiempo real - Balance, ingresos, gastos y beneficios"
-                className="w-full max-w-md mx-auto rounded-2xl shadow-2xl"
-              />
+              <div className="flex justify-center">
+                <img 
+                  src="/lovable-uploads/edfe88c1-c8c4-4f11-83fb-287debc52ecc.png"
+                  alt="Dashboard financiero con métricas en tiempo real - Balance, ingresos, gastos y beneficios"
+                  width="448"
+                  height="408"
+                  className="w-full max-w-md mx-auto rounded-2xl shadow-2xl"
+                  loading="eager"
+                  fetchPriority="high"
+                />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Beneficios Section - Fondo blanco */}
-      <section className="bg-white py-20">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="card-hover border border-border/30">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17a2 2 0 01-2-2V9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2M9 17h6M9 17v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4m6 0V9a2 2 0 012-2h2a2 2 0 012 2v8a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
+        {/* Beneficios Section - Fondo blanco */}
+        <section className="bg-white py-20" aria-labelledby="beneficios-heading">
+          <h2 id="beneficios-heading" className="sr-only">Beneficios de Finaptico</h2>
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="card-hover border border-border/30">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                  <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17a2 2 0 01-2-2V9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2M9 17h6M9 17v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4m6 0V9a2 2 0 012-2h2a2 2 0 012 2v8a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                </div>
+                <h3 className="text-subtitle font-semibold mb-3 text-text-primary">Control real con datos al día</h3>
+                <p className="text-base text-text-secondary leading-relaxed">Tesorería, KPIs y flujo de caja claros. Sabes dónde estás y qué puedes asumir.</p>
               </div>
-              <h3 className="text-subtitle font-semibold mb-3 text-text-primary">Control real con datos al día</h3>
-              <p className="text-base text-text-secondary leading-relaxed">Tesorería, KPIs y flujo de caja claros. Sabes dónde estás y qué puedes asumir.</p>
-            </div>
 
-            <div className="card-hover border border-border/30">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                </svg>
+              <div className="card-hover border border-border/30">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                  <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                </div>
+                <h3 className="text-subtitle font-semibold mb-3 text-text-primary">Menos riesgo fiscal</h3>
+                <p className="text-base text-text-secondary leading-relaxed">Supervisión constante y prevención de errores para evitar problemas y retrasos.</p>
               </div>
-              <h3 className="text-subtitle font-semibold mb-3 text-text-primary">Menos riesgo fiscal</h3>
-              <p className="text-base text-text-secondary leading-relaxed">Supervisión constante y prevención de errores para evitar problemas y retrasos.</p>
-            </div>
 
-            <div className="card-hover border border-border/30">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
+              <div className="card-hover border border-border/30">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                  <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <h3 className="text-subtitle font-semibold mb-3 text-text-primary">Dirección financiera operativa</h3>
+                <p className="text-base text-text-secondary leading-relaxed">Delegas la dirección y supervisión financiera, eliminas fricción y recuperas tiempo para crecer.</p>
               </div>
-              <h3 className="text-subtitle font-semibold mb-3 text-text-primary">Dirección financiera operativa</h3>
-              <p className="text-base text-text-secondary leading-relaxed">Delegas la dirección y supervisión financiera, eliminas fricción y recuperas tiempo para crecer.</p>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Packs Section - Fondo alternativo */}
       <section className="section-light py-20">
@@ -166,8 +172,9 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Espacio para el Footer CTA */}
-      <div className="bg-white py-16"></div>
+        {/* Espacio para el Footer CTA */}
+        <div className="bg-white py-16"></div>
+      </main>
 
       <Footer />
     </div>

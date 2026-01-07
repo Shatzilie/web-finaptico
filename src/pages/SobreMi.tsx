@@ -7,8 +7,9 @@ const SobreMi = () => {
     <div className="min-h-screen">
       <Header />
       
-      {/* Hero simple */}
-      <section className="bg-white py-20">
+      <main>
+        {/* Hero simple */}
+        <section className="bg-white py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-h1 text-text-primary mb-6">
@@ -193,8 +194,9 @@ const SobreMi = () => {
         </div>
       </section>
 
-      {/* Espacio para el Footer CTA */}
-      <div className="bg-white py-16"></div>
+        {/* Espacio para el Footer CTA */}
+        <div className="bg-white py-16"></div>
+      </main>
 
       <Footer />
     </div>

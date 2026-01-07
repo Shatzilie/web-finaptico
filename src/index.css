@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import Google Fonts */
+/* Import Google Fonts with display=swap for better performance */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 /* Finaptico Design System - Fintech/Neo-banco moderno */
@@ -107,6 +107,11 @@
   /* Button variants */
   .btn-primary {
     @apply bg-primary text-primary-foreground hover:bg-secondary hover:text-secondary-foreground transition-all duration-200 rounded-[var(--radius-pill)] px-7 py-3 font-medium text-body;
+  }
+
+  /* High contrast button for dark backgrounds - fixes accessibility contrast issues */
+  .btn-primary-contrast {
+    @apply bg-secondary text-[hsl(222,47%,11%)] hover:bg-primary hover:text-white transition-all duration-200 rounded-[var(--radius-pill)] px-7 py-3 font-medium text-body;
   }
   
   .btn-secondary {

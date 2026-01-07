@@ -33,9 +33,31 @@ export async function fetchLatestPosts(
   const res = await fetch(url, { headers: { Accept: "application/json" } });
   const data = await res.json();
   if (!res.ok) throw new Error(data?.error || `HTTP ${res.status}`);
-  const total = Number(res.headers?.get?.("X-WP-Total") ?? 0);
-  const totalPages = Number(res.headers?.get?.("X-WP-TotalPages") ?? 0);
-  return { data: data as WpPost[], total, totalPages };
+  
+  // Try to get from headers first (may not work through proxy/CORS)
+  let total = Number(res.headers?.get?.("X-WP-Total") ?? 0);
+  let totalPages = Number(res.headers?.get?.("X-WP-TotalPages") ?? 0);
+  
+  // Fallback: if headers missing, estimate based on returned data
+  // If we got a full page, assume there might be more pages
+  const posts = data as WpPost[];
+  if (total === 0 && posts.length > 0) {
+    // We don't know exact total, but we can infer pagination status
+    if (posts.length < perPage) {
+      // This is the last page (got fewer than requested)
+      total = (page - 1) * perPage + posts.length;
+      totalPages = page;
+    } else {
+      // Got full page, there might be more - estimate at least one more page
+      // We need to probe if there's a next page
+      total = page * perPage + 1; // at least this many
+      totalPages = page + 1; // assume at least one more page exists
+    }
+  } else if (totalPages === 0 && total > 0) {
+    totalPages = Math.ceil(total / perPage);
+  }
+  
+  return { data: posts, total, totalPages };
 }
 
 // --- Obtener un post por slug ---

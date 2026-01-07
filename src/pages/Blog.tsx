@@ -13,6 +13,7 @@ import {
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Checkbox } from "../components/ui/checkbox";
+import { BlogPostSkeletonGrid } from "../components/BlogPostSkeleton";
 
 function stripHtml(html?: string) {
   if (!html) return "";
@@ -257,8 +258,10 @@ const Blog = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             {error && <p className="text-center text-sm text-red-600 mb-4">{error}</p>}
-            {loading && <p className="text-center text-sm text-text-muted mb-4">Cargando artículos…</p>}
-
+            
+            {loading ? (
+              <BlogPostSkeletonGrid count={PER_PAGE} />
+            ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {renderedPosts.map((post) => (
                 <article key={post.id} className="card-hover border border-border/30 group">
@@ -307,6 +310,7 @@ const Blog = () => {
                 </article>
               ))}
             </div>
+            )}
 
             {/* Paginación */}
             <div className="flex items-center justify-center gap-2 mt-12">

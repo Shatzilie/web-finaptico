@@ -29,8 +29,9 @@ const Servicios = () => {
     <div className="min-h-screen">
       <Header />
       
-      {/* Intro */}
-      <section className="bg-white py-20">
+      <main>
+        {/* Intro */}
+        <section className="bg-white py-20">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-h1 text-text-primary mb-6">Servicios por packs</h1>
           <p className="text-body text-text-secondary max-w-2xl mx-auto mb-4">
@@ -400,8 +401,9 @@ const Servicios = () => {
         </div>
       </section>
 
-      {/* Espacio para el Footer CTA */}
-      <div className="bg-white py-16"></div>
+        {/* Espacio para el Footer CTA */}
+        <div className="bg-white py-16"></div>
+      </main>
 
       <Footer />
     </div>

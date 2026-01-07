@@ -13,10 +13,10 @@ const SobreMi = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-h1 text-text-primary mb-6">
-              Hola, soy Fátima, fundadora de Finaptico.
+              Soy Fátima, y ayudo a empresas a no perder dinero por desorden financiero.
             </h1>
             <p className="text-body text-text-secondary leading-relaxed">
-              Ayudo a empresas tecnológicas y pymes en crecimiento a tener números claros, orden, previsión y decisiones financieras seguras.
+              Trabajo con empresas tecnológicas y pymes digitales que quieren crecer sin improvisar.
             </p>
           </div>
         </div>
@@ -26,6 +26,7 @@ const SobreMi = () => {
       <section className="section-light py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
+            <p className="text-body text-text-secondary text-center mb-4">Esto es lo que hago. Y también lo que no hago.</p>
             <h2 className="text-h2 text-text-primary text-center mb-12">En qué te ayudo</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -59,6 +60,7 @@ const SobreMi = () => {
                 <p className="text-base text-text-secondary">Explicación simple, sin tecnicismos. Te cuento lo importante para que actúes con confianza.</p>
               </div>
             </div>
+            <p className="text-body text-text-secondary text-center mt-8 italic">No vendo tranquilidad vacía. Trabajo con datos, criterio y límites claros.</p>
           </div>
         </div>
       </section>
@@ -100,6 +102,7 @@ const SobreMi = () => {
                 </p>
               </div>
             </div>
+            <p className="text-body text-text-secondary text-center mt-8 italic">Si buscas que alguien te diga lo que quieres oír, no soy esa persona.</p>
           </div>
         </div>
       </section>
@@ -156,7 +159,7 @@ const SobreMi = () => {
                 </div>
                 <h3 className="text-subtitle font-semibold text-text-primary mb-4">Orientación a resultados</h3>
                 <p className="text-base text-text-secondary leading-relaxed">
-                  No se trata solo de ordenar números: te ayudo a tomar decisiones mejores para crecer con seguridad.
+                  No se trata de informes bonitos, sino de decisiones mejores y sostenibles.
                 </p>
               </div>
             </div>

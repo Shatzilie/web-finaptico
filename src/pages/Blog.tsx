@@ -206,9 +206,9 @@ const Blog = () => {
       <section className="bg-white py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-h1 text-text-primary mb-6">Blog de finanzas para pymes</h1>
+            <h1 className="text-h1 text-text-primary mb-6">Decisiones financieras sin humo para pymes y negocios digitales</h1>
             <p className="text-body text-text-secondary">
-              Consejos prácticos, casos reales y estrategias claras para hacer crecer tu empresa con finanzas ordenadas.
+              Aquí escribo sobre los errores que veo cada semana y sobre cómo evitarlos antes de que cuesten dinero.
             </p>
           </div>
         </div>
@@ -340,7 +340,7 @@ const Blog = () => {
             <div className="bg-white rounded-2xl p-8 shadow-lg border border-border/30">
               <h2 className="text-h2 text-text-primary mb-4">¿Te ha resultado útil?</h2>
               <p className="text-body text-text-secondary mb-6">
-                Recibe consejos financieros prácticos directamente en tu email. Un correo a la semana, sin spam.
+                Si este contenido te incomoda un poco, probablemente necesites revisar tus números.
               </p>
               <div className="space-y-4 max-w-md mx-auto">
                 <div className="flex flex-col sm:flex-row gap-3">
@@ -357,7 +357,7 @@ const Blog = () => {
                     disabled={!email || !privacy || nlLoading}
                     onClick={handleNewsletterSubmit}
                   >
-                    {nlLoading ? "Enviando..." : "Suscribirme"}
+                    {nlLoading ? "Enviando..." : "Recibir ideas claras por email"}
                   </button>
                 </div>
 

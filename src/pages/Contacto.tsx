@@ -148,10 +148,11 @@ const Contacto = () => {
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-h1 text-text-primary mb-6">Contacto</h1>
             <p className="text-body text-text-secondary mb-4">
-              Cuéntame sobre tu empresa y en qué punto estás. Te respondo muy pronto y vemos si puedo ayudarte.
+              Cuéntame en qué punto está tu empresa y qué te preocupa ahora mismo.
+              Te diré si puedo ayudarte o no.
             </p>
             <p className="text-base text-text-secondary">
-              Trabajo con un sistema estructurado. Durante la llamada vemos si tu empresa encaja con este modelo.
+              Prefiero pocas conversaciones, pero útiles.
             </p>
           </div>
         </div>
@@ -237,6 +238,7 @@ const Contacto = () => {
                         className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200 resize-none"
                         placeholder="Cuéntame qué necesitas, qué te preocupa o qué estás buscando mejorar."
                       />
+                      <p className="text-xs text-text-muted mt-1">Cuanto más concreto seas, mejor podré ayudarte.</p>
                     </div>
 
                     <div className="space-y-4">

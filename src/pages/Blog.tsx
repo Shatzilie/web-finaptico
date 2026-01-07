@@ -94,6 +94,17 @@ const Blog = () => {
           true,
           categoryId
         );
+        
+        // If page doesn't exist and we're not on page 1, redirect to last valid page
+        if (data.length === 0 && currentPage > 1) {
+          const lastPage = Math.max(totalPages, 1);
+          const qs = new URLSearchParams();
+          if (categorySlug) qs.set("category", categorySlug);
+          qs.set("page", String(lastPage));
+          navigate(`/blog?${qs.toString()}`, { replace: true });
+          return;
+        }
+        
         setWpPosts(data);
         setTotal(total);
         setTotalPages(Math.max(totalPages, 1));

@@ -45,4 +45,4 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://web-finaptico.lovable.app/sitemap.xml
+Sitemap: https://finaptico.com/sitemap.xml

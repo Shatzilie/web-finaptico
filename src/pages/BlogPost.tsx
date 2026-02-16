@@ -64,7 +64,7 @@ function buildTocAndAnchors(html: string): { html: string; toc: TocItem[] } {
     anchor.href = `#${id}`;
     anchor.setAttribute("aria-label", "Enlace a este apartado");
     anchor.className = "wp-anchor";
-    anchor.textContent = "¶";
+    anchor.textContent = "\u00B6";
     h.appendChild(anchor);
 
     toc.push({ id, text, level });
@@ -75,7 +75,6 @@ function buildTocAndAnchors(html: string): { html: string; toc: TocItem[] } {
 
 const TOC_LS_KEY = "finaptico_toc_collapsed";
 
-// Reusable TOC component (se usa en móvil y en desktop)
 function TocBox({
   toc,
   activeId,
@@ -105,7 +104,7 @@ function TocBox({
           className={`i-chevron transition-transform ${tocOpen ? "rotate-0" : "-rotate-90"}`}
           aria-hidden="true"
         >
-          ▸
+          {"\u25B8"}
         </span>
       </button>
 
@@ -145,26 +144,21 @@ const BlogPost: React.FC = () => {
   const [nextPost, setNextPost] = React.useState<WpPost | null>(null);
   const [related, setRelated] = React.useState<WpPost[]>([]);
 
-  // TOC + HTML con anchors
   const [toc, setToc] = React.useState<TocItem[]>([]);
   const [htmlWithAnchors, setHtmlWithAnchors] = React.useState<string>("");
 
-  // Scrollspy
   const [activeId, setActiveId] = React.useState<string>("");
 
-  // TOC colapsable (recuerda estado)
   const [tocOpen, setTocOpen] = React.useState<boolean>(() => {
     if (typeof window === "undefined") return true;
     const raw = localStorage.getItem(TOC_LS_KEY);
-    // Por UX: en móvil lo iniciamos colapsado si no hay preferencia guardada
     const defaultOpen = window.innerWidth < 1024 ? false : true;
-    return raw ? raw !== "1" : defaultOpen; // "1" = colapsado
+    return raw ? raw !== "1" : defaultOpen;
   });
   React.useEffect(() => {
     localStorage.setItem(TOC_LS_KEY, tocOpen ? "0" : "1");
   }, [tocOpen]);
 
-  // Carga principal
   React.useEffect(() => {
     (async () => {
       try {
@@ -173,14 +167,13 @@ const BlogPost: React.FC = () => {
         const p = await fetchPostBySlug(slug || "");
         setPost(p);
       } catch (e: any) {
-        setError(e?.message || "Error cargando el artículo");
+        setError(e?.message || "Error cargando el art\u00EDculo");
       } finally {
         setLoading(false);
       }
     })();
   }, [slug]);
 
-  // Procesa contenido para TOC al recibir el post
   React.useEffect(() => {
     if (!post?.content?.rendered) {
       setHtmlWithAnchors("");
@@ -192,7 +185,6 @@ const BlogPost: React.FC = () => {
     setToc(toc);
   }, [post?.content?.rendered]);
 
-  // Dependencias: adyacentes, relacionados, SEO
   React.useEffect(() => {
     (async () => {
       if (!post) return;
@@ -291,7 +283,6 @@ const BlogPost: React.FC = () => {
     })();
   }, [post]);
 
-  // Scrollspy
   React.useEffect(() => {
     const root = document.querySelector(".wp-article");
     if (!root) return;
@@ -340,22 +331,22 @@ const BlogPost: React.FC = () => {
             <nav className="text-sm text-text-muted">
               <Link to="/" className="hover:underline">Inicio</Link> <span>/</span>{" "}
               <Link to="/blog" className="hover:underline">Blog</Link> <span>/</span>{" "}
-              <span className="text-text-secondary">{post ? stripHtml(post.title?.rendered) : "…"}</span>
+              <span className="text-text-secondary">{post ? stripHtml(post.title?.rendered) : "\u2026"}</span>
             </nav>
             <button onClick={() => navigate(-1)} className="text-sm text-primary hover:underline" type="button">
-              ← Volver
+              {"\u2190"} Volver
             </button>
           </div>
         </div>
 
         <section className="bg-white">
           <div className="container mx-auto px-4">
-            {loading && <p className="text-center text-text-muted py-16">Cargando artículo…</p>}
+            {loading && <p className="text-center text-text-muted py-16">Cargando art{"\u00ED"}culo{"\u2026"}</p>}
 
             {!loading && !post && !error && (
               <div className="text-center py-16">
-                <h1 className="text-2xl font-semibold mb-2">Artículo no encontrado</h1>
-                <p className="text-text-secondary">Puede que el enlace haya cambiado o el artículo ya no exista.</p>
+                <h1 className="text-2xl font-semibold mb-2">Art{"\u00ED"}culo no encontrado</h1>
+                <p className="text-text-secondary">Puede que el enlace haya cambiado o el art{"\u00ED"}culo ya no exista.</p>
               </div>
             )}
 
@@ -363,7 +354,6 @@ const BlogPost: React.FC = () => {
 
             {post && (
               <article className="max-w-5xl mx-auto">
-                {/* Encabezado */}
                 {cats.length > 0 && (
                   <div className="flex flex-wrap gap-2 mb-4">
                     {cats.map((c) => (
@@ -379,12 +369,11 @@ const BlogPost: React.FC = () => {
                 )}
 
                 <h1 className="text-h1 text-text-primary mb-3">
-                  {stripHtml(post.title?.rendered) || "Sin título"}
+                  {stripHtml(post.title?.rendered) || "Sin t\u00EDtulo"}
                 </h1>
 
                 <p className="text-text-muted mb-6">{dateFmt(post.date)}</p>
 
-                {/* Imagen destacada (704x384, completa) */}
                 {img && (
                   <div
                     className="w-full rounded-2xl overflow-hidden mb-6 bg-section-light"
@@ -400,7 +389,6 @@ const BlogPost: React.FC = () => {
                   </div>
                 )}
 
-                {/* === TOC en MÓVIL: debajo de la imagen destacada === */}
                 {toc.length > 0 && (
                   <TocBox
                     toc={toc}
@@ -412,15 +400,12 @@ const BlogPost: React.FC = () => {
                   />
                 )}
 
-                {/* Layout 2 columnas: contenido + TOC sticky en desktop */}
                 <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8">
-                  {/* CONTENIDO WP */}
                   <div
                     className="wp-article text-text-primary leading-relaxed"
                     dangerouslySetInnerHTML={{ __html: htmlWithAnchors || post.content?.rendered || "" }}
                   />
 
-                  {/* TOC en DESKTOP (sticky a la derecha) */}
                   {toc.length > 0 && (
                     <TocBox
                       toc={toc}
@@ -433,14 +418,13 @@ const BlogPost: React.FC = () => {
                   )}
                 </div>
 
-                {/* Author box (E-E-A-T) */}
                 <section className="mt-10 p-6 rounded-2xl border border-border/50 bg-section-light">
                   <div className="flex items-start gap-4">
                     <div className="w-16 h-16 rounded-full overflow-hidden bg-white flex items-center justify-center">
                       {author?.avatar ? (
                         <img src={author.avatar} alt={author?.name || "Autor"} className="w-full h-full object-cover" />
                       ) : (
-                        <span className="text-2xl">👤</span>
+                        <span className="text-2xl">{"\uD83D\uDC64"}</span>
                       )}
                     </div>
                     <div className="flex-1">
@@ -456,7 +440,6 @@ const BlogPost: React.FC = () => {
                   </div>
                 </section>
 
-                {/* Navegación Anterior / Siguiente */}
                 <section className="mt-10 border-t border-border pt-6">
                   <div className="flex flex-col md:flex-row md:items-stretch gap-4">
                     <div className="flex-1">
@@ -465,7 +448,7 @@ const BlogPost: React.FC = () => {
                           to={`/blog/${prevPost.slug}`}
                           className="block rounded-xl border border-border/50 p-4 hover:border-primary transition-colors"
                         >
-                          <span className="text-xs text-text-muted">← Anterior</span>
+                          <span className="text-xs text-text-muted">{"\u2190"} Anterior</span>
                           <p className="text-base font-medium text-text-primary">
                             {stripHtml(prevPost.title?.rendered)}
                           </p>
@@ -478,7 +461,7 @@ const BlogPost: React.FC = () => {
                           to={`/blog/${nextPost.slug}`}
                           className="block rounded-xl border border-border/50 p-4 hover:border-primary transition-colors"
                         >
-                          <span className="text-xs text-text-muted">Siguiente →</span>
+                          <span className="text-xs text-text-muted">Siguiente {"\u2192"}</span>
                           <p className="text-base font-medium text-text-primary">
                             {stripHtml(nextPost.title?.rendered)}
                           </p>
@@ -488,10 +471,9 @@ const BlogPost: React.FC = () => {
                   </div>
                 </section>
 
-                {/* Relacionados */}
                 {related && related.length > 0 && (
                   <section className="mt-12">
-                    <h3 className="text-h3 text-text-primary mb-4">También te puede interesar</h3>
+                    <h3 className="text-h3 text-text-primary mb-4">Tambi{"\u00E9"}n te puede interesar</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                       {related.map((r) => {
                         const rImg = featuredImageFromEmbedded(r);
@@ -505,7 +487,7 @@ const BlogPost: React.FC = () => {
                               {rImg ? (
                                 <img src={rImg} alt={stripHtml(r.title?.rendered)} className="w-full h-full object-contain" loading="lazy" />
                               ) : (
-                                <div className="w-full h-full flex items-center justify-center text-3xl">📝</div>
+                                <div className="w-full h-full flex items-center justify-center text-3xl">{"\uD83D\uDCDD"}</div>
                               )}
                             </div>
                             <div className="p-4">
@@ -520,7 +502,6 @@ const BlogPost: React.FC = () => {
                   </section>
                 )}
 
-                {/* Más margen antes del footer */}
                 <div className="pb-24" />
               </article>
             )}
@@ -528,34 +509,18 @@ const BlogPost: React.FC = () => {
         </section>
       </main>
 
-      {/* ====== ESTILOS (headings + anclas + TOC + scroll offset) ====== */}
       <style>{`
         .wp-article { font-size: 1.0625rem; line-height: 1.75; }
         .wp-article p { margin: 1rem 0; }
-
-        .wp-article h2[id], .wp-article h3[id], .wp-article h4[id], .wp-article h5[id], .wp-article h6[id] {
-          scroll-margin-top: 96px;
-        }
-
-        .wp-article h2, .wp-article h3, .wp-article h4, .wp-article h5, .wp-article h6 {
-          color: var(--color-text-primary, #101828);
-          font-weight: 700; line-height: 1.25; margin: 2.25rem 0 0.75rem;
-          position: relative;
-        }
+        .wp-article h2[id], .wp-article h3[id], .wp-article h4[id], .wp-article h5[id], .wp-article h6[id] { scroll-margin-top: 96px; }
+        .wp-article h2, .wp-article h3, .wp-article h4, .wp-article h5, .wp-article h6 { color: var(--color-text-primary, #101828); font-weight: 700; line-height: 1.25; margin: 2.25rem 0 0.75rem; position: relative; }
         .wp-article h2 { font-size: clamp(1.5rem, 2.2vw, 2rem); padding-left: 0.75rem; border-left: 4px solid #6C5CE7; }
         .wp-article h3 { font-size: clamp(1.25rem, 1.8vw, 1.5rem); padding-left: 0.6rem; border-left: 3px solid #00BFA5; }
         .wp-article h4 { font-size: clamp(1.125rem, 1.4vw, 1.25rem); border-bottom: 1px solid rgba(16,24,40,0.08); padding-bottom: 0.25rem; }
         .wp-article h5 { font-size: 1.0625rem; letter-spacing: 0.02em; text-transform: uppercase; color: rgba(16,24,40,0.82); }
         .wp-article h6 { font-size: 0.95rem; letter-spacing: 0.03em; text-transform: uppercase; color: rgba(16,24,40,0.72); }
-
-        .wp-article .wp-anchor {
-          margin-left: 0.5rem; text-decoration: none; opacity: 0; transition: opacity .2s ease;
-          color: #98A2B3; font-weight: 400;
-        }
-        .wp-article h2:hover .wp-anchor,
-        .wp-article h3:hover .wp-anchor,
-        .wp-article h4:hover .wp-anchor { opacity: 1; }
-
+        .wp-article .wp-anchor { margin-left: 0.5rem; text-decoration: none; opacity: 0; transition: opacity .2s ease; color: #98A2B3; font-weight: 400; }
+        .wp-article h2:hover .wp-anchor, .wp-article h3:hover .wp-anchor, .wp-article h4:hover .wp-anchor { opacity: 1; }
         .wp-article ul, .wp-article ol { margin: 1rem 0 1rem 1.25rem; }
         .wp-article li { margin: 0.25rem 0; }
         .wp-article blockquote { margin: 1.25rem 0; padding: 0.75rem 1rem; border-left: 4px solid #6C5CE7; background: #F8F7FF; color: #475467; }
@@ -567,7 +532,6 @@ const BlogPost: React.FC = () => {
         .wp-article a:hover { color: #00BFA5; }
         .wp-article code { background: #F2F4F7; padding: 0.15rem 0.35rem; border-radius: 0.375rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 0.9em; }
         .wp-article pre { background: #0B1220; color: #F8FAFC; padding: 1rem 1.25rem; border-radius: 0.75rem; overflow: auto; margin: 1rem 0; }
-
         .i-chevron { display: inline-block; transform-origin: center; }
       `}</style>
 

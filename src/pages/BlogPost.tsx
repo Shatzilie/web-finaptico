@@ -114,7 +114,7 @@ function TocBox({
           <ul className="space-y-1">
             {toc.map((item) => (
               <li key={item.id} className={item.level === 3 ? "pl-4" : ""}>
-                <a
+                
                   href={`#${item.id}`}
                   className={`block rounded px-2 py-1 transition-colors ${
                     activeId === item.id
@@ -239,17 +239,33 @@ const BlogPost: React.FC = () => {
       const cats = postCategories(post).map((c) => c.name);
       const author = authorFromEmbedded(post);
 
+      const wordCount = stripHtml(post.content?.rendered).split(/\s+/).filter(Boolean).length;
+
       const articleLd = {
         "@context": "https://schema.org",
         "@type": "Article",
         headline: stripHtml(post.title?.rendered),
+        url: canonicalHref,
         datePublished: post.date,
         dateModified: post.modified || post.date,
-        author: author.name ? { "@type": "Person", name: author.name } : undefined,
+        author: author.name
+          ? { "@type": "Person", name: author.name }
+          : { "@type": "Organization", name: "Finaptico" },
+        publisher: {
+          "@type": "Organization",
+          name: "Finaptico",
+          url: "https://finaptico.com",
+          logo: {
+            "@type": "ImageObject",
+            url: "https://finaptico.com/og-image.png",
+          },
+        },
         image: img ? [img] : undefined,
-        articleSection: cats[0],
-        mainEntityOfPage: canonicalHref,
+        articleSection: cats[0] || undefined,
+        mainEntityOfPage: { "@type": "WebPage", "@id": canonicalHref },
         description: desc,
+        wordCount: wordCount,
+        inLanguage: "es",
       };
 
       const breadcrumbLd = {

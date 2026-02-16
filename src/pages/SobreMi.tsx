@@ -24,9 +24,9 @@ const SobreMi = () => {
               <img
                 src="/foto-fatima.png"
                 alt="Fátima, directora financiera operativa en Finaptico"
-                width="320"
-                height="320"
-                className="rounded-2xl shadow-lg w-full max-w-xs"
+                width="280"
+                height="280"
+                className="rounded-full shadow-lg w-64 h-64 object-cover object-top"
                 loading="eager"
               />
             </div>

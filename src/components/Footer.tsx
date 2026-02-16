@@ -68,7 +68,7 @@ const Footer = () => {
           {/* Franja final */}
           <div className="border-t border-white/20 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
             <p className="text-white/60 text-sm">
-              
+              © Finaptico {new Date().getFullYear()}
             </p>
             <p className="text-white/60 text-sm">
               Email: <a href="mailto:hola@finaptico.com" className="hover:text-secondary transition-colors duration-200">hola@finaptico.com</a>

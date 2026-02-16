@@ -113,7 +113,7 @@ function TocBox({
           <ul className="space-y-1">
             {toc.map((item) => (
               <li key={item.id} className={item.level === 3 ? "pl-4" : ""}>
-                
+                  <a
                   href={`#${item.id}`}
                   className={`block rounded px-2 py-1 transition-colors ${
                     activeId === item.id

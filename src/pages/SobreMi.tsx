@@ -11,13 +11,25 @@ const SobreMi = () => {
         {/* Hero simple */}
         <section className="bg-white py-20">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-h1 text-text-primary mb-6">
-              Soy Fátima, y ayudo a empresas a no perder dinero por desorden financiero.
-            </h1>
-            <p className="text-body text-text-secondary leading-relaxed">
-              Trabajo con empresas tecnológicas y pymes digitales que quieren crecer sin improvisar.
-            </p>
+          <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div className="text-center md:text-left">
+              <h1 className="text-h1 text-text-primary mb-6">
+                Soy Fátima, y ayudo a empresas a no perder dinero por desorden financiero.
+              </h1>
+              <p className="text-body text-text-secondary leading-relaxed">
+                Trabajo con empresas tecnológicas y pymes digitales que quieren crecer sin improvisar.
+              </p>
+            </div>
+            <div className="flex justify-center">
+              <img
+                src="/foto-fatima.png"
+                alt="Fátima, directora financiera operativa en Finaptico"
+                width="320"
+                height="320"
+                className="rounded-2xl shadow-lg w-full max-w-xs"
+                loading="eager"
+              />
+            </div>
           </div>
         </div>
       </section>

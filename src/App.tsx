@@ -10,24 +10,20 @@ import SobreMi from "./pages/SobreMi";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Contacto from "./pages/Contacto";
+import FAQs from "./pages/FAQs";
 import AvisoLegal from "./pages/AvisoLegal";
 import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
 import PoliticaCookies from "./pages/PoliticaCookies";
 import SmartWorkerTest from "./pages/SmartWorkerTest";
 import NotFound from "./pages/NotFound";
-
 const queryClient = new QueryClient();
-
 const ScrollToTop = () => {
   const { pathname } = useLocation();
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
-
   return null;
 };
-
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -42,6 +38,7 @@ const App = () => (
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/contacto" element={<Contacto />} />
+          <Route path="/preguntas-frecuentes" element={<FAQs />} />
           <Route path="/aviso-legal" element={<AvisoLegal />} />
           <Route path="/politica-de-privacidad" element={<PoliticaPrivacidad />} />
           <Route path="/politica-de-cookies" element={<PoliticaCookies />} />
@@ -53,5 +50,4 @@ const App = () => (
     </TooltipProvider>
   </QueryClientProvider>
 );
-
 export default App;

@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-
 const Footer = () => {
   return (
     <footer className="section-darker text-white relative">
@@ -15,7 +14,6 @@ const Footer = () => {
             Solicitar revisión financiera
           </Link>
         </div>
-
         <div className="pb-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Marca + Claim */}
@@ -25,7 +23,6 @@ const Footer = () => {
                 Sistemas financieros claros y sin fricción para empresas tecnológicas.
               </p>
             </div>
-
             {/* Navegación */}
             <div className="space-y-4">
               <h4 className="font-semibold text-white">Navegación</h4>
@@ -42,12 +39,14 @@ const Footer = () => {
                 <Link to="/blog" className="text-white/80 hover:text-secondary transition-colors duration-200">
                   Blog
                 </Link>
+                <Link to="/preguntas-frecuentes" className="text-white/80 hover:text-secondary transition-colors duration-200">
+                  Preguntas frecuentes
+                </Link>
                 <Link to="/contacto" className="text-white/80 hover:text-secondary transition-colors duration-200">
                   Contacto
                 </Link>
               </nav>
             </div>
-
             {/* Legal */}
             <div className="space-y-4">
               <h4 className="font-semibold text-white">Legal</h4>
@@ -64,7 +63,6 @@ const Footer = () => {
               </nav>
             </div>
           </div>
-
           {/* Franja final */}
           <div className="border-t border-white/20 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
             <p className="text-white/60 text-sm">
@@ -79,5 +77,4 @@ const Footer = () => {
     </footer>
   );
 };
-
 export default Footer;

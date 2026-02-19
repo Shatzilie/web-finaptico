@@ -262,52 +262,43 @@ const Blog = () => {
             {loading ? (
               <BlogPostSkeletonGrid count={PER_PAGE} />
             ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {renderedPosts.map((post) => (
-                <article key={post.id} className="card-hover border border-border/30 group">
-                  <div className="space-y-4">
-                    {/* Media en cards del blog (mantener imagen entera 704x384 adaptada) */}
-                    <div
-                      className="w-full rounded-lg flex items-center justify-center overflow-hidden bg-section-light"
-                      style={{ aspectRatio: "704 / 384" }}
-                    >
-                      {"imageUrl" in post && post.imageUrl ? (
-                        <img
-                          src={post.imageUrl as string}
-                          alt={post.title}
-                          className="max-w-full max-h-full object-contain"
-                          loading="lazy"
-                          referrerPolicy="no-referrer-when-downgrade"
-                        />
-                      ) : (
-                        <span className="text-4xl">{(post as any).image ?? "📝"}</span>
-                      )}
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <span className="inline-block bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium">
+                <Link
+                  key={post.id}
+                  to={`/blog/${(post as any).slug}`}
+                  className="group border border-border/40 rounded-xl overflow-hidden hover:border-primary/50 hover:shadow-[0_4px_20px_rgba(0,0,0,0.06)] transition-all"
+                >
+                  <div className="w-full bg-[#1a1040] overflow-hidden" style={{ aspectRatio: "16/9" }}>
+                    {"imageUrl" in post && post.imageUrl ? (
+                      <img
+                        src={post.imageUrl as string}
+                        alt={post.title}
+                        className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300"
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-3xl text-white/30">
+                        {(post as any).image ?? "📝"}
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-semibold text-primary uppercase tracking-wide">
                         {"category" in post ? (post as any).category : "Blog"}
                       </span>
-                      <span className="text-sm text-text-muted">
-                        {"readTime" in post ? (post as any).readTime : "—"}
-                      </span>
+                      <span className="text-xs text-text-muted">{post.date}</span>
                     </div>
-
-                    <h2 className="text-xl font-semibold text-text-primary group-hover:text-primary transition-colors duration-200 leading-tight">
-                      <Link to={`/blog/${(post as any).slug}`} className="link-underline">
-                        {post.title}
-                      </Link>
+                    <h2 className="text-base font-semibold text-text-primary line-clamp-2 group-hover:text-primary transition-colors">
+                      {post.title}
                     </h2>
-
-                    <p className="text-base text-text-secondary leading-relaxed">
+                    <p className="text-sm text-text-muted mt-1.5 line-clamp-2">
                       {post.excerpt}
                     </p>
-
-                    <div className="pt-2 border-t border-border">
-                      <span className="text-sm text-text-muted">{post.date}</span>
-                    </div>
                   </div>
-                </article>
+                </Link>
               ))}
             </div>
             )}
@@ -367,7 +358,7 @@ const Blog = () => {
                     className="flex-1 px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   />
                   <button
-                    type="button" // 👈 importante
+                    type="button"
                     className="btn-primary whitespace-nowrap disabled:opacity-50"
                     disabled={!email || !privacy || nlLoading}
                     onClick={handleNewsletterSubmit}

@@ -1,5 +1,3 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
-
 const WP_BASE = "https://sienna-grouse-877900.hostingersite.com/wp-json/wp/v2";
 const SITE_URL = "https://finaptico.com";
 const FALLBACK_IMAGE = `${SITE_URL}/og-image.png`;
@@ -28,11 +26,15 @@ function truncate(text: string, max: number): string {
   return text.slice(0, max).replace(/\s+\S*$/, "") + "…";
 }
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const slug = req.query.slug as string;
+export const config = {
+  runtime: "edge",
+};
+
+export default async function handler(req: Request) {
+  const url = new URL(req.url);
+  const slug = url.searchParams.get("slug");
   if (!slug) {
-    res.status(400).send("Missing slug");
-    return;
+    return new Response("Missing slug", { status: 400 });
   }
 
   try {
@@ -45,14 +47,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const posts: WpPost[] = await wpRes.json();
     if (!posts.length) {
-      res.status(404).send("Post not found");
-      return;
+      return new Response("Post not found", { status: 404 });
     }
 
     const post = posts[0];
     const title = stripHtml(post.title.rendered);
     const description = truncate(stripHtml(post.excerpt.rendered), 160);
-    const url = `${SITE_URL}/blog/${post.slug}`;
+    const postUrl = `${SITE_URL}/blog/${post.slug}`;
     const author = post._embedded?.author?.[0]?.name || "Finaptico";
 
     // Imagen destacada
@@ -68,13 +69,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   <meta charset="utf-8" />
   <title>${escapeHtml(title)} | Finaptico</title>
   <meta name="description" content="${escapeHtml(description)}" />
-  <link rel="canonical" href="${url}" />
+  <link rel="canonical" href="${postUrl}" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="article" />
   <meta property="og:title" content="${escapeHtml(title)}" />
   <meta property="og:description" content="${escapeHtml(description)}" />
-  <meta property="og:url" content="${url}" />
+  <meta property="og:url" content="${postUrl}" />
   <meta property="og:image" content="${escapeHtml(image)}" />
   <meta property="og:image:width" content="1536" />
   <meta property="og:image:height" content="1024" />
@@ -91,21 +92,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   <meta name="twitter:image" content="${escapeHtml(image)}" />
 
   <!-- Redirect real users to the SPA -->
-  <meta http-equiv="refresh" content="0;url=${url}" />
+  <meta http-equiv="refresh" content="0;url=${postUrl}" />
 </head>
 <body>
   <h1>${escapeHtml(title)}</h1>
   <p>${escapeHtml(description)}</p>
-  <a href="${url}">Leer artículo</a>
+  <a href="${postUrl}">Leer artículo</a>
 </body>
 </html>`;
 
-    res.setHeader("Content-Type", "text/html; charset=utf-8");
-    res.setHeader("Cache-Control", "public, s-maxage=3600, stale-while-revalidate=86400");
-    res.status(200).send(html);
+    return new Response(html, {
+      status: 200,
+      headers: {
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
+      },
+    });
   } catch (err: any) {
     // En caso de error, redirigir al SPA
-    res.redirect(302, `${SITE_URL}/blog/${slug}`);
+    return Response.redirect(`${SITE_URL}/blog/${slug}`, 302);
   }
 }
 

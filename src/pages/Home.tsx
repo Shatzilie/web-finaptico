@@ -33,7 +33,7 @@ const Home = () => {
               </div>
               <div className="flex justify-center">
                 <img 
-                  src="/lovable-uploads/edfe88c1-c8c4-4f11-83fb-287debc52ecc.png"
+                  src="/images/dashboard-hero.png"
                   alt="Dashboard financiero con métricas en tiempo real - Balance, ingresos, gastos y beneficios"
                   width="448"
                   height="408"

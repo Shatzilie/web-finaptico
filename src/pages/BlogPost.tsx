@@ -557,6 +557,21 @@ const BlogPost: React.FC = () => {
                   </div>
                 </section>
 
+                {/* CTA banner */}
+                <section className="mt-12 rounded-2xl overflow-hidden bg-gradient-to-br from-[#1a1040] via-[#2d1b69] to-[#1a1040] p-8 md:p-10 text-center">
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
+                    {"\u00BF"}Quieres saber exactamente qu{"\u00E9"} est{"\u00E1"} pasando con tu caja y tus impuestos?
+                  </h3>
+                  <p className="text-white/70 text-sm mb-6">Habl{"\u00E9"}moslo en 30 minutos. Sin compromiso.</p>
+                  <Link
+                    to="/contacto"
+                    className="inline-flex items-center gap-2 bg-secondary text-[#111827] font-semibold px-6 py-3 rounded-xl hover:bg-white transition-colors"
+                  >
+                    Agendar conversaci{"\u00F3"}n
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  </Link>
+                </section>
+
                 {/* Navegacion anterior / siguiente */}
                 <section className="mt-10 border-t border-border/50 pt-8">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -609,21 +624,6 @@ const BlogPost: React.FC = () => {
                       })()}
                     </div>
                   </div>
-                </section>
-
-                {/* CTA banner */}
-                <section className="mt-12 rounded-2xl overflow-hidden bg-gradient-to-br from-[#1a1040] via-[#2d1b69] to-[#1a1040] p-8 md:p-10 text-center">
-                  <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
-                    {"\u00BF"}Quieres saber exactamente qu{"\u00E9"} est{"\u00E1"} pasando con tu caja y tus impuestos?
-                  </h3>
-                  <p className="text-white/70 text-sm mb-6">Habl{"\u00E9"}moslo en 30 minutos. Sin compromiso.</p>
-                  <Link
-                    to="/contacto"
-                    className="inline-flex items-center gap-2 bg-secondary text-[#111827] font-semibold px-6 py-3 rounded-xl hover:bg-white transition-colors"
-                  >
-                    Agendar conversaci{"\u00F3"}n
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                  </Link>
                 </section>
 
                 {/* Posts relacionados */}

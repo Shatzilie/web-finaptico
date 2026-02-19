@@ -12,6 +12,8 @@ import {
   authorFromEmbedded,
   pageTitleFromPost,
   metaDescriptionFromPost,
+  shortExcerpt,
+  primaryCategoryName,
 } from "../lib/wp";
 
 function stripHtml(html?: string) {
@@ -19,6 +21,13 @@ function stripHtml(html?: string) {
   const div = document.createElement("div");
   div.innerHTML = html;
   return (div.textContent || div.innerText || "").trim();
+}
+
+function readingTime(html?: string): number {
+  if (!html) return 1;
+  const text = stripHtml(html);
+  const words = text.split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 200));
 }
 
 // ---------- TOC utils ----------
@@ -320,20 +329,33 @@ const BlogPost: React.FC = () => {
   const img = post ? featuredImageFromEmbedded(post) : null;
   const cats = post ? postCategories(post) : [];
   const author = post ? authorFromEmbedded(post) : {};
+  const minutes = post ? readingTime(post.content?.rendered) : 0;
 
   return (
     <div className="min-h-screen">
       <Header />
 
       <main className="bg-white">
-        <div className="container mx-auto px-4 py-8">
+        {/* Breadcrumb */}
+        <div className="container mx-auto px-4 pt-6 pb-2">
           <div className="flex items-center justify-between">
-            <nav className="text-sm text-text-muted">
-              <Link to="/" className="hover:underline">Inicio</Link> <span>/</span>{" "}
-              <Link to="/blog" className="hover:underline">Blog</Link> <span>/</span>{" "}
-              <span className="text-text-secondary">{post ? stripHtml(post.title?.rendered) : "\u2026"}</span>
+            <nav className="text-sm text-text-muted" aria-label="Breadcrumb">
+              <Link to="/" className="hover:text-primary transition-colors">Inicio</Link>
+              <span className="mx-1.5 text-border">/</span>
+              <Link to="/blog" className="hover:text-primary transition-colors">Blog</Link>
+              {cats.length > 0 && (
+                <>
+                  <span className="mx-1.5 text-border">/</span>
+                  <Link
+                    to={`/blog?category=${encodeURIComponent(cats[0].slug)}&page=1`}
+                    className="hover:text-primary transition-colors"
+                  >
+                    {cats[0].name}
+                  </Link>
+                </>
+              )}
             </nav>
-            <button onClick={() => navigate(-1)} className="text-sm text-primary hover:underline" type="button">
+            <button onClick={() => navigate(-1)} className="text-sm text-text-muted hover:text-primary transition-colors" type="button">
               {"\u2190"} Volver
             </button>
           </div>
@@ -354,41 +376,59 @@ const BlogPost: React.FC = () => {
 
             {post && (
               <article className="max-w-5xl mx-auto">
-                {cats.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {cats.map((c) => (
-                      <Link
-                        key={c.slug}
-                        to={`/blog?category=${encodeURIComponent(c.slug)}&page=1`}
-                        className="inline-block rounded-full bg-primary/10 text-primary px-3 py-1 text-sm hover:bg-primary hover:text-white transition-colors"
-                      >
-                        {c.name}
-                      </Link>
-                    ))}
+                {/* Hero del articulo */}
+                <header className="mb-8">
+                  {/* Categorias */}
+                  {cats.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {cats.map((c) => (
+                        <Link
+                          key={c.slug}
+                          to={`/blog?category=${encodeURIComponent(c.slug)}&page=1`}
+                          className="inline-block rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-semibold uppercase tracking-wide hover:bg-primary hover:text-white transition-colors"
+                        >
+                          {c.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Titulo */}
+                  <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-text-primary leading-tight mb-4">
+                    {stripHtml(post.title?.rendered) || "Sin t\u00EDtulo"}
+                  </h1>
+
+                  {/* Meta-line: fecha, tiempo de lectura, autor */}
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-text-muted">
+                    <time dateTime={post.date}>{dateFmt(post.date)}</time>
+                    <span className="text-border">|</span>
+                    <span>{minutes} min de lectura</span>
+                    {author?.name && (
+                      <>
+                        <span className="text-border">|</span>
+                        <span>Por <span className="text-text-secondary font-medium">{author.name}</span></span>
+                      </>
+                    )}
                   </div>
-                )}
+                </header>
 
-                <h1 className="text-h1 text-text-primary mb-3">
-                  {stripHtml(post.title?.rendered) || "Sin t\u00EDtulo"}
-                </h1>
-
-                <p className="text-text-muted mb-6">{dateFmt(post.date)}</p>
-
+                {/* Imagen destacada */}
                 {img && (
                   <div
-                    className="w-full rounded-2xl overflow-hidden mb-6 bg-section-light"
-                    style={{ aspectRatio: "704 / 384" }}
+                    className="w-full rounded-2xl overflow-hidden mb-10 bg-[#1a1040]"
+                    style={{ aspectRatio: "16 / 9" }}
                   >
                     <img
                       src={img}
                       alt={stripHtml(post.title?.rendered)}
-                      className="w-full h-full object-contain"
-                      loading="lazy"
+                      className="w-full h-full object-cover"
+                      loading="eager"
                       referrerPolicy="no-referrer-when-downgrade"
                     />
                   </div>
                 )}
 
+                {/* TOC mobile */}
                 {toc.length > 0 && (
                   <TocBox
                     toc={toc}
@@ -400,7 +440,8 @@ const BlogPost: React.FC = () => {
                   />
                 )}
 
-                <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8">
+                {/* Cuerpo del articulo + TOC desktop */}
+                <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-10">
                   <div
                     className="wp-article text-text-primary leading-relaxed"
                     dangerouslySetInnerHTML={{ __html: htmlWithAnchors || post.content?.rendered || "" }}
@@ -418,9 +459,10 @@ const BlogPost: React.FC = () => {
                   )}
                 </div>
 
-                <section className="mt-10 p-6 rounded-2xl border border-border/50 bg-section-light">
+                {/* Seccion autor */}
+                <section className="mt-12 p-6 rounded-2xl border border-border/50 bg-section-light">
                   <div className="flex items-start gap-4">
-                    <div className="w-16 h-16 rounded-full overflow-hidden bg-white flex items-center justify-center">
+                    <div className="w-14 h-14 rounded-full overflow-hidden bg-white flex-shrink-0 flex items-center justify-center border border-border/30">
                       {author?.avatar ? (
                         <img src={author.avatar} alt={author?.name || "Autor"} className="w-full h-full object-cover" />
                       ) : (
@@ -440,60 +482,77 @@ const BlogPost: React.FC = () => {
                   </div>
                 </section>
 
-                <section className="mt-10 border-t border-border pt-6">
-                  <div className="flex flex-col md:flex-row md:items-stretch gap-4">
-                    <div className="flex-1">
+                {/* Navegacion anterior / siguiente */}
+                <section className="mt-10 border-t border-border/50 pt-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
                       {prevPost && (
                         <Link
                           to={`/blog/${prevPost.slug}`}
-                          className="block rounded-xl border border-border/50 p-4 hover:border-primary transition-colors"
+                          className="group block rounded-xl border border-border/40 p-5 hover:border-primary/50 hover:bg-section-light transition-all h-full"
                         >
-                          <span className="text-xs text-text-muted">{"\u2190"} Anterior</span>
-                          <p className="text-base font-medium text-text-primary">
+                          <span className="text-xs font-medium text-text-muted uppercase tracking-wide">{"\u2190"} Anterior</span>
+                          <p className="text-base font-semibold text-text-primary mt-1.5 group-hover:text-primary transition-colors line-clamp-2">
                             {stripHtml(prevPost.title?.rendered)}
                           </p>
+                          <span className="text-xs text-text-muted mt-1 block">{primaryCategoryName(prevPost)}</span>
                         </Link>
                       )}
                     </div>
-                    <div className="flex-1 text-right">
+                    <div>
                       {nextPost && (
                         <Link
                           to={`/blog/${nextPost.slug}`}
-                          className="block rounded-xl border border-border/50 p-4 hover:border-primary transition-colors"
+                          className="group block rounded-xl border border-border/40 p-5 hover:border-primary/50 hover:bg-section-light transition-all text-right h-full"
                         >
-                          <span className="text-xs text-text-muted">Siguiente {"\u2192"}</span>
-                          <p className="text-base font-medium text-text-primary">
+                          <span className="text-xs font-medium text-text-muted uppercase tracking-wide">Siguiente {"\u2192"}</span>
+                          <p className="text-base font-semibold text-text-primary mt-1.5 group-hover:text-primary transition-colors line-clamp-2">
                             {stripHtml(nextPost.title?.rendered)}
                           </p>
+                          <span className="text-xs text-text-muted mt-1 block">{primaryCategoryName(nextPost)}</span>
                         </Link>
                       )}
                     </div>
                   </div>
                 </section>
 
+                {/* Posts relacionados */}
                 {related && related.length > 0 && (
-                  <section className="mt-12">
-                    <h3 className="text-h3 text-text-primary mb-4">Tambi{"\u00E9"}n te puede interesar</h3>
+                  <section className="mt-14">
+                    <h3 className="text-2xl font-bold text-text-primary mb-6">Tambi{"\u00E9"}n te puede interesar</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                       {related.map((r) => {
                         const rImg = featuredImageFromEmbedded(r);
+                        const rCat = primaryCategoryName(r);
                         return (
                           <Link
                             key={r.id}
                             to={`/blog/${r.slug}`}
-                            className="border border-border/40 rounded-xl overflow-hidden hover:border-primary transition-colors"
+                            className="group border border-border/40 rounded-xl overflow-hidden hover:border-primary/50 hover:shadow-[0_4px_20px_rgba(0,0,0,0.06)] transition-all"
                           >
-                            <div className="w-full bg-section-light overflow-hidden" style={{ aspectRatio: "704/384" }}>
+                            <div className="w-full bg-[#1a1040] overflow-hidden" style={{ aspectRatio: "16/9" }}>
                               {rImg ? (
-                                <img src={rImg} alt={stripHtml(r.title?.rendered)} className="w-full h-full object-contain" loading="lazy" />
+                                <img
+                                  src={rImg}
+                                  alt={stripHtml(r.title?.rendered)}
+                                  className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300"
+                                  loading="lazy"
+                                />
                               ) : (
-                                <div className="w-full h-full flex items-center justify-center text-3xl">{"\uD83D\uDCDD"}</div>
+                                <div className="w-full h-full flex items-center justify-center text-3xl text-white/30">{"\uD83D\uDCDD"}</div>
                               )}
                             </div>
                             <div className="p-4">
-                              <h4 className="text-base font-semibold text-text-primary line-clamp-2">
+                              <div className="flex items-center justify-between mb-2">
+                                <span className="text-xs font-semibold text-primary uppercase tracking-wide">{rCat}</span>
+                                <span className="text-xs text-text-muted">{dateFmt(r.date)}</span>
+                              </div>
+                              <h4 className="text-base font-semibold text-text-primary line-clamp-2 group-hover:text-primary transition-colors">
                                 {stripHtml(r.title?.rendered)}
                               </h4>
+                              <p className="text-sm text-text-muted mt-1.5 line-clamp-2">
+                                {shortExcerpt(r, 18)}
+                              </p>
                             </div>
                           </Link>
                         );
@@ -502,7 +561,7 @@ const BlogPost: React.FC = () => {
                   </section>
                 )}
 
-                <div className="pb-24" />
+                <div className="pb-20" />
               </article>
             )}
           </div>

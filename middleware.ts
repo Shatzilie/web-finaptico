@@ -1,5 +1,3 @@
-import { next } from "@vercel/edge";
-
 const CRAWLER_UAS = /facebookexternalhit|Facebot|Twitterbot|LinkedInBot|WhatsApp|Slackbot|TelegramBot|Discordbot|Embedly|Quora Link Preview|Showyoubot|outbrain|pinterest|vkShare|W3C_Validator|Googlebot|bingbot/i;
 
 export default function middleware(request: Request) {
@@ -8,10 +6,10 @@ export default function middleware(request: Request) {
 
   // Solo interceptar rutas /blog/:slug (no /blog ni /blog/)
   const match = url.pathname.match(/^\/blog\/([^/]+)$/);
-  if (!match) return next();
+  if (!match) return;
 
   // Solo interceptar crawlers
-  if (!CRAWLER_UAS.test(ua)) return next();
+  if (!CRAWLER_UAS.test(ua)) return;
 
   // Reescribir a la API function que genera HTML con OG tags
   const slug = match[1];

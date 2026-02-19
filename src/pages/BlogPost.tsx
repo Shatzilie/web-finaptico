@@ -158,6 +158,8 @@ const BlogPost: React.FC = () => {
 
   const [activeId, setActiveId] = React.useState<string>("");
 
+  const [readProgress, setReadProgress] = React.useState(0);
+
   const [tocOpen, setTocOpen] = React.useState<boolean>(() => {
     if (typeof window === "undefined") return true;
     const raw = localStorage.getItem(TOC_LS_KEY);
@@ -321,6 +323,23 @@ const BlogPost: React.FC = () => {
     return () => io.disconnect();
   }, [htmlWithAnchors]);
 
+  // Reading progress bar
+  React.useEffect(() => {
+    if (!post) return;
+    const onScroll = () => {
+      const article = document.querySelector(".wp-article");
+      if (!article) return;
+      const rect = article.getBoundingClientRect();
+      const articleTop = window.scrollY + rect.top;
+      const articleHeight = rect.height;
+      const scrolled = window.scrollY - articleTop;
+      const progress = Math.min(100, Math.max(0, (scrolled / (articleHeight - window.innerHeight * 0.3)) * 100));
+      setReadProgress(progress);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [post, htmlWithAnchors]);
+
   const dateFmt = (iso?: string) =>
     iso
       ? new Date(iso).toLocaleDateString("es-ES", { day: "2-digit", month: "long", year: "numeric" })
@@ -335,6 +354,15 @@ const BlogPost: React.FC = () => {
     <div className="min-h-screen">
       <Header />
 
+      {/* Reading progress bar */}
+      {post && (
+        <div className="fixed top-0 left-0 right-0 z-[60] h-[3px] bg-transparent pointer-events-none">
+          <div
+            className="h-full bg-gradient-to-r from-primary to-secondary transition-[width] duration-150 ease-out"
+            style={{ width: `${readProgress}%` }}
+          />
+        </div>
+      )}
       <main className="bg-white">
         {/* Breadcrumb */}
         <div className="container mx-auto px-4 pt-6 pb-2">
@@ -533,32 +561,52 @@ const BlogPost: React.FC = () => {
                 <section className="mt-10 border-t border-border/50 pt-8">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      {prevPost && (
-                        <Link
-                          to={`/blog/${prevPost.slug}`}
-                          className="group block rounded-xl border border-border/40 p-5 hover:border-primary/50 hover:bg-section-light transition-all h-full"
-                        >
-                          <span className="text-xs font-medium text-text-muted uppercase tracking-wide">{"\u2190"} Anterior</span>
-                          <p className="text-base font-semibold text-text-primary mt-1.5 group-hover:text-primary transition-colors line-clamp-2">
-                            {stripHtml(prevPost.title?.rendered)}
-                          </p>
-                          <span className="text-xs text-text-muted mt-1 block">{primaryCategoryName(prevPost)}</span>
-                        </Link>
-                      )}
+                      {prevPost && (() => {
+                        const prevImg = featuredImageFromEmbedded(prevPost);
+                        return (
+                          <Link
+                            to={`/blog/${prevPost.slug}`}
+                            className="group flex items-stretch rounded-xl border border-border/40 overflow-hidden hover:border-primary/50 hover:bg-section-light transition-all h-full"
+                          >
+                            {prevImg && (
+                              <div className="hidden sm:block w-24 flex-shrink-0 bg-[#1a1040]">
+                                <img src={prevImg} alt="" className="w-full h-full object-cover" loading="lazy" />
+                              </div>
+                            )}
+                            <div className="flex-1 p-4">
+                              <span className="text-xs font-medium text-text-muted uppercase tracking-wide">{"\u2190"} Anterior</span>
+                              <p className="text-sm font-semibold text-text-primary mt-1 group-hover:text-primary transition-colors line-clamp-2">
+                                {stripHtml(prevPost.title?.rendered)}
+                              </p>
+                              <span className="text-xs text-text-muted mt-0.5 block">{primaryCategoryName(prevPost)}</span>
+                            </div>
+                          </Link>
+                        );
+                      })()}
                     </div>
                     <div>
-                      {nextPost && (
-                        <Link
-                          to={`/blog/${nextPost.slug}`}
-                          className="group block rounded-xl border border-border/40 p-5 hover:border-primary/50 hover:bg-section-light transition-all text-right h-full"
-                        >
-                          <span className="text-xs font-medium text-text-muted uppercase tracking-wide">Siguiente {"\u2192"}</span>
-                          <p className="text-base font-semibold text-text-primary mt-1.5 group-hover:text-primary transition-colors line-clamp-2">
-                            {stripHtml(nextPost.title?.rendered)}
-                          </p>
-                          <span className="text-xs text-text-muted mt-1 block">{primaryCategoryName(nextPost)}</span>
-                        </Link>
-                      )}
+                      {nextPost && (() => {
+                        const nextImg = featuredImageFromEmbedded(nextPost);
+                        return (
+                          <Link
+                            to={`/blog/${nextPost.slug}`}
+                            className="group flex items-stretch rounded-xl border border-border/40 overflow-hidden hover:border-primary/50 hover:bg-section-light transition-all h-full flex-row-reverse"
+                          >
+                            {nextImg && (
+                              <div className="hidden sm:block w-24 flex-shrink-0 bg-[#1a1040]">
+                                <img src={nextImg} alt="" className="w-full h-full object-cover" loading="lazy" />
+                              </div>
+                            )}
+                            <div className="flex-1 p-4 text-right">
+                              <span className="text-xs font-medium text-text-muted uppercase tracking-wide">Siguiente {"\u2192"}</span>
+                              <p className="text-sm font-semibold text-text-primary mt-1 group-hover:text-primary transition-colors line-clamp-2">
+                                {stripHtml(nextPost.title?.rendered)}
+                              </p>
+                              <span className="text-xs text-text-muted mt-0.5 block">{primaryCategoryName(nextPost)}</span>
+                            </div>
+                          </Link>
+                        );
+                      })()}
                     </div>
                   </div>
                 </section>

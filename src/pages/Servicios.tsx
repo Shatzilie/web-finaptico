@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import SEOHead from "../components/SEOHead";
 
 const Servicios = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -21,7 +22,7 @@ const Servicios = () => {
     },
     {
       question: "¿Qué herramientas utilizas?",
-      answer: "Las que mejor se adapten a tu flujo: Notion, Holded, Google Workspace, tus bancos y las integraciones necesarias para automatizar tareas."
+      answer: "Odoo como ERP, Notion para documentación y seguimiento, y n8n y Make para automatizar procesos financieros. Si ya usas otras herramientas, las integramos o migramos según el caso."
     },
     {
       question: "¿Qué pasa si no trabajamos juntos?",
@@ -31,392 +32,396 @@ const Servicios = () => {
 
   return (
     <div className="min-h-screen">
+      <SEOHead
+        title="Servicios de CFO externo para pymes tech | Packs de dirección financiera | Finaptico"
+        description="Tres niveles de dirección financiera externa adaptados al momento de tu empresa. Desde estructura contable hasta CFO estratégico para pymes tecnológicas."
+        canonical="/servicios"
+      />
       <Header />
       
       <main>
         {/* Intro */}
         <section className="bg-white py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-h1 text-text-primary mb-6">Servicios por packs</h1>
-          <p className="text-body text-text-secondary max-w-2xl mx-auto mb-4">
-            No todas las empresas necesitan lo mismo.
-            Por eso trabajo por niveles de acompañamiento, según el momento real de tu negocio.
-          </p>
-          <p className="text-base text-text-secondary max-w-2xl mx-auto">
-            Para ofrecerte resultados reales, trabajo con un método definido. Si tu sistema actual genera fricción, lo ajustamos en el onboarding. Este servicio requiere apertura al cambio y compromiso con una forma de trabajo estable.
-          </p>
-        </div>
-      </section>
+          <div className="container mx-auto px-4 text-center">
+            <h1 className="text-4xl md:text-5xl font-bold leading-[1.15] text-text-primary mb-6 text-balance">
+              Dirección financiera externa por packs para empresas tech
+            </h1>
+            <p className="text-body text-text-secondary max-w-2xl mx-auto mb-4">
+              No todas las pymes tech necesitan lo mismo. Hay empresas que necesitan orden básico y otras que necesitan a alguien que tome decisiones financieras con ellos. Por eso trabajo por niveles de acompañamiento.
+            </p>
+            <p className="text-base text-text-secondary max-w-2xl mx-auto">
+              Trabajo con un método definido y herramientas concretas. Si tu sistema actual genera fricción, lo ajustamos en el onboarding. Esto requiere compromiso, no es un servicio de "ya me dirás".
+            </p>
+          </div>
+        </section>
 
-      {/* Pack Esencial */}
-      <section id="pack-esencial" className="bg-white py-16">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-h2 text-text-primary mb-4">Pack Esencial · Empezar con base sólida</h2>
-              <p className="text-subtitle text-text-secondary">Para empresas que están empezando y quieren hacerlo bien desde el principio.</p>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <ul className="space-y-4 mb-8">
-                  <li className="flex items-start space-x-3">
-                    <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-body text-text-secondary">Visión clara de obligaciones y pasos iniciales para empezar bien</span>
-                  </li>
-                  <li className="flex items-start space-x-3">
-                    <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-body text-text-secondary">Estructura contable organizada desde el primer día</span>
-                  </li>
-                  <li className="flex items-start space-x-3">
-                    <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-body text-text-secondary">Resolución rápida de dudas para que avances sin frenar</span>
-                  </li>
-                </ul>
-
-                <p className="text-small text-text-muted italic mb-4">
-                  Pensado para: empresas que empiezan, abren su primera SL o autónomos que quieren una base clara y sin líos desde el inicio.
-                </p>
-                <p className="text-small text-text-muted mb-6">
-                  Si buscas solo "cumplir con Hacienda", este pack no es para ti.
-                </p>
-
-                <Link to="/contacto?pack=esencial" className="btn-primary">
-                  Quiero este pack
-                </Link>
+        {/* Pack Esencial */}
+        <section id="pack-esencial" className="section-light py-16">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-h2 text-text-primary mb-4">Pack Esencial: estructura financiera desde el inicio</h2>
+                <p className="text-subtitle text-text-secondary">Para pymes tech que empiezan y quieren hacerlo bien desde el primer día.</p>
               </div>
 
-              <div className="bg-section-light rounded-2xl p-8">
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-text-secondary">Estado empresa</span>
-                    <span className="bg-secondary text-white px-2 py-1 rounded text-sm">✓ Activa</span>
-                  </div>
-                  <div className="h-px bg-border"></div>
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-sm text-text-secondary">Libro diario</span>
-                      <span className="text-sm text-text-primary">Al día</span>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                  <ul className="space-y-4 mb-8">
+                    <li className="flex items-start space-x-3">
+                      <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-body text-text-secondary">Visión clara de obligaciones fiscales y pasos para arrancar con orden</span>
+                    </li>
+                    <li className="flex items-start space-x-3">
+                      <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-body text-text-secondary">Estructura contable organizada y adaptada a negocio digital</span>
+                    </li>
+                    <li className="flex items-start space-x-3">
+                      <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-body text-text-secondary">Resolución de dudas financieras para que avances sin frenar</span>
+                    </li>
+                  </ul>
+
+                  <p className="text-small text-text-muted italic mb-4">
+                    Pensado para: empresas que abren su primera SL, autónomos que quieren una base clara o pymes en fase inicial que no quieren repetir los errores de otros.
+                  </p>
+                  <p className="text-small text-text-secondary mb-6">
+                    Si solo buscas "cumplir con Hacienda", una gestoría te cubre. Si quieres entender qué pasa con tu dinero, esto es otra cosa.
+                  </p>
+
+                  <Link to="/contacto?pack=esencial" className="btn-primary">
+                    Quiero este pack
+                  </Link>
+                </div>
+
+                <div className="bg-white rounded-2xl p-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-text-secondary">Estado empresa</span>
+                      <span className="bg-secondary text-white px-2 py-1 rounded text-sm">Activa</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-text-secondary">Facturas pendientes</span>
-                      <span className="text-sm text-text-primary">0</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-text-secondary">Próxima declaración</span>
-                      <span className="text-sm text-primary">15 días</span>
+                    <div className="h-px bg-border"></div>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span className="text-sm text-text-secondary">Libro diario</span>
+                        <span className="text-sm text-text-primary">Al día</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-text-secondary">Facturas pendientes</span>
+                        <span className="text-sm text-text-primary">0</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-text-secondary">Próxima declaración</span>
+                        <span className="text-sm text-primary">15 días</span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Pack Crecimiento */}
-      <section id="pack-crecimiento" className="section-light py-16">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-h2 text-text-primary mb-4">Pack Crecimiento · Escalar con control</h2>
-              <p className="text-subtitle text-text-secondary">Aquí es donde empiezan a evitarse los errores caros.</p>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <ul className="space-y-4 mb-8">
-                  <li className="flex items-start space-x-3">
-                    <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-body text-text-secondary">KPIs y tesorería mensual sin complicaciones</span>
-                  </li>
-                  <li className="flex items-start space-x-3">
-                    <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-body text-text-secondary">Supervisión fiscal y previsiones de caja reales</span>
-                  </li>
-                  <li className="flex items-start space-x-3">
-                    <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-body text-text-secondary">Automatización de procesos para ahorrar tiempo</span>
-                  </li>
-                </ul>
-
-                <p className="text-small text-text-muted italic mb-4">
-                  Pensado para: SaaS y pymes digitales que están creciendo y necesitan claridad financiera para no comprometer la liquidez.
-                </p>
-                <p className="text-small text-text-muted mb-6">
-                  Este pack es para empresas que ya facturan y no quieren que el crecimiento les rompa la caja.
-                </p>
-
-                <Link to="/contacto?pack=crecimiento" className="btn-primary">
-                  Lo quiero para mi empresa
-                </Link>
+        {/* Pack Crecimiento */}
+        <section id="pack-crecimiento" className="bg-white py-16">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-h2 text-text-primary mb-4">Pack Crecimiento: control financiero para escalar sin romper la caja</h2>
+                <p className="text-subtitle text-text-secondary">Aquí es donde se evitan los errores que cuestan dinero de verdad.</p>
               </div>
 
-              <div className="bg-white rounded-2xl p-8 shadow-lg">
-                <h4 className="font-semibold text-text-primary mb-4">Dashboard mensual</h4>
-                <div className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-section-light rounded-lg p-3">
-                      <div className="text-sm text-text-muted">MRR</div>
-                      <div className="text-lg font-semibold text-secondary">€12,450</div>
-                      <div className="text-xs text-secondary">+15% vs mes anterior</div>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                  <ul className="space-y-4 mb-8">
+                    <li className="flex items-start space-x-3">
+                      <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-body text-text-secondary">KPIs y tesorería mensual: sabes lo que entra, lo que sale y lo que viene</span>
+                    </li>
+                    <li className="flex items-start space-x-3">
+                      <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-body text-text-secondary">Supervisión fiscal y previsiones de caja reales</span>
+                    </li>
+                    <li className="flex items-start space-x-3">
+                      <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-body text-text-secondary">Automatización de procesos financieros para reducir errores y ahorrar tiempo</span>
+                    </li>
+                  </ul>
+
+                  <p className="text-small text-text-muted italic mb-4">
+                    Pensado para: SaaS y pymes digitales que ya facturan y necesitan claridad financiera para que el crecimiento no les comprometa la liquidez.
+                  </p>
+                  <p className="text-small text-text-secondary mb-6">
+                    He visto empresas buenas perder dinero por no mirar los números a tiempo. Este pack existe para que eso no te pase a ti.
+                  </p>
+
+                  <Link to="/contacto?pack=crecimiento" className="btn-primary">
+                    Lo quiero para mi empresa
+                  </Link>
+                </div>
+
+                <div className="bg-section-light rounded-2xl p-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+                  <h4 className="font-semibold text-text-primary mb-4">Dashboard mensual</h4>
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="bg-white rounded-lg p-3">
+                        <div className="text-sm text-text-muted">Ingresos recurrentes</div>
+                        <div className="text-lg font-semibold text-secondary">€12.450</div>
+                        <div className="text-xs text-secondary">+15% vs mes anterior</div>
+                      </div>
+                      <div className="bg-white rounded-lg p-3">
+                        <div className="text-sm text-text-muted">Gasto mensual</div>
+                        <div className="text-lg font-semibold text-text-primary">€8.200</div>
+                        <div className="text-xs text-text-muted">18 meses de caja</div>
+                      </div>
                     </div>
-                    <div className="bg-section-light rounded-lg p-3">
-                      <div className="text-sm text-text-muted">Burn Rate</div>
-                      <div className="text-lg font-semibold text-text-primary">€8,200</div>
-                      <div className="text-xs text-text-muted">18 meses runway</div>
+                    <div className="h-16 bg-white rounded-lg flex items-center justify-center">
+                      <span className="text-sm text-text-muted">Gráfico de caja proyectado</span>
                     </div>
                   </div>
-                  <div className="h-16 bg-section-light rounded-lg flex items-center justify-center">
-                    <span className="text-sm text-text-muted">Gráfico de caja proyectado</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Pack Pro */}
+        <section id="pack-pro" className="section-light py-16">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-h2 text-text-primary mb-4">Pack Pro: CFO externo con visión estratégica a largo plazo</h2>
+                <p className="text-subtitle text-text-secondary">No ejecuto tareas sueltas. Trabajo contigo como dirección financiera real.</p>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                  <ul className="space-y-4 mb-8">
+                    <li className="flex items-start space-x-3">
+                      <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-body text-text-secondary">Modelos financieros para inversión y expansión</span>
+                    </li>
+                    <li className="flex items-start space-x-3">
+                      <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-body text-text-secondary">Informes para bancos, inversores y socios</span>
+                    </li>
+                    <li className="flex items-start space-x-3">
+                      <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-body text-text-secondary">Planificación patrimonial y estrategia financiera</span>
+                    </li>
+                  </ul>
+
+                  <p className="text-small text-text-muted italic mb-4">
+                    Pensado para: empresas en expansión, preparando ronda de inversión o con crecimiento acelerado que necesitan un CFO sin contratarlo a jornada completa.
+                  </p>
+                  <p className="text-small text-text-secondary mb-6">
+                    Solo trabajo con pocas empresas en este nivel. Porque la dirección financiera estratégica requiere atención, no volumen.
+                  </p>
+
+                  <Link to="/contacto?pack=pro" className="btn-primary">
+                    Hablemos de este pack
+                  </Link>
+                </div>
+
+                <div className="bg-white rounded-2xl p-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+                  <h4 className="font-semibold text-text-primary mb-4">Informe ejecutivo</h4>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-text-secondary">Valoración actual</span>
+                      <span className="font-semibold text-text-primary">€2.1M</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-text-secondary">Caja disponible</span>
+                      <span className="font-semibold text-secondary">24 meses</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-text-secondary">Retorno proyectado</span>
+                      <span className="font-semibold text-secondary">185%</span>
+                    </div>
+                    <div className="mt-4 p-3 bg-section-light rounded-lg">
+                      <div className="text-xs text-text-muted mb-1">Próximo hito de financiación</div>
+                      <div className="text-sm font-medium text-text-primary">Serie A · Q3 2026</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Pack Pro */}
-      <section id="pack-pro" className="bg-white py-16">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-h2 text-text-primary mb-4">Pack Pro · Visión estratégica a largo plazo</h2>
-              <p className="text-subtitle text-text-secondary">Trabajo contigo como CFO externo. No ejecuto tareas sueltas. Tomo decisiones contigo.</p>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <ul className="space-y-4 mb-8">
-                  <li className="flex items-start space-x-3">
-                    <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-body text-text-secondary">Modelos de inversión y expansión</span>
-                  </li>
-                  <li className="flex items-start space-x-3">
-                    <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-body text-text-secondary">Informes para bancos e inversores</span>
-                  </li>
-                  <li className="flex items-start space-x-3">
-                    <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-body text-text-secondary">Planificación patrimonial y financiera</span>
-                  </li>
-                </ul>
-
-                <p className="text-small text-text-muted italic mb-4">
-                  Pensado para: empresas en fase de expansión, ronda de inversión o crecimiento acelerado que necesitan una visión estratégica.
-                </p>
-                <p className="text-small text-text-muted mb-6">
-                  Solo trabajo con pocas empresas en este nivel. Requiere compromiso y visión a medio plazo.
-                </p>
-
-                <Link to="/contacto?pack=pro" className="btn-primary">
-                  Hablemos de este pack
-                </Link>
-              </div>
-
-              <div className="bg-section-light rounded-2xl p-8">
-                <h4 className="font-semibold text-text-primary mb-4">Informe ejecutivo</h4>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-text-secondary">Valoración actual</span>
-                    <span className="font-semibold text-text-primary">€2.1M</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-text-secondary">Runway disponible</span>
-                    <span className="font-semibold text-secondary">24 meses</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-text-secondary">ROI proyectado</span>
-                    <span className="font-semibold text-secondary">185%</span>
-                  </div>
-                  <div className="mt-4 p-3 bg-white rounded-lg">
-                    <div className="text-xs text-text-muted mb-1">Próximo hito de funding</div>
-                    <div className="text-sm font-medium text-text-primary">Serie A · Q3 2025</div>
-                  </div>
+        {/* Comparativa */}
+        <section className="bg-white py-16">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <h2 id="comparativa" className="text-h2 text-text-primary text-center mb-4">Comparativa de servicios de dirección financiera</h2>
+              <p className="text-body text-text-secondary text-center mb-4">Revisa qué incluye cada nivel y elige el que se ajusta a tu momento.</p>
+              <p className="text-sm text-text-muted text-center mb-12 italic">Si dudas entre dos packs, el inferior suele quedarse corto antes de seis meses.</p>
+              
+              <div className="bg-white rounded-2xl overflow-hidden shadow-lg">
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="bg-primary text-white">
+                        <th className="text-left p-4 font-semibold">Servicios</th>
+                        <th className="text-center p-4 font-semibold">Esencial</th>
+                        <th className="text-center p-4 font-semibold">Crecimiento</th>
+                        <th className="text-center p-4 font-semibold">Pro</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-b border-border">
+                        <td className="p-4 text-text-secondary">Estructura contable básica</td>
+                        <td className="text-center p-4 text-secondary text-xl">✓</td>
+                        <td className="text-center p-4 text-secondary text-xl">✓</td>
+                        <td className="text-center p-4 text-secondary text-xl">✓</td>
+                      </tr>
+                      <tr className="bg-section-light border-b border-border">
+                        <td className="p-4 text-text-secondary">KPIs mensuales</td>
+                        <td className="text-center p-4 text-text-muted">—</td>
+                        <td className="text-center p-4 text-secondary text-xl">✓</td>
+                        <td className="text-center p-4 text-secondary text-xl">✓</td>
+                      </tr>
+                      <tr className="border-b border-border">
+                        <td className="p-4 text-text-secondary">Supervisión fiscal</td>
+                        <td className="text-center p-4 text-text-muted">—</td>
+                        <td className="text-center p-4 text-secondary text-xl">✓</td>
+                        <td className="text-center p-4 text-secondary text-xl">✓</td>
+                      </tr>
+                      <tr className="bg-section-light border-b border-border">
+                        <td className="p-4 text-text-secondary">Automatización financiera</td>
+                        <td className="text-center p-4 text-text-muted">—</td>
+                        <td className="text-center p-4 text-secondary text-xl">✓</td>
+                        <td className="text-center p-4 text-secondary text-xl">✓</td>
+                      </tr>
+                      <tr className="border-b border-border">
+                        <td className="p-4 text-text-secondary">CFO externo</td>
+                        <td className="text-center p-4 text-text-muted">—</td>
+                        <td className="text-center p-4 text-text-muted">—</td>
+                        <td className="text-center p-4 text-secondary text-xl">✓</td>
+                      </tr>
+                      <tr className="bg-section-light">
+                        <td className="p-4 text-text-secondary">Informes para inversores</td>
+                        <td className="text-center p-4 text-text-muted">—</td>
+                        <td className="text-center p-4 text-text-muted">—</td>
+                        <td className="text-center p-4 text-secondary text-xl">✓</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Comparativa */}
-      <section className="section-light py-16">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <h2 id="comparativa" className="text-h2 text-text-primary text-center mb-4">Comparativa de packs</h2>
-            <p className="text-body text-text-secondary text-center mb-4">Revisa qué incluye cada nivel y elige el que se ajusta a tu momento empresarial.</p>
-            <p className="text-sm text-text-muted text-center mb-12 italic">Si dudas entre dos packs, normalmente el inferior se queda corto en menos de seis meses.</p>
-            
-            <div className="bg-white rounded-2xl overflow-hidden shadow-lg">
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="bg-primary text-white">
-                      <th className="text-left p-4 font-semibold">Servicios</th>
-                      <th className="text-center p-4 font-semibold">Esencial</th>
-                      <th className="text-center p-4 font-semibold">Crecimiento</th>
-                      <th className="text-center p-4 font-semibold">Pro</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b border-border">
-                      <td className="p-4 text-text-secondary">Estructura contable básica</td>
-                      <td className="text-center p-4 text-secondary text-xl">✓</td>
-                      <td className="text-center p-4 text-secondary text-xl">✓</td>
-                      <td className="text-center p-4 text-secondary text-xl">✓</td>
-                    </tr>
-                    <tr className="bg-section-light border-b border-border">
-                      <td className="p-4 text-text-secondary">KPIs mensuales</td>
-                      <td className="text-center p-4 text-text-muted">—</td>
-                      <td className="text-center p-4 text-secondary text-xl">✓</td>
-                      <td className="text-center p-4 text-secondary text-xl">✓</td>
-                    </tr>
-                    <tr className="border-b border-border">
-                      <td className="p-4 text-text-secondary">Supervisión fiscal</td>
-                      <td className="text-center p-4 text-text-muted">—</td>
-                      <td className="text-center p-4 text-secondary text-xl">✓</td>
-                      <td className="text-center p-4 text-secondary text-xl">✓</td>
-                    </tr>
-                    <tr className="bg-section-light border-b border-border">
-                      <td className="p-4 text-text-secondary">Automatización</td>
-                      <td className="text-center p-4 text-text-muted">—</td>
-                      <td className="text-center p-4 text-secondary text-xl">✓</td>
-                      <td className="text-center p-4 text-secondary text-xl">✓</td>
-                    </tr>
-                    <tr className="border-b border-border">
-                      <td className="p-4 text-text-secondary">CFO externo</td>
-                      <td className="text-center p-4 text-text-muted">—</td>
-                      <td className="text-center p-4 text-text-muted">—</td>
-                      <td className="text-center p-4 text-secondary text-xl">✓</td>
-                    </tr>
-                    <tr className="bg-section-light">
-                      <td className="p-4 text-text-secondary">Informes inversores</td>
-                      <td className="text-center p-4 text-text-muted">—</td>
-                      <td className="text-center p-4 text-text-muted">—</td>
-                      <td className="text-center p-4 text-secondary text-xl">✓</td>
-                    </tr>
-                  </tbody>
-                </table>
+        {/* Cómo trabajo */}
+        <section className="section-alt py-16">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-h2 text-text-primary mb-4">Cómo funciona el servicio de CFO externo</h2>
+              <p className="text-body text-text-secondary mb-12">En tres pasos pasamos de conversación a sistema en marcha.</p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-12 h-12 rounded-full border-2 border-primary flex items-center justify-center mb-5">
+                    <span className="text-lg font-semibold text-primary">01</span>
+                  </div>
+                  <h3 className="text-subtitle font-semibold text-text-primary mb-3">Llamada inicial de 30 minutos</h3>
+                  <p className="text-base text-text-secondary">Hablamos de tu empresa, tu situación real y si tiene sentido trabajar juntos. Sin compromiso.</p>
+                </div>
+
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-12 h-12 rounded-full border-2 border-primary flex items-center justify-center mb-5">
+                    <span className="text-lg font-semibold text-primary">02</span>
+                  </div>
+                  <h3 className="text-subtitle font-semibold text-text-primary mb-3">Onboarding y configuración del sistema</h3>
+                  <p className="text-base text-text-secondary">Definimos herramientas, accesos y flujos de trabajo. Todo queda claro antes de empezar.</p>
+                </div>
+
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-12 h-12 rounded-full border-2 border-primary flex items-center justify-center mb-5">
+                    <span className="text-lg font-semibold text-primary">03</span>
+                  </div>
+                  <h3 className="text-subtitle font-semibold text-text-primary mb-3">Dirección financiera operativa y reporting</h3>
+                  <p className="text-base text-text-secondary">Empiezo a dirigir y supervisar tu parte financiera con entregas regulares y soporte cuando lo necesitas.</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Cómo trabajamos */}
-      <section className="section-alt py-16">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-h2 text-text-primary mb-12">Cómo trabajo</h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold text-primary">1</span>
-                </div>
-                <h3 className="text-subtitle font-semibold text-text-primary mb-3">Llamada inicial</h3>
-                <p className="text-base text-text-secondary">20 minutos para entender si hay un problema real que merezca resolverse.</p>
-              </div>
-
-              <div className="text-center">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold text-primary">2</span>
-                </div>
-                <h3 className="text-subtitle font-semibold text-text-primary mb-3">Setup y acceso seguro</h3>
-                <p className="text-base text-text-secondary">Definimos y configuramos el sistema de trabajo que usaremos juntos, asegurando orden y claridad desde el inicio.</p>
-              </div>
-
-              <div className="text-center">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold text-primary">3</span>
-                </div>
-                <h3 className="text-subtitle font-semibold text-text-primary mb-3">Ejecución y reporting</h3>
-                <p className="text-base text-text-secondary">Empiezo a dirigir y supervisar tu parte financiera con entregas regulares y soporte directo.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQs */}
-      <section className="bg-white py-16">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-h2 text-text-primary text-center mb-12">Preguntas frecuentes</h2>
-            
-            <div className="space-y-4">
-              {faqs.map((faq, index) => (
-                <div key={index} className="border border-border rounded-lg overflow-hidden">
-                  <button
-                    onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                    className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-section-light transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset"
-                  >
-                    <span className="font-medium text-text-primary">{faq.question}</span>
-                    <svg
-                      className={`w-5 h-5 text-text-muted transition-transform duration-200 ${
-                        openFaq === index ? "rotate-180" : ""
-                      }`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+        {/* FAQs */}
+        <section className="bg-white py-16">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto">
+              <h2 className="text-h2 text-text-primary text-center mb-12">Preguntas frecuentes sobre los packs</h2>
+              
+              <div className="space-y-4">
+                {faqs.map((faq, index) => (
+                  <div key={index} className="border border-border rounded-lg overflow-hidden">
+                    <button
+                      onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                      className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-section-light transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset"
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
-                  {openFaq === index && (
-                    <div className="px-6 pb-4">
-                      <p className="text-text-secondary">{faq.answer}</p>
-                    </div>
-                  )}
-                </div>
-              ))}
+                      <span className="font-medium text-text-primary">{faq.question}</span>
+                      <svg
+                        className={`w-5 h-5 text-text-muted transition-transform duration-200 flex-shrink-0 ml-4 ${
+                          openFaq === index ? "rotate-180" : ""
+                        }`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                    {openFaq === index && (
+                      <div className="px-6 pb-4">
+                        <p className="text-text-secondary">{faq.answer}</p>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* CTA Final */}
-      <section className="section-light py-16">
-        <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center">
-            <div className="cta-gradient">
-              <h2 className="text-h2 mb-4">¿No tienes claro el pack?</h2>
-              <p className="text-body mb-6 opacity-90">
-                Hablamos y vemos cuál encaja de verdad con tu empresa. Quiero que tomes la decisión con claridad.
-              </p>
-              <Link
-                to="/contacto"
-                className="inline-block bg-white text-darker-bg hover:bg-section-light transition-colors duration-200 rounded-[var(--radius-pill)] px-8 py-4 font-semibold text-body"
-              >
-                Reserva tu llamada
-              </Link>
+        {/* CTA Final */}
+        <section className="section-light pt-8 pb-32">
+          <div className="container mx-auto px-4">
+            <div className="max-w-2xl mx-auto text-center">
+              <div className="cta-gradient">
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">¿No tienes claro qué pack necesitas?</h2>
+                <p className="text-lg mb-8 opacity-90">
+                  Cuéntame en qué punto está tu empresa. Te digo cuál encaja de verdad, o si ninguno tiene sentido ahora mismo.
+                </p>
+                <Link
+                  to="/contacto"
+                  className="inline-block bg-white text-[hsl(222,47%,11%)] hover:bg-gray-100 transition-colors duration-200 rounded-[var(--radius-pill)] px-10 py-4 font-bold text-lg shadow-lg"
+                >
+                  Reserva tu llamada
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-
-        {/* Espacio para el Footer CTA */}
-        <div className="bg-white py-16"></div>
+        </section>
       </main>
 
       <Footer />

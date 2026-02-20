@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import SEOHead from "../components/SEOHead";
@@ -156,7 +155,7 @@ const SobreMi = () => {
         </section>
 
         {/* Valores */}
-        <section className="bg-white py-16">
+        <section className="bg-white pt-16 pb-32">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-h2 text-text-primary text-center mb-12">Lo que puedes esperar de mí</h2>
@@ -203,25 +202,6 @@ const SobreMi = () => {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="section-light pt-8 pb-32">
-          <div className="container mx-auto px-4">
-            <div className="max-w-2xl mx-auto text-center">
-              <div className="cta-gradient">
-                <h2 className="text-2xl md:text-3xl font-bold mb-4">¿Quieres saber si encajamos?</h2>
-                <p className="text-lg mb-8 opacity-90">
-                  Revisamos tu situación financiera y vemos si tiene sentido trabajar juntos. Si no encaja, te lo diré claro.
-                </p>
-                <Link
-                  to="/contacto"
-                  className="inline-block bg-white text-[hsl(222,47%,11%)] hover:bg-gray-100 transition-colors duration-200 rounded-[var(--radius-pill)] px-10 py-4 font-bold text-lg shadow-lg"
-                >
-                  Reserva tu llamada
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
 
       <Footer />

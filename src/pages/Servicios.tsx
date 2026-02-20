@@ -49,6 +49,9 @@ const Servicios = () => {
             <p className="text-body text-text-secondary max-w-2xl mx-auto mb-4">
               No todas las pymes tech necesitan lo mismo. Hay empresas que necesitan orden básico y otras que necesitan a alguien que tome decisiones financieras con ellos. Por eso trabajo por niveles de acompañamiento.
             </p>
+            <p className="text-base text-text-secondary max-w-2xl mx-auto mb-4">
+              No trabajo por tareas sueltas. Cada nivel define el grado de implicación en la dirección financiera de tu empresa.
+            </p>
             <p className="text-base text-text-secondary max-w-2xl mx-auto">
               Trabajo con un método definido y herramientas concretas. Si tu sistema actual genera fricción, lo ajustamos en el onboarding. Esto requiere compromiso, no es un servicio de "ya me dirás".
             </p>
@@ -83,7 +86,7 @@ const Servicios = () => {
                       <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span className="text-body text-text-secondary">Resolución de dudas financieras para que avances sin frenar</span>
+                      <span className="text-body text-text-secondary">Acompañamiento para que tomes decisiones financieras con criterio desde el inicio</span>
                     </li>
                   </ul>
 
@@ -163,7 +166,7 @@ const Servicios = () => {
                     Pensado para: SaaS y pymes digitales que ya facturan y necesitan claridad financiera para que el crecimiento no les comprometa la liquidez.
                   </p>
                   <p className="text-small text-text-secondary mb-6">
-                    He visto empresas buenas perder dinero por no mirar los números a tiempo. Este pack existe para que eso no te pase a ti.
+                    El crecimiento sin control financiero suele salir caro.
                   </p>
 
                   <Link to="/contacto?pack=crecimiento" className="btn-primary">
@@ -183,7 +186,6 @@ const Servicios = () => {
                       <div className="bg-white rounded-lg p-3">
                         <div className="text-sm text-text-muted">Gasto mensual</div>
                         <div className="text-lg font-semibold text-text-primary">€8.200</div>
-                        <div className="text-xs text-text-muted">18 meses de caja</div>
                       </div>
                     </div>
                     <div className="h-16 bg-white rounded-lg flex items-center justify-center">
@@ -224,7 +226,7 @@ const Servicios = () => {
                       <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span className="text-body text-text-secondary">Planificación patrimonial y estrategia financiera</span>
+                      <span className="text-body text-text-secondary">Estructura financiera y planificación patrimonial</span>
                     </li>
                   </ul>
 
@@ -241,7 +243,10 @@ const Servicios = () => {
                 </div>
 
                 <div className="bg-white rounded-2xl p-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
-                  <h4 className="font-semibold text-text-primary mb-4">Informe ejecutivo</h4>
+                  <div className="flex items-center justify-between mb-4">
+                    <h4 className="font-semibold text-text-primary">Informe ejecutivo</h4>
+                    <span className="text-xs text-text-muted bg-section-light px-2 py-1 rounded">Ejemplo</span>
+                  </div>
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-text-secondary">Valoración actual</span>
@@ -272,7 +277,7 @@ const Servicios = () => {
             <div className="max-w-4xl mx-auto">
               <h2 id="comparativa" className="text-h2 text-text-primary text-center mb-4">Comparativa de servicios de dirección financiera</h2>
               <p className="text-body text-text-secondary text-center mb-4">Revisa qué incluye cada nivel y elige el que se ajusta a tu momento.</p>
-              <p className="text-sm text-text-muted text-center mb-12 italic">Si dudas entre dos packs, el inferior suele quedarse corto antes de seis meses.</p>
+              <p className="text-sm text-text-muted text-center mb-12 italic">Si dudas entre dos niveles, lo revisamos en la llamada y decidimos según tu situación real.</p>
               
               <div className="bg-white rounded-2xl overflow-hidden shadow-lg">
                 <div className="overflow-x-auto">
@@ -410,7 +415,7 @@ const Servicios = () => {
               <div className="cta-gradient">
                 <h2 className="text-2xl md:text-3xl font-bold mb-4">¿No tienes claro qué pack necesitas?</h2>
                 <p className="text-lg mb-8 opacity-90">
-                  Cuéntame en qué punto está tu empresa. Te digo cuál encaja de verdad, o si ninguno tiene sentido ahora mismo.
+                  Revisamos tu situación financiera y vemos si tiene sentido trabajar juntos.
                 </p>
                 <Link
                   to="/contacto"

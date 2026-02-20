@@ -5,13 +5,13 @@ const Footer = () => {
       {/* CTA Card superpuesta */}
       <div className="container mx-auto px-4 relative">
         <div className="cta-gradient text-center -mt-16 mb-16 relative z-10">
-          <h2 className="text-h2 mb-4">Hablemos antes de que el problema crezca</h2>
-          <p className="text-body mb-6 opacity-90">Revisamos tu situación financiera y vemos si tiene sentido trabajar juntos. Si no encaja, te lo diré claro.</p>
+          <h2 className="text-h2 mb-4">¿Quieres saber si tiene sentido trabajar juntos?</h2>
+          <p className="text-body mb-6 opacity-90">Revisamos tu situación financiera y vemos si encaja. Si no, te lo diré claro.</p>
           <Link
             to="/contacto"
             className="inline-block bg-white text-darker-bg hover:bg-section-light transition-colors duration-200 rounded-[var(--radius-pill)] px-8 py-4 font-semibold text-body"
           >
-            Solicitar revisión financiera
+            Reserva tu llamada
           </Link>
         </div>
         <div className="pb-8">

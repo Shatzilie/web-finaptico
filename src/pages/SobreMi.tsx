@@ -65,7 +65,7 @@ const SobreMi = () => {
                     </svg>
                   </div>
                   <h3 className="text-subtitle font-semibold text-text-primary mb-3">Tesorería y métricas que entiendes</h3>
-                  <p className="text-base text-text-secondary">Métricas claras y adaptadas a tu negocio digital. Sin jerga, para que sepas si la empresa va bien.</p>
+                  <p className="text-base text-text-secondary">Indicadores claros y adaptados a tu negocio digital. Sin jerga, para que sepas si la empresa va bien.</p>
                 </div>
 
                 <div className="card-hover border border-border/30 text-center">
@@ -210,7 +210,7 @@ const SobreMi = () => {
               <div className="cta-gradient">
                 <h2 className="text-2xl md:text-3xl font-bold mb-4">¿Quieres saber si encajamos?</h2>
                 <p className="text-lg mb-8 opacity-90">
-                  Cuéntame tu situación. En 30 minutos te digo si puedo ayudarte o si necesitas otra cosa.
+                  Revisamos tu situación financiera y vemos si tiene sentido trabajar juntos. Si no encaja, te lo diré claro.
                 </p>
                 <Link
                   to="/contacto"
@@ -218,9 +218,6 @@ const SobreMi = () => {
                 >
                   Reserva tu llamada
                 </Link>
-                <p className="text-sm text-white/70 mt-6">
-                  Revisamos tu situación financiera y vemos si tiene sentido trabajar juntos. Si no encaja, te lo diré claro.
-                </p>
               </div>
             </div>
           </div>

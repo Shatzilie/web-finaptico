@@ -14,21 +14,29 @@ const Home = () => {
       <Header />
       
       <main>
-        {/* Hero */}
-        <section className="section-dark text-white py-20">
+        {/* Hero — mucho aire, H1 domina, subtítulo ligero */}
+        <section className="section-dark text-white pt-24 pb-28">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div className="space-y-6">
-                <h1 className="text-h1 text-balance">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <div className="space-y-8">
+                <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-bold leading-[1.15] text-balance">
                   Dirección financiera externa para pymes tech y negocios digitales
                 </h1>
-                <p className="text-body text-white/90 leading-relaxed">
-                  Si cada mes miras la cuenta del banco para saber cómo vas, eso no es control financiero. Es ir a ciegas. Soy CFO externa para empresas tecnológicas que quieren tomar decisiones con números reales, no con intuición.
+                <p className="text-lg text-white/85 leading-relaxed max-w-lg">
+                  Si cada mes miras la cuenta del banco para saber cómo vas, eso no es control financiero. Es ir a ciegas.
                 </p>
-                <p className="text-sm text-white/70 italic">
-                  No soy tu gestoría. Soy la dirección financiera que tu empresa aún no tiene.
+                <p className="text-lg text-white/85 leading-relaxed max-w-lg">
+                  Soy CFO externa para empresas tecnológicas que quieren tomar decisiones con números reales, no con intuición.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4">
+
+                {/* Frase diferenciadora — peso visual propio */}
+                <div className="border-l-4 border-secondary pl-5 py-1">
+                  <p className="text-base font-medium text-secondary tracking-wide">
+                    No soy tu gestoría. Soy la dirección financiera que tu empresa aún no tiene.
+                  </p>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-4 pt-2">
                   <Link to="/contacto" className="btn-primary-contrast">
                     Reserva una llamada de 30 min
                   </Link>
@@ -55,7 +63,7 @@ const Home = () => {
         {/* Para quién es */}
         <section className="bg-white py-20">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
+            <div className="text-center mb-14">
               <h2 className="text-h2 text-text-primary mb-4">¿Es para ti?</h2>
               <p className="text-body text-text-secondary max-w-2xl mx-auto">
                 Trabajo con empresas tecnológicas y negocios digitales en España que comparten algo: han crecido más rápido que su estructura financiera.
@@ -102,72 +110,80 @@ const Home = () => {
           </div>
         </section>
 
-        {/* Diferenciación: gestoría vs CFO externo */}
+        {/* Gestoría vs CFO externo — comparativa visual real */}
         <section className="section-light py-20">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-12">
+              <div className="text-center mb-14">
                 <h2 className="text-h2 text-text-primary mb-4">Gestoría y CFO externo no son lo mismo</h2>
                 <p className="text-body text-text-secondary max-w-2xl mx-auto">
                   Tu gestoría registra lo que ya ha pasado. La dirección financiera externa trabaja con lo que va a pasar. No la sustituyo, la complemento con una capa que la mayoría de pymes no tiene.
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="bg-white rounded-2xl p-8 border border-border/30">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Gestoría */}
+                <div className="bg-white rounded-2xl p-8 border border-border/40 h-full flex flex-col">
+                  <div className="flex items-center gap-3 mb-8">
+                    <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
                       <svg className="w-5 h-5 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       </svg>
                     </div>
-                    <h3 className="text-subtitle font-semibold text-text-primary">Lo que hace tu gestoría</h3>
+                    <div>
+                      <h3 className="text-lg font-semibold text-text-primary">Tu gestoría</h3>
+                      <p className="text-sm text-text-muted">Registra el pasado</p>
+                    </div>
                   </div>
-                  <ul className="space-y-3">
-                    <li className="flex items-start gap-2">
-                      <span className="text-text-muted mt-1 flex-shrink-0">•</span>
+                  <ul className="space-y-4 flex-1">
+                    <li className="flex items-start gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-text-muted mt-2.5 flex-shrink-0"></span>
                       <span className="text-base text-text-secondary">Contabilidad y presentación de impuestos</span>
                     </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-text-muted mt-1 flex-shrink-0">•</span>
+                    <li className="flex items-start gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-text-muted mt-2.5 flex-shrink-0"></span>
                       <span className="text-base text-text-secondary">Nóminas y obligaciones fiscales</span>
                     </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-text-muted mt-1 flex-shrink-0">•</span>
+                    <li className="flex items-start gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-text-muted mt-2.5 flex-shrink-0"></span>
                       <span className="text-base text-text-secondary">Registro de lo que ya ha ocurrido</span>
                     </li>
                   </ul>
                 </div>
 
-                <div className="bg-white rounded-2xl p-8 border-2 border-primary/30 shadow-lg">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                {/* CFO externa */}
+                <div className="bg-white rounded-2xl p-8 border-2 border-primary/40 shadow-[0_8px_30px_rgba(108,92,231,0.08)] h-full flex flex-col">
+                  <div className="flex items-center gap-3 mb-8">
+                    <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
                       <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                       </svg>
                     </div>
-                    <h3 className="text-subtitle font-semibold text-text-primary">Lo que hago como CFO externa</h3>
+                    <div>
+                      <h3 className="text-lg font-semibold text-text-primary">Finaptico como CFO externa</h3>
+                      <p className="text-sm text-secondary font-medium">Trabaja con lo que viene</p>
+                    </div>
                   </div>
-                  <ul className="space-y-3">
-                    <li className="flex items-start gap-2">
+                  <ul className="space-y-4 flex-1">
+                    <li className="flex items-start gap-3">
                       <svg className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
                       <span className="text-base text-text-secondary">Previsión de tesorería y control de caja real</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-3">
                       <svg className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
                       <span className="text-base text-text-secondary">KPIs, rentabilidad y análisis de márgenes</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-3">
                       <svg className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
                       <span className="text-base text-text-secondary">Supervisión fiscal y coordinación con tu gestoría</span>
                     </li>
-                    <li className="flex items-start gap-2">
+                    <li className="flex items-start gap-3">
                       <svg className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
@@ -177,174 +193,203 @@ const Home = () => {
                 </div>
               </div>
 
-              <p className="text-base text-text-secondary text-center mt-8 italic">
+              <p className="text-base text-text-secondary text-center mt-10 italic">
                 No necesitas cambiar de gestoría. Necesitas a alguien que lea los números con mirada estratégica y te diga lo que significan para tu negocio.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Lo que incluye */}
+        {/* Lo que incluye — iconos consistentes, sobrios */}
         <section className="bg-white py-20">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
+            <div className="text-center mb-14">
               <h2 className="text-h2 text-text-primary mb-4">Lo que incluye la dirección financiera externa de Finaptico</h2>
               <p className="text-body text-text-secondary">Has montado algo que funciona. Ahora toca que los números lo confirmen.</p>
             </div>
 
-            <div className="flex justify-center">
-              <div className="card-hover border border-border/30 max-w-2xl w-full">
-                <ul className="space-y-2 mb-6">
-                  <li className="flex items-start space-x-2">
-                    <svg className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-base text-text-secondary">Control mensual de KPIs y tesorería</span>
-                  </li>
-                  <li className="flex items-start space-x-2">
-                    <svg className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-base text-text-secondary">Supervisión fiscal y coordinación con tu gestoría</span>
-                  </li>
-                  <li className="flex items-start space-x-2">
-                    <svg className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-base text-text-secondary">Automatización de procesos financieros con Odoo, Notion y n8n</span>
-                  </li>
-                  <li className="flex items-start space-x-2">
-                    <svg className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-base text-text-secondary">Informes claros que puedes entender sin ser financiero</span>
-                  </li>
-                  <li className="flex items-start space-x-2">
-                    <svg className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-base text-text-secondary">Acompañamiento financiero operativo en el día a día</span>
-                  </li>
-                  <li className="flex items-start space-x-2">
-                    <svg className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-base text-text-secondary">Revisión periódica del sistema financiero completo</span>
-                  </li>
-                </ul>
-                <p className="text-base text-text-secondary mb-6">
-                  Si tu empresa no está dispuesta a trabajar con orden y criterio, este servicio no encaja. Pero si estás aquí, probablemente sí lo estés.
-                </p>
-                <Link to="/servicios" className="btn-primary w-full text-center block">
-                  Ver los packs en detalle
-                </Link>
+            <div className="max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="flex items-start gap-4 p-5 rounded-xl bg-section-light">
+                <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-base font-medium text-text-primary">Control mensual de KPIs y tesorería</p>
+                </div>
               </div>
+
+              <div className="flex items-start gap-4 p-5 rounded-xl bg-section-light">
+                <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-base font-medium text-text-primary">Supervisión fiscal y coordinación con tu gestoría</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 p-5 rounded-xl bg-section-light">
+                <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-base font-medium text-text-primary">Automatización financiera con Odoo, Notion y n8n</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 p-5 rounded-xl bg-section-light">
+                <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-base font-medium text-text-primary">Informes claros que entiendes sin ser financiero</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 p-5 rounded-xl bg-section-light">
+                <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-base font-medium text-text-primary">Acompañamiento financiero operativo en el día a día</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 p-5 rounded-xl bg-section-light">
+                <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-base font-medium text-text-primary">Revisión periódica del sistema financiero completo</p>
+                </div>
+              </div>
+            </div>
+
+            <p className="text-base text-text-secondary text-center mt-10 max-w-xl mx-auto">
+              Si tu empresa no está dispuesta a trabajar con orden y criterio, este servicio no encaja. Pero si estás aquí, probablemente sí lo estés.
+            </p>
+            <div className="text-center mt-8">
+              <Link to="/servicios" className="btn-primary">
+                Ver los packs en detalle
+              </Link>
             </div>
           </div>
         </section>
 
-        {/* Cómo funciona */}
+        {/* Cómo funciona — numeración tipo sistema, limpia */}
         <section className="section-alt py-20">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-12">
+              <div className="text-center mb-14">
                 <h2 className="text-h2 text-text-primary mb-4">Cómo funciona el servicio de dirección financiera externa</h2>
                 <p className="text-body text-text-secondary max-w-2xl mx-auto">
                   Sin procesos eternos ni semanas de espera. En tres pasos pasamos de una conversación a tener tu sistema financiero funcionando.
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-2xl font-bold text-primary">1</span>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-12 h-12 rounded-full border-2 border-primary flex items-center justify-center mb-5">
+                    <span className="text-lg font-semibold text-primary">01</span>
                   </div>
                   <h3 className="text-subtitle font-semibold text-text-primary mb-3">Llamada de 30 minutos</h3>
                   <p className="text-base text-text-secondary">Hablamos de tu empresa, tu situación real y si tiene sentido trabajar juntos. Sin compromiso ni discurso de venta.</p>
                 </div>
 
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-2xl font-bold text-primary">2</span>
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-12 h-12 rounded-full border-2 border-primary flex items-center justify-center mb-5">
+                    <span className="text-lg font-semibold text-primary">02</span>
                   </div>
                   <h3 className="text-subtitle font-semibold text-text-primary mb-3">Onboarding y configuración</h3>
-                  <p className="text-base text-text-secondary">Definimos herramientas, accesos y flujos de trabajo. Todo queda claro antes de empezar. Si tu sistema actual genera fricción, lo ajustamos.</p>
+                  <p className="text-base text-text-secondary">Definimos herramientas, accesos y flujos de trabajo. Todo queda claro antes de empezar. Si tu sistema genera fricción, lo ajustamos.</p>
                 </div>
 
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-2xl font-bold text-primary">3</span>
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-12 h-12 rounded-full border-2 border-primary flex items-center justify-center mb-5">
+                    <span className="text-lg font-semibold text-primary">03</span>
                   </div>
                   <h3 className="text-subtitle font-semibold text-text-primary mb-3">Ejecución y reporting mensual</h3>
-                  <p className="text-base text-text-secondary">Empiezo a dirigir y supervisar tu parte financiera con entregas regulares, informes que entiendes y soporte directo cuando lo necesitas.</p>
+                  <p className="text-base text-text-secondary">Empiezo a dirigir y supervisar tu parte financiera con entregas regulares, informes que entiendes y soporte directo.</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Prueba social */}
+        {/* Prueba social — creíble, sin exagerar */}
         <section className="bg-white py-20">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-h2 text-text-primary text-center mb-12">Lo que dicen quienes ya trabajan conmigo</h2>
+              <h2 className="text-h2 text-text-primary text-center mb-14">Lo que dicen quienes ya trabajan conmigo</h2>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="bg-section-light rounded-2xl p-6">
-                  <div className="mb-4">
-                    <svg className="w-8 h-8 text-primary/30" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                    </svg>
-                  </div>
-                  <p className="text-base text-text-secondary leading-relaxed mb-4">
+                <div className="bg-section-light rounded-2xl p-6 flex flex-col">
+                  <svg className="w-7 h-7 text-primary/25 mb-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                  </svg>
+                  <p className="text-base text-text-secondary leading-relaxed flex-1">
                     Antes tomaba decisiones financieras mirando la cuenta del banco. Ahora tengo un informe mensual que me dice exactamente dónde estamos y qué viene. La diferencia es enorme.
                   </p>
-                  <p className="text-sm font-medium text-text-primary">CEO de SaaS B2B</p>
-                  <p className="text-sm text-text-muted">12 empleados, Madrid</p>
+                  <div className="mt-5 pt-4 border-t border-border/30">
+                    <p className="text-sm font-medium text-text-primary">CEO de SaaS B2B</p>
+                    <p className="text-xs text-text-muted mt-0.5">12 empleados · Madrid</p>
+                  </div>
                 </div>
 
-                <div className="bg-section-light rounded-2xl p-6">
-                  <div className="mb-4">
-                    <svg className="w-8 h-8 text-primary/30" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                    </svg>
-                  </div>
-                  <p className="text-base text-text-secondary leading-relaxed mb-4">
+                <div className="bg-section-light rounded-2xl p-6 flex flex-col">
+                  <svg className="w-7 h-7 text-primary/25 mb-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                  </svg>
+                  <p className="text-base text-text-secondary leading-relaxed flex-1">
                     Pensaba que con la gestoría era suficiente. Fátima me hizo ver en la primera llamada tres cosas que estaban mal y que me estaban costando dinero cada trimestre.
                   </p>
-                  <p className="text-sm font-medium text-text-primary">Fundadora de agencia digital</p>
-                  <p className="text-sm text-text-muted">8 empleados, Barcelona</p>
+                  <div className="mt-5 pt-4 border-t border-border/30">
+                    <p className="text-sm font-medium text-text-primary">Fundadora de agencia digital</p>
+                    <p className="text-xs text-text-muted mt-0.5">8 empleados · Barcelona</p>
+                  </div>
                 </div>
 
-                <div className="bg-section-light rounded-2xl p-6">
-                  <div className="mb-4">
-                    <svg className="w-8 h-8 text-primary/30" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                    </svg>
-                  </div>
-                  <p className="text-base text-text-secondary leading-relaxed mb-4">
+                <div className="bg-section-light rounded-2xl p-6 flex flex-col">
+                  <svg className="w-7 h-7 text-primary/25 mb-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                  </svg>
+                  <p className="text-base text-text-secondary leading-relaxed flex-1">
                     Lo que más valoro es que me habla claro. Sin rodeos, sin jerga. Me dice lo que necesito oír, no lo que quiero oír. Y eso, cuando hablamos de dinero, vale mucho.
                   </p>
-                  <p className="text-sm font-medium text-text-primary">CTO y cofundador de startup</p>
-                  <p className="text-sm text-text-muted">18 empleados, Valencia</p>
+                  <div className="mt-5 pt-4 border-t border-border/30">
+                    <p className="text-sm font-medium text-text-primary">CTO y cofundador de startup</p>
+                    <p className="text-xs text-text-muted mt-0.5">18 empleados · Valencia</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* CTA Final */}
-        <section className="section-light py-16">
+        {/* CTA Final — contraste alto, potente */}
+        <section className="bg-white pt-8 pb-32">
           <div className="container mx-auto px-4">
             <div className="max-w-2xl mx-auto text-center">
               <div className="cta-gradient">
-                <h2 className="text-h2 mb-4">¿Quieres saber qué está pasando de verdad con tus finanzas?</h2>
-                <p className="text-body mb-6 opacity-90">
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">¿Quieres saber qué está pasando de verdad con tus finanzas?</h2>
+                <p className="text-lg mb-8 opacity-90">
                   Hablamos 30 minutos. Te digo si puedo ayudarte o no. Sin compromiso, sin discurso de venta.
                 </p>
                 <Link
                   to="/contacto"
-                  className="inline-block bg-white text-darker-bg hover:bg-section-light transition-colors duration-200 rounded-[var(--radius-pill)] px-8 py-4 font-semibold text-body"
+                  className="inline-block bg-white text-[hsl(222,47%,11%)] hover:bg-gray-100 transition-colors duration-200 rounded-[var(--radius-pill)] px-10 py-4 font-bold text-lg shadow-lg"
                 >
                   Reserva tu llamada
                 </Link>

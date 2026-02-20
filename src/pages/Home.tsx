@@ -79,7 +79,7 @@ const Home = () => {
                 </div>
                 <h3 className="text-subtitle font-semibold mb-3 text-text-primary">Startups y SaaS que ya facturan</h3>
                 <p className="text-base text-text-secondary leading-relaxed">
-                  Tienes MRR y clientes, pero no tienes claro tu margen real ni cuántos meses de caja te quedan.
+                  Tienes ingresos recurrentes y clientes, pero no tienes claro tu margen real ni cuántos meses de caja te quedan.
                 </p>
                 <p className="text-sm font-medium text-primary mt-3">Las métricas de vanidad no pagan nóminas.</p>
               </div>

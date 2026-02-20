@@ -139,7 +139,7 @@ const Contacto = () => {
     <div className="min-h-screen">
       <SEOHead
         title="Contacta con Finaptico | Dirección financiera para pymes tech"
-        description="Solicita una llamada de 30 minutos sin compromiso. Cuéntame la situación de tu empresa y te digo si la dirección financiera externa es lo que necesitas."
+        description="Solicita una llamada de 30 minutos sin compromiso. Cuéntame la situación de tu empresa y te diré si la dirección financiera externa es lo que necesitas."
         canonical="/contacto"
       />
       <Header />
@@ -150,13 +150,10 @@ const Contacto = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl font-bold leading-[1.15] text-text-primary mb-6 text-balance">
-                Hablemos de las finanzas de tu empresa
+                Cuéntame qué está pasando en las finanzas de tu empresa
               </h1>
-              <p className="text-body text-text-secondary mb-4">
-                Cuéntame en qué punto está tu negocio y qué te preocupa ahora mismo. Te digo si puedo ayudarte o no. Sin rodeos.
-              </p>
-              <p className="text-base text-text-secondary">
-                Prefiero pocas conversaciones, pero útiles.
+              <p className="text-body text-text-secondary">
+                Cuéntame en qué punto está tu negocio y qué te preocupa ahora mismo. Te diré si puedo ayudarte o si no encaja. Sin rodeos.
               </p>
             </div>
           </div>
@@ -242,7 +239,6 @@ const Contacto = () => {
                           className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200 resize-none"
                           placeholder="Cuéntame qué necesitas, qué te preocupa o qué estás buscando mejorar."
                         />
-                        <p className="text-xs text-text-muted mt-1">Cuanto más concreto seas, mejor podré ayudarte.</p>
                       </div>
 
                       <div className="space-y-4">
@@ -265,16 +261,8 @@ const Contacto = () => {
                               className="text-primary hover:text-secondary underline"
                             >
                               Política de Privacidad
-                            </a>{" "}
-                            *
+                            </a>.
                           </label>
-                        </div>
-
-                        <div className="bg-section-light p-4 rounded-lg">
-                          <p className="text-xs text-text-muted leading-relaxed">
-                            <strong>Responsable:</strong> Fátima. <strong>Finalidad:</strong> responder tu solicitud y enviar información relacionada con mis servicios. 
-                            <strong> Derechos:</strong> acceso, rectificación, supresión y más. Consulta la Política de Privacidad para más detalle.
-                          </p>
                         </div>
                       </div>
 
@@ -313,8 +301,7 @@ const Contacto = () => {
                           </svg>
                         </div>
                         <div>
-                          <h3 className="font-semibold text-text-primary">WhatsApp (solo mensajes)</h3>
-                          <p className="text-sm text-text-secondary mb-2">Respuesta rápida para consultas breves.</p>
+                          <h3 className="font-semibold text-text-primary mb-2">WhatsApp (solo mensajes)</h3>
                           <a
                             href="https://web.whatsapp.com/send?phone=34623760848&text=Hola,%20quiero%20información%20sobre%20Finaptico"
                             target="_blank"
@@ -342,8 +329,7 @@ const Contacto = () => {
                           </svg>
                         </div>
                         <div>
-                          <h3 className="font-semibold text-text-primary">Telegram</h3>
-                          <p className="text-sm text-text-secondary mb-2">Canal directo para dudas y mensajes rápidos.</p>
+                          <h3 className="font-semibold text-text-primary mb-2">Telegram</h3>
                           <a
                             href="https://t.me/+34623760848"
                             target="_blank"
@@ -365,8 +351,7 @@ const Contacto = () => {
                           </svg>
                         </div>
                         <div>
-                          <h3 className="font-semibold text-text-primary">Email directo</h3>
-                          <p className="text-sm text-text-secondary mb-2">Para consultas más detalladas:</p>
+                          <h3 className="font-semibold text-text-primary mb-2">Email directo</h3>
                           <a
                             href="mailto:hola@finaptico.com"
                             className="text-primary hover:text-secondary underline"
@@ -384,19 +369,15 @@ const Contacto = () => {
                     <div className="space-y-3">
                       <div className="flex items-center space-x-3">
                         <div className="w-2 h-2 bg-secondary rounded-full"></div>
-                        <span className="text-sm text-text-secondary">Formulario web: máximo 24 horas</span>
+                        <span className="text-sm text-text-secondary">Formulario web: hasta 24h laborables</span>
                       </div>
                       <div className="flex items-center space-x-3">
                         <div className="w-2 h-2 bg-secondary rounded-full"></div>
-                        <span className="text-sm text-text-secondary">WhatsApp: 2-4 horas (días laborables)</span>
+                        <span className="text-sm text-text-secondary">WhatsApp y Telegram: hasta 24h laborables</span>
                       </div>
                       <div className="flex items-center space-x-3">
                         <div className="w-2 h-2 bg-secondary rounded-full"></div>
-                        <span className="text-sm text-text-secondary">Telegram: 2-4 horas (días laborables)</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <div className="w-2 h-2 bg-secondary rounded-full"></div>
-                        <span className="text-sm text-text-secondary">Email: 12-24 horas</span>
+                        <span className="text-sm text-text-secondary">Email: hasta 24h laborables</span>
                       </div>
                     </div>
                   </div>

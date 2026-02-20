@@ -74,7 +74,7 @@ const Servicios = () => {
                       <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span className="text-body text-text-secondary">Visión clara de obligaciones fiscales y pasos para arrancar con orden</span>
+                      <span className="text-body text-text-secondary">Visión clara de lo que hay que hacer y en qué orden para arrancar con control</span>
                     </li>
                     <li className="flex items-start space-x-3">
                       <svg className="w-6 h-6 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
@@ -180,12 +180,12 @@ const Servicios = () => {
                     <div className="grid grid-cols-2 gap-4">
                       <div className="bg-white rounded-lg p-3">
                         <div className="text-sm text-text-muted">Ingresos recurrentes</div>
-                        <div className="text-lg font-semibold text-secondary">€12.450</div>
+                        <div className="text-lg font-semibold text-secondary">12.450 €</div>
                         <div className="text-xs text-secondary">+15% vs mes anterior</div>
                       </div>
                       <div className="bg-white rounded-lg p-3">
                         <div className="text-sm text-text-muted">Gasto mensual</div>
-                        <div className="text-lg font-semibold text-text-primary">€8.200</div>
+                        <div className="text-lg font-semibold text-text-primary">8.200 €</div>
                       </div>
                     </div>
                     <div className="h-16 bg-white rounded-lg flex items-center justify-center">
@@ -204,7 +204,7 @@ const Servicios = () => {
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-12">
                 <h2 className="text-h2 text-text-primary mb-4">Pack Pro: CFO externo con visión estratégica a largo plazo</h2>
-                <p className="text-subtitle text-text-secondary">No ejecuto tareas sueltas. Trabajo contigo como dirección financiera real.</p>
+                <p className="text-subtitle text-text-secondary">Trabajo contigo como dirección financiera real.</p>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -250,15 +250,15 @@ const Servicios = () => {
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-text-secondary">Valoración actual</span>
-                      <span className="font-semibold text-text-primary">€2.1M</span>
+                      <span className="font-semibold text-text-primary">2,1 M €</span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-text-secondary">Caja disponible</span>
                       <span className="font-semibold text-secondary">24 meses</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-text-secondary">Retorno proyectado</span>
-                      <span className="font-semibold text-secondary">185%</span>
+                      <span className="text-sm text-text-secondary">Proyección a 12 meses</span>
+                      <span className="font-semibold text-secondary">Positiva</span>
                     </div>
                     <div className="mt-4 p-3 bg-section-light rounded-lg">
                       <div className="text-xs text-text-muted mb-1">Próximo hito de financiación</div>
@@ -415,7 +415,7 @@ const Servicios = () => {
               <div className="cta-gradient">
                 <h2 className="text-2xl md:text-3xl font-bold mb-4">¿No tienes claro qué pack necesitas?</h2>
                 <p className="text-lg mb-8 opacity-90">
-                  Revisamos tu situación financiera y vemos si tiene sentido trabajar juntos.
+                  Revisamos tu situación y te digo qué nivel encaja, o si ahora no tiene sentido.
                 </p>
                 <Link
                   to="/contacto"

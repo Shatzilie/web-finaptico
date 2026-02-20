@@ -20,7 +20,7 @@ const SobreMi = () => {
             <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               <div className="text-center md:text-left">
                 <h1 className="text-4xl md:text-5xl font-bold leading-[1.15] text-text-primary mb-6 text-balance">
-                  Dirección financiera operativa para pymes tech. Remota, especializada y sin rodeos.
+                  Dirección financiera externa, operativa y clara para empresas tech
                 </h1>
                 <p className="text-body text-text-secondary leading-relaxed">
                   Soy Fátima. Trabajo como CFO externa con empresas tecnológicas y negocios digitales que quieren crecer sin improvisar sus finanzas.
@@ -54,8 +54,8 @@ const SobreMi = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h3 className="text-subtitle font-semibold text-text-primary mb-3">Rigor contable y fiscal</h3>
-                  <p className="text-base text-text-secondary">Superviso que tu contabilidad esté bien y que tu gestoría cumpla. Si algo no cuadra, lo detecto antes de que sea un problema.</p>
+                  <h3 className="text-subtitle font-semibold text-text-primary mb-3">Control contable y fiscal sin sorpresas</h3>
+                  <p className="text-base text-text-secondary">Superviso que tu contabilidad esté bien y que la gestoría ejecute correctamente. Si algo no cuadra, lo vemos antes de que sea un problema.</p>
                 </div>
 
                 <div className="card-hover border border-border/30 text-center">
@@ -64,8 +64,8 @@ const SobreMi = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                     </svg>
                   </div>
-                  <h3 className="text-subtitle font-semibold text-text-primary mb-3">Tesorería y KPIs que entiendes</h3>
-                  <p className="text-base text-text-secondary">Métricas claras, adaptadas a tu negocio digital. No necesitas ser financiero para saber si tu empresa va bien.</p>
+                  <h3 className="text-subtitle font-semibold text-text-primary mb-3">Tesorería y métricas que entiendes</h3>
+                  <p className="text-base text-text-secondary">Métricas claras y adaptadas a tu negocio digital. Sin jerga, para que sepas si la empresa va bien.</p>
                 </div>
 
                 <div className="card-hover border border-border/30 text-center">
@@ -75,10 +75,10 @@ const SobreMi = () => {
                     </svg>
                   </div>
                   <h3 className="text-subtitle font-semibold text-text-primary mb-3">Comunicación directa y sin jerga</h3>
-                  <p className="text-base text-text-secondary">Te cuento lo que importa para que actúes con seguridad. Sin informes que nadie lee ni reuniones que no aportan.</p>
+                  <p className="text-base text-text-secondary">Te cuento lo que importa para que decidas con criterio. Sin informes eternos ni reuniones vacías.</p>
                 </div>
               </div>
-              <p className="text-body text-text-secondary text-center mt-8 italic">No vendo tranquilidad vacía. Trabajo con datos, criterio y límites claros.</p>
+              <p className="text-body text-text-secondary text-center mt-8 italic">No vendo tranquilidad. Trabajo con datos, criterio y límites claros.</p>
             </div>
           </div>
         </section>
@@ -116,11 +116,11 @@ const SobreMi = () => {
                   </div>
                   <h3 className="text-subtitle font-semibold text-text-primary mb-4">Te doy claridad para decidir</h3>
                   <p className="text-base text-text-secondary leading-relaxed">
-                    Informes que entiendes, métricas que importan y recomendaciones concretas. Sin adornos.
+                    Informes que entiendes, métricas que importan y opciones claras para decidir. Sin adornos.
                   </p>
                 </div>
               </div>
-              <p className="text-body text-text-secondary text-center mt-8 italic">Si buscas que alguien te diga lo que quieres oír, no soy esa persona. Si buscas claridad, probablemente nos entendamos.</p>
+              <p className="text-body text-text-secondary text-center mt-8 italic">Si buscas que alguien te dé la razón, no soy esa persona. Si buscas claridad, probablemente nos entendamos.</p>
             </div>
           </div>
         </section>
@@ -131,7 +131,7 @@ const SobreMi = () => {
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-h2 text-text-primary mb-6">Las herramientas con las que trabajo</h2>
               <p className="text-body text-text-secondary mb-10">
-                Estoy especializada en Odoo como ERP, Notion para documentación financiera, y herramientas de automatización como n8n y Make. Elijo las que mejor se adaptan a cada negocio digital, no las que están de moda.
+                Trabajo con Odoo, Notion y automatización con n8n y Make. Ajusto el sistema a tu operativa y a tu forma de vender y cobrar.
               </p>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div className="bg-white rounded-xl p-5 shadow-[0_2px_10px_rgba(0,0,0,0.04)]">
@@ -193,9 +193,9 @@ const SobreMi = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                   </div>
-                  <h3 className="text-subtitle font-semibold text-text-primary mb-4">Orientación a resultados</h3>
+                  <h3 className="text-subtitle font-semibold text-text-primary mb-4">Decisiones con números</h3>
                   <p className="text-base text-text-secondary leading-relaxed">
-                    No se trata de informes bonitos. Se trata de que tomes mejores decisiones y que se note en la caja.
+                    No se trata de informes bonitos. Se trata de entender la situación y tomar mejores decisiones con datos.
                   </p>
                 </div>
               </div>
@@ -210,7 +210,7 @@ const SobreMi = () => {
               <div className="cta-gradient">
                 <h2 className="text-2xl md:text-3xl font-bold mb-4">¿Quieres saber si encajamos?</h2>
                 <p className="text-lg mb-8 opacity-90">
-                  Cuéntame la situación financiera de tu empresa. En 30 minutos te digo si puedo ayudarte o si lo que necesitas es otra cosa.
+                  Cuéntame tu situación. En 30 minutos te digo si puedo ayudarte o si necesitas otra cosa.
                 </p>
                 <Link
                   to="/contacto"
@@ -218,6 +218,9 @@ const SobreMi = () => {
                 >
                   Reserva tu llamada
                 </Link>
+                <p className="text-sm text-white/70 mt-6">
+                  Revisamos tu situación financiera y vemos si tiene sentido trabajar juntos. Si no encaja, te lo diré claro.
+                </p>
               </div>
             </div>
           </div>

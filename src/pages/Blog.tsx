@@ -340,7 +340,7 @@ const Blog = () => {
       </section>
 
       {/* Newsletter */}
-      <section className="section-light py-16">
+      <section className="section-light pt-16 pb-32">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center">
             <div className="bg-white rounded-2xl p-8 shadow-lg border border-border/30">

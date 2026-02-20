@@ -160,7 +160,7 @@ const FAQs: React.FC = () => {
       </section>
 
       {/* FAQs */}
-      <section className="section-light py-16">
+      <section className="section-light pt-16 pb-32">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto space-y-6">
             {faqs.map((faq, i) => (
@@ -179,21 +179,6 @@ const FAQs: React.FC = () => {
                 </div>
               </details>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="bg-white py-16">
-        <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-h2 text-text-primary mb-4">¿Tienes otra pregunta?</h2>
-            <p className="text-body text-text-secondary mb-8">
-              Cuéntame tu situación y vemos si tiene sentido trabajar juntos.
-            </p>
-            <Link to="/contacto" className="btn-primary inline-block">
-              Contactar
-            </Link>
           </div>
         </div>
       </section>

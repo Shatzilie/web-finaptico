@@ -372,7 +372,7 @@ const Servicios = () => {
         </section>
 
         {/* FAQs */}
-        <section className="bg-white py-16">
+        <section className="bg-white pt-16 pb-32">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
               <h2 className="text-h2 text-text-primary text-center mb-12">Preguntas frecuentes sobre los packs</h2>
@@ -403,26 +403,6 @@ const Servicios = () => {
                     )}
                   </div>
                 ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Final */}
-        <section className="section-light pt-8 pb-32">
-          <div className="container mx-auto px-4">
-            <div className="max-w-2xl mx-auto text-center">
-              <div className="cta-gradient">
-                <h2 className="text-2xl md:text-3xl font-bold mb-4">¿No tienes claro qué pack necesitas?</h2>
-                <p className="text-lg mb-8 opacity-90">
-                  Revisamos tu situación y te digo qué nivel encaja, o si ahora no tiene sentido.
-                </p>
-                <Link
-                  to="/contacto"
-                  className="inline-block bg-white text-[hsl(222,47%,11%)] hover:bg-gray-100 transition-colors duration-200 rounded-[var(--radius-pill)] px-10 py-4 font-bold text-lg shadow-lg"
-                >
-                  Reserva tu llamada
-                </Link>
               </div>
             </div>
           </div>
